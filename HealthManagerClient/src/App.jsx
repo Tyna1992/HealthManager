@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Outlet, Link } from "react-router-dom";
 import "./App.css";
-import RegisterUser from "../components/Register.jsx";
+
 
 function App() {
   return (
@@ -11,28 +11,25 @@ function App() {
         <h1>Welcome to the Health Manager App!</h1>
         <div className="Layout">
           <nav>
-            <ul>
-              <li>
-                <Link to="/register">
-                  <button type="button">Register</button>
-                </Link>
-              </li>
-              <li>
-                <Link to="/login">
-                  <button type="button">Login</button>
-                </Link>
-              </li>
-              <li>
-                <Link to="/drinks">
-                  <button type="button">Search drink</button>
-                </Link>
-              </li>
-              <li>
-                <Link to="/food">
-                  <button type="button">Search food</button>
-                </Link>
-              </li>
-            </ul>
+            <Link to="/">
+              <button type="button">Home</button>
+            </Link>
+
+            <Link to="/register">
+              <button type="button">Register</button>
+            </Link>
+            
+            <Link to="/login">
+              <button type="button">Login</button>
+            </Link>
+
+            <Link to="/drinks">
+              <button type="button">Search drink</button>
+            </Link>
+
+            <Link to="/food">
+              <button type="button">Search food</button>
+            </Link>
           </nav>
           <Outlet />
         </div>
