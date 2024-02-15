@@ -1,23 +1,26 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 function RegisterUser(props) {
+    const navigate = useNavigate()
 
     async function handleSubmit(event) {
         event.preventDefault();
         const userName = event.target.username.value;
         const email = event.target.email.value;
         const password = event.target.password.value;
-        const weight = event.target.weight.value;
+        const weight = parseFloat(event.target.weight.value);
         const gender = event.target.gender.value;
         const user = {userName, email, password,weight, gender};
         try{
-            const response = await fetch("/api/user/register",{
+            const response = await fetch("http://localhost:5179/api/user/register",{
                 method: "POST",
                 headers:{
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify(user)
             })
+            console.log(user)
             alert("Registration successful!");
             event.target.username.value = "";
             event.target.email.value = "";
@@ -64,7 +67,7 @@ function RegisterUser(props) {
                 </select>
                 <button type="submit">Register</button>
             </form>
-            <button type="button" onClick={() => props.setPage("/")}>Cancel</button>
+            <button type="button" onClick={() => navigate("/")}>Cancel</button>
         </div>
     )
 }
