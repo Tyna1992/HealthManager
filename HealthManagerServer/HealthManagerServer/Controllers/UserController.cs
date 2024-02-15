@@ -20,7 +20,7 @@ public class UserController : ControllerBase
     
     
 
-    [HttpPost("user/register")]
+    [HttpPost("api/user/register")]
     public IActionResult Register(string userName, string email, string password,double weight,Gender gender)
     {
         
@@ -37,6 +37,5 @@ public class UserController : ControllerBase
         _userRepository.AddUser(user);
         return Ok(user);
     }
-        
     
 }
