@@ -66,11 +66,13 @@ public class UserRepository
                 command.Parameters.AddWithValue("@Email", user.Email);
                 command.Parameters.AddWithValue("@Password", user.Password);
                 command.Parameters.AddWithValue("@Weight", user.Weight);
-                var genderString= user.Gender.ToString();
-                command.Parameters.AddWithValue("@Gender", genderString);
+               
+                command.Parameters.AddWithValue("@Gender", user.Gender);
             
                 command.ExecuteNonQuery();
             }
         }
     }
+    
+    
 }
