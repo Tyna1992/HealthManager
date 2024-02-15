@@ -6,7 +6,8 @@ namespace HealthManagerServer.Model;
 [JsonConverter(typeof(JsonStringEnumConverter))]
 public enum Gender
 {
-    Male,
+    
+    Male ,
     Female,
     Other
 }
