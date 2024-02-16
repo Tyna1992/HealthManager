@@ -57,17 +57,20 @@ function Meals(props) {
             <br></br>
             <label>Serving size:</label>
             <br></br>
-            <input required={true} type="text" name= "amount" value={amount} placeholder="In gramms or pounds" onChange={handleAmountChange}></input>
+            <input required={true} type="text" name= "amount" value={amount} placeholder="In gramms" onChange={handleAmountChange}></input>
             <br></br>
             <button onClick={() => fetchNutritionalValue()}>Show nutritional value</button>
             <button onClick={()=> {setHideResult(true);handleClear()}}>Clear</button>
 
             <div hidden={hideResult} id="result">
-                <h2>Nutritional value</h2>
-                <p>Calories: {nutritionalValue.calories}</p>
-                <p>Protein: {nutritionalValue.protein_g}</p>
-                <p>Fat: {nutritionalValue.fat_total_g}</p>
-                <p>Carbohydrates: {nutritionalValue.carbohydrates_total_g}</p>
+                <h2>Nutritional value of {nutritionalValue.name}</h2>
+                <p>Serving size: {nutritionalValue.serving_size_g} g</p>
+                <p>Calories: {nutritionalValue.calories} cal</p>
+                <p>Protein: {nutritionalValue.protein_g} g</p>
+                <p>Fat: {nutritionalValue.fat_total_g} g</p>
+                <p>Carbohydrates: {nutritionalValue.carbohydrates_total_g} g</p>
+                <p>Sugar: {nutritionalValue.sugar_g} g</p>
+                <p>Sodium: {nutritionalValue.sodium_mg} mg</p>
             </div>
         </div>
     )

@@ -1,4 +1,5 @@
-﻿using HealthManagerServer.Model;
+﻿using dotenv.net;
+using HealthManagerServer.Model;
 
 namespace HealthManagerServer.Service;
 using Microsoft.Data.SqlClient;
@@ -10,7 +11,10 @@ public class UserRepository
     
     public UserRepository()
     {
-        _connectionString = File.ReadAllText("env/env.txt");
+        DotEnv.Load(new DotEnvOptions(envFilePaths: new[] {"../.env"}));
+        var envVars = DotEnv.Read();
+        Console.WriteLine(envVars["DATABASES__SQLSERVER__CONNECTIONSTRING"]);
+        _connectionString = envVars["DATABASES__SQLSERVER__CONNECTIONSTRING"];
     }
     
     private SqlConnection GetConnection()
@@ -55,7 +59,7 @@ public class UserRepository
     {
         var query = @"INSERT INTO Users (Id, UserName, Email, Password, Weight, Gender) 
                   VALUES (@Id, @UserName, @Email, @Password, @Weight, @Gender)";
-    
+        var hashedPassword = BCrypt.Net.BCrypt.HashPassword(user.Password);
         using (var connection = new SqlConnection(_connectionString))
         {
             connection.Open();
@@ -64,7 +68,7 @@ public class UserRepository
                 command.Parameters.AddWithValue("@Id", user.Id);
                 command.Parameters.AddWithValue("@UserName", user.UserName);
                 command.Parameters.AddWithValue("@Email", user.Email);
-                command.Parameters.AddWithValue("@Password", user.Password);
+                command.Parameters.AddWithValue("@Password", hashedPassword);
                 command.Parameters.AddWithValue("@Weight", user.Weight);
                
                 command.Parameters.AddWithValue("@Gender", user.Gender);
