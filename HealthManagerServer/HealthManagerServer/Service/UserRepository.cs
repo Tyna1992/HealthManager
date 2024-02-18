@@ -11,10 +11,12 @@ public class UserRepository
     
     public UserRepository()
     {
-        DotEnv.Load(new DotEnvOptions(envFilePaths: new[] {"../.env"}));
-        var envVars = DotEnv.Read();
-        Console.WriteLine(envVars["DATABASES__SQLSERVER__CONNECTIONSTRING"]);
-        _connectionString = envVars["DATABASES__SQLSERVER__CONNECTIONSTRING"];
+        //DotEnv.Load(new DotEnvOptions(envFilePaths: new[] {"../.env"}));
+        //var envVars = DotEnv.Read();
+        //Console.WriteLine(envVars["DATABASES__SQLSERVER__CONNECTIONSTRING"]);
+        //_connectionString = envVars["DATABASES__SQLSERVER__CONNECTIONSTRING"];
+        _connectionString = "Server=tcp:mysqlserverhun.database.windows.net,1433;Initial Catalog=SQLDatabase;Persist Security Info=False;User ID=azureuser;Password=121212EmQ1994!%;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
+
     }
     
     private SqlConnection GetConnection()
