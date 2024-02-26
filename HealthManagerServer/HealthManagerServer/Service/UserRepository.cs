@@ -39,6 +39,11 @@ public class UserRepository : IUserRepository
         return _context.Users.FirstOrDefault(user => user.UserName == userName);
     }
 
+    public User? GetByEmail(string email)
+    {
+        return _context.Users.FirstOrDefault(user => user.Email == email);
+    }
+
     public void UpdateUser(User user)
     {
         _context.Users.Update(user);    

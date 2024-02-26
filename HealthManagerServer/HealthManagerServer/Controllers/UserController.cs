@@ -11,31 +11,30 @@ using Microsoft.AspNetCore.Mvc;
 public class UserController : ControllerBase
 {
     private readonly ILogger<UserController> _logger;
-    private readonly UserRepository _userRepository = new UserRepository();
+    private readonly IUserRepository _userRepository ;
 
-    public UserController(ILogger<UserController> logger)
+    public UserController(ILogger<UserController> logger, IUserRepository userRepository)
     {
         _logger = logger;
+        _userRepository = userRepository;
     }
+    
 
 
     [HttpPost("/api/user/register")]
     public IActionResult Register([FromBody] User user)
     {
-        Console.WriteLine("Registering user");
-        try
-        {
-            user.Id = Guid.NewGuid();
-
-            _userRepository.AddUser(user);
-            return Ok(user);
+        user.Password = BCrypt.Net.BCrypt.HashPassword(user.Password);
+        if(_userRepository.GetByUserName(user.UserName) != null){
+            return BadRequest("Username already taken! Please choose another one!");
         }
-        catch (Exception e)
-        {
-            Console.WriteLine(e);
-            return StatusCode(500);
+        if(_userRepository.GetByEmail(user.Email) != null){
+            return BadRequest($"{user.Email} is already registered!");
         }
+        _userRepository.AddUser(user);
+        return Ok("User registered successfully!");
+        
     }
     
-   
+
 }
