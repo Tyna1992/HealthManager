@@ -17,6 +17,6 @@ public class DataBaseContext : DbContext
     {
         modelBuilder.Entity<User>().HasIndex(u => u.UserName).IsUnique();
         modelBuilder.Entity<User>().HasIndex(u => u.Email).IsUnique();
-        modelBuilder.Entity<Nutrition>().HasIndex(n => n.Name).IsUnique();
+        modelBuilder.Entity<Nutrition>().HasIndex(n => new{n.Name, n.Serving_size_g}).IsUnique();
     }
 }
