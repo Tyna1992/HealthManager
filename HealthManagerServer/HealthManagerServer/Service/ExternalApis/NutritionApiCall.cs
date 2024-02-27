@@ -11,13 +11,15 @@ public class NutritionApiCall{
 
     public async Task<string> GetNutritionData(string foodName, double servingSize)
     {
-        string url = $"https://api.api-ninjas.com/v1/nutrition/?query=${servingSize}g ${foodName}";
+        string url = $"https://api.api-ninjas.com/v1/nutrition/?query={servingSize}g {foodName}";
         using var client = new HttpClient();
         client.DefaultRequestHeaders.Add("X-Api-Key", _apiKey);
         var response = await client.GetAsync(url);
+        
         if (response.IsSuccessStatusCode)
         {
             var content = await response.Content.ReadAsStringAsync();
+            Console.WriteLine(content);
             return content;
         }
         return null;
