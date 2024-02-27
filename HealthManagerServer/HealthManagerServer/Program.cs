@@ -1,5 +1,6 @@
 using HealthManagerServer.Data;
 using HealthManagerServer.Service;
+using HealthManagerServer.Service.JsonProcess;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +12,8 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddSingleton<DataBaseContext>();
 builder.Services.AddSingleton<IUserRepository,UserRepository>();
 builder.Services.AddSingleton<INutritionRepository,NutritionRepository>();
+builder.Services.AddSingleton<NutritionApiCall>();
+builder.Services.AddSingleton<JsonProcessor>();
 var app = builder.Build();
 
 
@@ -22,7 +25,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+// app.UseHttpsRedirection();
 
 app.UseAuthorization();
 

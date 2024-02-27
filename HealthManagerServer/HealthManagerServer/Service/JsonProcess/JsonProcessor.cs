@@ -1,5 +1,7 @@
 using System.Text.Json;
 
+namespace HealthManagerServer.Service.JsonProcess;
+
 public class JsonProcessor
 {
 
@@ -7,6 +9,7 @@ public class JsonProcessor
     {
         JsonDocument document = JsonDocument.Parse(data);
         JsonElement root = document.RootElement;
+        Console.WriteLine(root);
         var name = root[0].GetProperty("name").GetString();
         var calories = root[0].GetProperty("calories").GetDouble();
         var servingSize = root[0].GetProperty("serving_size_g").GetDouble();
