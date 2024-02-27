@@ -11,6 +11,11 @@ function Meals(props) {
 
 
     const fetchNutritionalValue = async () => {
+        
+        if(amount === "" || meal === ""){
+            alert("Please fill out both fields.")
+            return;
+        }
         try {
             const response = await fetch(`/api/meal/${amount}/${meal}`, {
                 method: "GET",
@@ -19,6 +24,7 @@ function Meals(props) {
                 }
             })
             if(!response.ok){
+                alert("Cannot find the nutritional value for the meal. Please try again.")
                 throw new Error("Fetch failed!")
             }
             const data = await response.json();
@@ -50,11 +56,11 @@ function Meals(props) {
         <div>
             <label>Meal name:</label>
             <br></br>
-            <input required={true} type="text" name="meal" value={meal} placeholder="Name of the meal" onChange={handleMealChange}></input>
+            <input required type="text" name="meal" value={meal} placeholder="Name of the meal" onChange={handleMealChange}></input>
             <br></br>
             <label>Serving size:</label>
             <br></br>
-            <input required={true} type="text" name= "amount" value={amount} placeholder="In gramms" onChange={handleAmountChange}></input>
+            <input required type="text" name= "amount" value={amount} placeholder="In gramms" onChange={handleAmountChange}></input>
             <br></br>
             <button onClick={() => fetchNutritionalValue()}>Show nutritional value</button>
             <button onClick={()=> {setHideResult(true);handleClear()}}>Clear</button>
