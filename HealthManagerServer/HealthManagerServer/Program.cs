@@ -10,6 +10,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddSingleton<DataBaseContext>();
 builder.Services.AddSingleton<IUserRepository,UserRepository>();
+builder.Services.AddSingleton<INutritionRepository,NutritionRepository>();
 var app = builder.Build();
 
 
