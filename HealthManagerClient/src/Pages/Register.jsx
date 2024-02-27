@@ -2,7 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import "../index.css";
 
-function RegisterUser(props) {
+function RegisterUser() {
     const navigate = useNavigate()
 
     async function handleSubmit(event) {
@@ -14,7 +14,7 @@ function RegisterUser(props) {
         const gender = event.target.gender.value;
         const user = {userName, email, password,weight, gender};
         try{
-            const response = await fetch("http://localhost:5179/api/user/register",{
+            const response = await fetch("/api/user/register",{
                 method: "POST",
                 headers:{
                     "Content-Type": "application/json"
