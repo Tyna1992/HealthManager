@@ -11,13 +11,10 @@ function Meals(props) {
 
 
     const fetchNutritionalValue = async () => {
-        const API_KEY = "pe8bDjzt2qs1AeJNbzukUw==sXVqA6FU8t4IBEFG";
-        const API_URL = `https://api.api-ninjas.com/v1/nutrition/?query=${amount} ${meal}`;
         try {
-            const response = await fetch(API_URL, {
+            const response = await fetch(`/api/meal/${amount}/${meal}`, {
                 method: "GET",
                 headers: {
-                    "X-Api-Key": API_KEY,
                     "Content-Type": "application/json"
                 }
             })
@@ -29,7 +26,7 @@ function Meals(props) {
                 alert("Cannot find the nutritional value for the meal. Please try again.")
                 throw new Error("Cannot find the nutritional value for the meal. Please try again.") 
             }
-            setNutritionalValue(data[0]);
+            setNutritionalValue(data);
             console.log(data);
             setHideResult(false);
         } catch (error) {
@@ -62,7 +59,7 @@ function Meals(props) {
             <button onClick={() => fetchNutritionalValue()}>Show nutritional value</button>
             <button onClick={()=> {setHideResult(true);handleClear()}}>Clear</button>
 
-            <div hidden={hideResult} id="result">
+            {<div hidden={hideResult} id="result">
                 <h2>Nutritional value of {nutritionalValue.name}</h2>
                 <p>Serving size: {nutritionalValue.serving_size_g} g</p>
                 <p>Calories: {nutritionalValue.calories} cal</p>
@@ -71,7 +68,7 @@ function Meals(props) {
                 <p>Carbohydrates: {nutritionalValue.carbohydrates_total_g} g</p>
                 <p>Sugar: {nutritionalValue.sugar_g} g</p>
                 <p>Sodium: {nutritionalValue.sodium_mg} mg</p>
-            </div>
+            </div> }
         </div>
     )
 }
