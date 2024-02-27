@@ -1,12 +1,12 @@
-
 using HealthManagerServer.Model;
 using Microsoft.EntityFrameworkCore;
 
 namespace HealthManagerServer.Data;
 
 public class UserContext : DbContext
-    {
-        public DbSet<User> Users { get; set; }
+{
+    public DbSet<User> Users { get; set; }
+    public DbSet<Nutrition> Nutritions { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
@@ -17,7 +17,6 @@ public class UserContext : DbContext
     {
         modelBuilder.Entity<User>().HasIndex(u => u.UserName).IsUnique();
         modelBuilder.Entity<User>().HasIndex(u => u.Email).IsUnique();
+        modelBuilder.Entity<Nutrition>().HasIndex(n => n.Name).IsUnique();
     }
 }
-
-
