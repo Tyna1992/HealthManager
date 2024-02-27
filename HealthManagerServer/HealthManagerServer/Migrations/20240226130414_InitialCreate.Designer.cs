@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace HealthManagerServer.Migrations
 {
-    [DbContext(typeof(UserContext))]
+    [DbContext(typeof(DataBaseContext))]
     [Migration("20240226130414_InitialCreate")]
     partial class InitialCreate
     {
