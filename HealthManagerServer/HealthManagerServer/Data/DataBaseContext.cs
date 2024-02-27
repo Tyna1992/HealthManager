@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace HealthManagerServer.Data;
 
-public class UserContext : DbContext
+public class DataBaseContext : DbContext
 {
     public DbSet<User> Users { get; set; }
     public DbSet<Nutrition> Nutritions { get; set; }
