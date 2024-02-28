@@ -69,13 +69,14 @@ public class JsonProcessor
         JsonElement root = document.RootElement;
         Console.WriteLine(root);
         var name = root[0].GetProperty("name").GetString();
-        var ingredients = root[0].GetProperty("ingredients").EnumerateArray().Select(ingredient => ingredient.GetString());
+        var ingredients = root[0].GetProperty("ingredients").EnumerateArray().Select(i => i.GetString()).ToList();
+        var ingredientString = ingredients.Aggregate("", (current, ingredient) => current + (ingredient + ", "));
         var instructions = root[0].GetProperty("instructions").GetString();
 
         return new Cocktail
         {
             Name = name,
-            Ingredients = ingredients,
+            Ingredients = ingredientString,
             Instructions = instructions
         };
     }
