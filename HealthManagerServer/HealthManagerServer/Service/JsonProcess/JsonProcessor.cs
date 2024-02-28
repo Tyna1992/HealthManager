@@ -62,4 +62,21 @@ public class JsonProcessor
         };
 
     }
+
+    public Cocktail ProcessCocktailJson(string data)
+    {
+        JsonDocument document = JsonDocument.Parse(data);
+        JsonElement root = document.RootElement;
+        Console.WriteLine(root);
+        var name = root[0].GetProperty("name").GetString();
+        var ingredients = root[0].GetProperty("ingredients").EnumerateArray().Select(ingredient => ingredient.GetString());
+        var instructions = root[0].GetProperty("instructions").GetString();
+
+        return new Cocktail
+        {
+            Name = name,
+            Ingredients = ingredients,
+            Instructions = instructions
+        };
+    }
 }
