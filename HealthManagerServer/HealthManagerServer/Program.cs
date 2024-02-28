@@ -13,10 +13,12 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddSingleton<DataBaseContext>();
 builder.Services.AddSingleton<IUserRepository,UserRepository>();
 builder.Services.AddSingleton<INutritionRepository,NutritionRepository>();
-builder.Services.AddSingleton<NutritionApiCall>();
-builder.Services.AddSingleton<JsonProcessor>();
 builder.Services.AddSingleton<IActivityRepository,ActivityRepository>();
+builder.Services.AddSingleton<ICocktailRepository,CocktailRepository>();
+builder.Services.AddSingleton<NutritionApiCall>();
 builder.Services.AddSingleton<ActivitiesApiCall>();
+builder.Services.AddSingleton<CocktailApiCall>();
+builder.Services.AddSingleton<JsonProcessor>();
 var app = builder.Build();
 
 
