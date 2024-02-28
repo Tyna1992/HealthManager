@@ -24,23 +24,21 @@ public class ActivitiesController : ControllerBase
     [HttpGet("/api/activities/{activityName}/{weight}/{duration}")]
     public async Task<IActionResult> SearchOrAddActivity(string activityName, double weight = 160, int duration=60)
     {
-        var result = _activityRepository.GetByActivityName(activityName);
-        Console.WriteLine("Result:"+result);
-        if (result == null)
+        try
         {
-            var activityData = await _activitiesApiCall.GetActivitiesData(activityName, weight, duration);
-            var activity = _jsonProcessor.ProcessActivityJson(activityData);
-            _activityRepository.AddActivity(activity);
-            return Ok(activity);
+            var result = _activityRepository.GetByActivityName(activityName);
+            if (result == null)
+            {
+                var activityData = await _activitiesApiCall.GetActivitiesData(activityName, weight, duration);
+                var activity = _jsonProcessor.ProcessActivityJson(activityData);
+                _activityRepository.AddActivity(activity);
+                return Ok(activity);
+            }
+            return Ok(result);
         }
-        return Ok(result);
-
-
-
-            
-           
-
-
+        catch (Exception e)
+        {
+            return BadRequest(e.Message);
+        }
     }
-    
 }
