@@ -1,5 +1,6 @@
 using HealthManagerServer.Data;
 using HealthManagerServer.Service;
+using HealthManagerServer.Service.ExternalApis;
 using HealthManagerServer.Service.JsonProcess;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -14,6 +15,8 @@ builder.Services.AddSingleton<IUserRepository,UserRepository>();
 builder.Services.AddSingleton<INutritionRepository,NutritionRepository>();
 builder.Services.AddSingleton<NutritionApiCall>();
 builder.Services.AddSingleton<JsonProcessor>();
+builder.Services.AddSingleton<IActivityRepository,ActivityRepository>();
+builder.Services.AddSingleton<ActivitiesApiCall>();
 var app = builder.Build();
 
 
