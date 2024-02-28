@@ -30,6 +30,9 @@ function App() {
             <Link to="/food">
               <button type="button">Search food</button>
             </Link>
+            <Link to="/activities">
+              <button type="button">Search activities</button>
+            </Link>
           </nav>
           <Outlet />
         </div>
