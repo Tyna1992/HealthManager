@@ -1,4 +1,5 @@
 using System.Text.Json;
+using HealthManagerServer.Model;
 
 namespace HealthManagerServer.Service.JsonProcess;
 
@@ -38,6 +39,26 @@ public class JsonProcessor
             Fiber_g = fiber,
             Sugar_g = sugar
 
+        };
+
+    }
+    
+    public Activity ProcessActivityJson(string data)
+    {
+        JsonDocument document = JsonDocument.Parse(data);
+        JsonElement root = document.RootElement;
+        Console.WriteLine(root);
+        var name = root[0].GetProperty("name").GetString();
+        var caloriesBurnedPerHour = root[0].GetProperty("calories_per_hour").GetDouble();
+        var duration = root[0].GetProperty("duration_minutes").GetInt32();
+        var totalCaloriesBurned = root[0].GetProperty("total_calories").GetDouble();
+
+        return new Activity
+        {
+            Name = name,
+            CaloriesBurnedPerHour = caloriesBurnedPerHour,
+            Duration = duration,
+            TotalCaloriesBurned = totalCaloriesBurned
         };
 
     }
