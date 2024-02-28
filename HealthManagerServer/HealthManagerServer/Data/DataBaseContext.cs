@@ -7,6 +7,7 @@ public class DataBaseContext : DbContext
 {
     public DbSet<User> Users { get; set; }
     public DbSet<Nutrition> Nutritions { get; set; }
+    public DbSet<Activity> Activities { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
@@ -17,6 +18,7 @@ public class DataBaseContext : DbContext
     {
         modelBuilder.Entity<User>().HasIndex(u => u.UserName).IsUnique();
         modelBuilder.Entity<User>().HasIndex(u => u.Email).IsUnique();
+        modelBuilder.Entity<Activity>().HasIndex(a => a.Name).IsUnique();
         modelBuilder.Entity<Nutrition>().HasIndex(n => new{n.Name, n.Serving_size_g}).IsUnique();
     }
 }
