@@ -71,9 +71,12 @@ namespace HealthManagerServer.Migrations
                     b.Property<double>("TotalCaloriesBurned")
                         .HasColumnType("float");
 
+                    b.Property<int>("Weight")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("Name")
+                    b.HasIndex("Name", "Duration", "Weight")
                         .IsUnique();
 
                     b.ToTable("Activities");
