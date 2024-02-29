@@ -1,5 +1,6 @@
 ﻿import { useState } from "react";
 import "../index.css";
+import { capitalizeWords } from "../../utilities/utils";
 
 
 function Meals(props) {
@@ -8,7 +9,6 @@ function Meals(props) {
     const [amount, setAmount] = useState("");
     const [nutritionalValue, setNutritionalValue] = useState({});
     const [hideResult, setHideResult] = useState(true);
-
 
     const fetchNutritionalValue = async () => {
         
@@ -52,6 +52,7 @@ function Meals(props) {
     const handleAmountChange = (event) => {
         setAmount(event.target.value);
     };
+    
     return (
         <div>
             <label>Meal name:</label>
@@ -66,7 +67,7 @@ function Meals(props) {
             <button onClick={()=> {setHideResult(true);handleClear()}}>Clear</button>
 
             {<div hidden={hideResult} id="result">
-                <h2>Nutritional value of {nutritionalValue.name}</h2>
+                <h2>Nutritional value of: {capitalizeWords(meal)}</h2>
                 <p>Serving size: {nutritionalValue.serving_size_g} g</p>
                 <p>Calories: {nutritionalValue.calories} cal</p>
                 <p>Protein: {nutritionalValue.protein_g} g</p>

@@ -1,6 +1,8 @@
 import React, { useState } from "react";
+import { capitalizeWords } from "../../utilities/utils";
 
 function Cocktails(props) {
+    
     const [cocktail, setCocktail] = useState("");
     const [cocktailDatas, setCocktailDatas ] = useState({});
     const [hideResult, setHideResult] = useState(true);
@@ -24,8 +26,14 @@ function Cocktails(props) {
                 alert("Cannot find the cocktail. Please try again.");
                 throw new Error("Cannot find data about the cocktail. Please try again.");
             }
-            setCocktailDatas(data);
-            setIngredients(data.ingredients.split(","));
+            console.log(data);
+            if (Array.isArray(data)){
+                setCocktailDatas(data[0]);
+                setIngredients(data[0].ingredients.split(","));
+            } else {
+                setCocktailDatas(data);
+                setIngredients(data.ingredients.split(","));
+            }
             setHideResult(false);
         } catch (error) {
             console.error(error);
@@ -44,13 +52,13 @@ function Cocktails(props) {
         <div>
             <label>Cocktail name:</label>
             <br></br>
-            <input required type="text" name="coctail" value={cocktail} onChange={handleCocktailChange}/>
+            <input required type="text" name="cocktail" value={cocktail} onChange={handleCocktailChange}/>
             <br></br>
             <button onClick={fetchCocktailDatas}>Search cocktail</button>
             <button onClick={() => {setHideResult(true); handleClear()}}>Clear</button>
 
             {<div hidden={hideResult}>
-                <h2>{cocktailDatas.name}</h2>
+                <h2>{capitalizeWords(cocktailDatas.name)}</h2>
                 <h3>Ingredients:</h3>
                 {ingredients.map(ingredient => {
                     return <p>{ingredient}</p>
