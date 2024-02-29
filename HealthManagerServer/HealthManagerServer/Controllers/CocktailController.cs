@@ -30,6 +30,7 @@ public class CocktailController : ControllerBase
                 var cocktailData = await _cocktailApiCall.GetCocktailData(cocktailName);
                 var cocktail = _jsonProcessor.ProcessCocktailJson(cocktailData);
                 _cocktailRepository.AddCocktail(cocktail);
+                Console.WriteLine("IDEEEEEE" + cocktail);
                 return Ok(cocktail);
             }
 

@@ -56,10 +56,10 @@ public class JsonProcessor
         return new Activity
         {
             Name = name,
-            CaloriesBurnedPerHour = caloriesBurnedPerHour,
+            Calories_per_hour = caloriesBurnedPerHour,
             Weight = weight,
-            Duration = duration,
-            TotalCaloriesBurned = totalCaloriesBurned
+            Duration_minutes = duration,
+            Total_calories = totalCaloriesBurned
         };
 
     }
