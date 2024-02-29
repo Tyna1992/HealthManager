@@ -22,15 +22,15 @@ public class ActivitiesController : ControllerBase
     }
     
     [HttpGet("/api/activities/{activityName}/{weight}/{duration}")]
-    public async Task<IActionResult> SearchOrAddActivity(string activityName, double weight = 160, int duration=60)
+    public async Task<IActionResult> SearchOrAddActivity(string activityName, int weight = 160, int duration=60)
     {
         try
         {
             var result = _activityRepository.GetByActivityName(activityName);
-            if (result == null)
+            if (!result.Any())
             {
                 var activityData = await _activitiesApiCall.GetActivitiesData(activityName, weight, duration);
-                var activity = _jsonProcessor.ProcessActivityJson(activityData);
+                var activity = _jsonProcessor.ProcessActivityJson(activityData, weight);
                 _activityRepository.AddActivity(activity);
                 return Ok(activity);
             }

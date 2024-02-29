@@ -43,7 +43,7 @@ public class JsonProcessor
 
     }
     
-    public Activity ProcessActivityJson(string data)
+    public Activity ProcessActivityJson(string data, int weight)
     {
         JsonDocument document = JsonDocument.Parse(data);
         JsonElement root = document.RootElement;
@@ -57,6 +57,7 @@ public class JsonProcessor
         {
             Name = name,
             CaloriesBurnedPerHour = caloriesBurnedPerHour,
+            Weight = weight,
             Duration = duration,
             TotalCaloriesBurned = totalCaloriesBurned
         };
