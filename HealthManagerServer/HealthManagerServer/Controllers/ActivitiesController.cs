@@ -26,7 +26,7 @@ public class ActivitiesController : ControllerBase
     {
         try
         {
-            var result = _activityRepository.GetByActivityName(activityName);
+            var result = _activityRepository.GetByActivityName(activityName, weight, duration);
             if (!result.Any())
             {
                 var activityData = await _activitiesApiCall.GetActivitiesData(activityName, weight, duration);
