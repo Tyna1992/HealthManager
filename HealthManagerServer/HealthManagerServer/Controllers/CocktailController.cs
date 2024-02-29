@@ -25,7 +25,7 @@ public class CocktailController : ControllerBase
         try
         {
             var result = _cocktailRepository.GetByName(cocktailName);
-            if (result == null)
+            if (!result.Any())
             {
                 var cocktailData = await _cocktailApiCall.GetCocktailData(cocktailName);
                 var cocktail = _jsonProcessor.ProcessCocktailJson(cocktailData);

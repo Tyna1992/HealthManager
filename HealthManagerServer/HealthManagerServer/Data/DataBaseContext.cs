@@ -19,7 +19,7 @@ public class DataBaseContext : DbContext
     {
         modelBuilder.Entity<User>().HasIndex(u => u.UserName).IsUnique();
         modelBuilder.Entity<User>().HasIndex(u => u.Email).IsUnique();
-        modelBuilder.Entity<Activity>().HasIndex(a => a.Name).IsUnique();
+        modelBuilder.Entity<Activity>().HasIndex(a => new {a.Name, a.Duration, a.Weight}).IsUnique();
         modelBuilder.Entity<Nutrition>().HasIndex(n => new{n.Name, n.Serving_size_g}).IsUnique();
         modelBuilder.Entity<Cocktail>().HasIndex(c => c.Name).IsUnique();
     }
