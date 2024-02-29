@@ -10,9 +10,9 @@ using Microsoft.Data.SqlClient;
 
 public class UserRepository : IUserRepository
 {
-    private readonly UserContext _context;
+    private readonly DataBaseContext _context;
     
-    public UserRepository(UserContext context)
+    public UserRepository(DataBaseContext context)
     {
         _context = context;
     }

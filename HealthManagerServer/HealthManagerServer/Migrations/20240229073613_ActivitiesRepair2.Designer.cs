@@ -4,6 +4,7 @@ using HealthManagerServer.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HealthManagerServer.Migrations
 {
     [DbContext(typeof(DataBaseContext))]
-    partial class UserContextModelSnapshot : ModelSnapshot
+    [Migration("20240229073613_ActivitiesRepair2")]
+    partial class ActivitiesRepair2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -58,17 +61,17 @@ namespace HealthManagerServer.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<double>("Calories_per_hour")
+                    b.Property<double>("CaloriesBurnedPerHour")
                         .HasColumnType("float");
 
-                    b.Property<int>("Duration_minutes")
+                    b.Property<int>("Duration")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<double>("Total_calories")
+                    b.Property<double>("TotalCaloriesBurned")
                         .HasColumnType("float");
 
                     b.Property<int>("Weight")
@@ -76,7 +79,7 @@ namespace HealthManagerServer.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Name", "Duration_minutes", "Weight")
+                    b.HasIndex("Name", "Duration", "Weight")
                         .IsUnique();
 
                     b.ToTable("Activities");
