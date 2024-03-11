@@ -33,9 +33,29 @@ body {
 h1 {
   font-size: 3.2em;
   line-height: 1.1;
+  color: #f9f9f9;
+}
+
+h2 {
+  font-size: 2.4em;
+  line-height: 1.1;
+  color: #f9f9f9;
+}
+h3{
+  color: #f9f9f9;
+  line-height: 1.1;
+  font-size: 2em;
+}
+p {
+  color: #f9f9f9;
+}
+
+label {
+  color: #f9f9f9;
 }
 
 button {
+  margin: 15px 15px;
   border-radius: 8px;
   border: 1px solid transparent;
   padding: 0.6em 1.2em;
@@ -52,6 +72,10 @@ button:hover {
 button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
+}
+
+input {
+  margin-bottom: 15px;
 }
 
 @media (prefers-color-scheme: light) {

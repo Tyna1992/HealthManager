@@ -1,27 +1,27 @@
+using HealthManagerServer.Data;
 using HealthManagerServer.Service;
+using HealthManagerServer.Service.ExternalApis;
+using HealthManagerServer.Service.JsonProcess;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-builder.Services.AddCors(options =>
-{
-    options.AddPolicy("AllowAllOrigins",
-        builders =>
-        {
-            builders.AllowAnyOrigin()
-                .AllowAnyHeader()
-                .AllowAnyMethod();
-        });
-});
+
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddSingleton<UserRepository>();
+builder.Services.AddSingleton<DataBaseContext>();
+builder.Services.AddSingleton<IUserRepository,UserRepository>();
+builder.Services.AddSingleton<INutritionRepository,NutritionRepository>();
+builder.Services.AddSingleton<IActivityRepository,ActivityRepository>();
+builder.Services.AddSingleton<ICocktailRepository,CocktailRepository>();
+builder.Services.AddSingleton<NutritionApiCall>();
+builder.Services.AddSingleton<ActivitiesApiCall>();
+builder.Services.AddSingleton<CocktailApiCall>();
+builder.Services.AddSingleton<JsonProcessor>();
 var app = builder.Build();
 
 
-app.UseCors("AllowAllOrigins");
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -30,12 +30,11 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+// app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
 
 app.MapControllers();
-var userRepository = new UserRepository();
-userRepository.CreateUserTable();
+
 app.Run();
