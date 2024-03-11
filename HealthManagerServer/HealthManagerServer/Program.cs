@@ -47,13 +47,13 @@ void AddServices()
     builder.Services.AddScoped<INutritionRepository, NutritionRepository>();
     builder.Services.AddScoped<IActivityRepository, ActivityRepository>();
     builder.Services.AddScoped<ICocktailRepository, CocktailRepository>();
+    builder.Services.AddScoped<IAuthService, AuthService>();
+    builder.Services.AddScoped<ITokenService, TokenService>();
+    builder.Services.AddScoped<AuthSeeder>();
     builder.Services.AddSingleton<NutritionApiCall>();
     builder.Services.AddSingleton<ActivitiesApiCall>();
     builder.Services.AddSingleton<CocktailApiCall>();
     builder.Services.AddSingleton<JsonProcessor>();
-    builder.Services.AddScoped<IAuthService, AuthService>();
-    builder.Services.AddScoped<ITokenService, TokenService>();
-    builder.Services.AddScoped<AuthSeeder>();
     builder.Services.Configure<JwtSettings>(builder.Configuration.GetSection("JwtSettings"));
 }
 
@@ -66,7 +66,7 @@ void AddDbContext()
 void AddIdentity()
 {
     builder.Services
-        .AddIdentityCore<IdentityUser>(options =>
+        .AddIdentityCore<ApplicationUser>(options =>
         {
             options.SignIn.RequireConfirmedAccount = false;
             options.User.RequireUniqueEmail = true;

@@ -5,9 +5,9 @@ namespace HealthManagerServer.Service.Authentication;
 public class AuthSeeder
 {
     private RoleManager<IdentityRole> _roleManager;
-    private UserManager<IdentityUser> userManager;
+    private UserManager<ApplicationUser> userManager;
 
-    public AuthSeeder(RoleManager<IdentityRole> roleManager, UserManager<IdentityUser> userManager)
+    public AuthSeeder(RoleManager<IdentityRole> roleManager, UserManager<ApplicationUser> userManager)
     {
         this._roleManager = roleManager;
         this.userManager = userManager;
@@ -32,7 +32,7 @@ public class AuthSeeder
         var adminInDb = await userManager.FindByEmailAsync("admin@admin.com");
         if (adminInDb == null)
         {
-            var admin = new IdentityUser { UserName = "admin", Email = "admin@admin.com" };
+            var admin = new ApplicationUser { UserName = "admin", Email = "admin@admin.com", Weight = 0, Gender = "" };
             var adminCreated = await userManager.CreateAsync(admin, "admin");
 
             if (adminCreated.Succeeded)

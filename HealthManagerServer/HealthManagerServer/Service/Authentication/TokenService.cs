@@ -15,7 +15,7 @@ public class TokenService : ITokenService
         _configuration = configuration;
     }
 
-    public string CreateToken(IdentityUser user, string role)
+    public string CreateToken(ApplicationUser user, string role)
     {
         var expiration = DateTime.UtcNow.AddMinutes(ExpirationMinutes);
         var token = CreateJwtToken(
@@ -37,7 +37,7 @@ public class TokenService : ITokenService
             signingCredentials: credentials
         );
 
-    private List<Claim> CreateClaims(IdentityUser user, string? role)
+    private List<Claim> CreateClaims(ApplicationUser user, string? role)
     {
         try
         {
@@ -48,9 +48,16 @@ public class TokenService : ITokenService
                 new Claim(JwtRegisteredClaimNames.Iat, DateTime.UtcNow.ToString(CultureInfo.InvariantCulture)),
                 new Claim(ClaimTypes.NameIdentifier, user.Id),
                 new Claim(ClaimTypes.Name, user.UserName),
-                new Claim(ClaimTypes.Email, user.Email)
+                new Claim(ClaimTypes.Email, user.Email),
+
             };
-            
+            if (!string.IsNullOrEmpty(user.Gender))
+            {
+                claims.Add(new Claim("Gender", user.Gender));
+            }
+
+            claims.Add(new Claim("Weight", user.Weight.ToString()));
+
             if (role != null)
             {
                 claims.Add(new Claim(ClaimTypes.Role, role));

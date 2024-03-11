@@ -1,6 +1,8 @@
-using Microsoft.AspNetCore.Mvc;
 using HealthManagerServer.Contracts;
 using HealthManagerServer.Service.Authentication;
+using Microsoft.AspNetCore.Mvc;
+
+namespace HealthManagerServer.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
@@ -23,7 +25,7 @@ public class AuthController : ControllerBase
             return BadRequest(ModelState);
         }
 
-        var result = await _authenticationService.RegisterAsync(request.Email, request.Username, request.Password, "User");
+        var result = await _authenticationService.RegisterAsync(request.Email, request.Username, request.Password,request.Weight, request.Gender, "User");
 
         if (!result.Success)
         {
