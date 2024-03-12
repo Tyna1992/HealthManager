@@ -4,7 +4,7 @@
   font-weight: 400;
 
   color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
+  color: rgb(0, 0, 0);
   background-color: #242424;
 
   font-synthesis: none;
@@ -38,30 +38,87 @@ body {
 
 }
 
+.table {
+  padding: 0.5rem;
+  color: black;
+    
+}
+
+table {
+  width: fit-content;
+  text-align: left;
+  border-collapse: collapse;
+  margin: 0;
+  padding: 0;
+  border-color: #1da6cf;
+  border: 5px solid#1da6cf;
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+}
+
+.mealTable {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+table tbody tr {
+  background-color: rgb(198, 242, 255);
+  width: fit-content;
+  text-align: center;
+  border-collapse: collapse;
+  border: 2px solid #1da6cf;
+  justify-content: center;
+}
+
+table tbody tr:nth-child(even) {
+  background-color: rgb(172, 210, 233);
+  border: 2px solid #1da6cf;
+  width: fit-content;
+  justify-content: center;
+}
+
+table td,
+table th {
+  padding: 0.2rem;
+  padding: 0.2rem;
+  border: 2px solid #1da6cf;
+  text-align: center;
+  font-size: 1.2rem;
+  width: 210px;
+  justify-content: center;
+  
+
+
+}
+
 h1 {
   font-size: 3.2em;
   line-height: 1.1;
-  color: #f9f9f9;
+  color: #000000;
 }
 
 h2 {
   font-size: 2.4em;
   line-height: 1.1;
-  color: #f9f9f9;
+  color: #000000;
 }
 
 h3 {
-  color: #f9f9f9;
+  color: #000000;
   line-height: 1.1;
   font-size: 2em;
 }
 
 p {
-  color: #f9f9f9;
+  color: #000000;
 }
 
 label {
-  color: #f9f9f9;
+  color: #000000;
 }
 
 button {
