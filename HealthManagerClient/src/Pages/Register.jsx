@@ -14,7 +14,7 @@ function RegisterUser() {
         const gender = event.target.gender.value;
         const user = {userName, email, password,weight, gender};
         try{
-            const response = await fetch("/api/user/register",{
+            const response = await fetch("/api/Auth/Register",{
                 method: "POST",
                 headers:{
                     "Content-Type": "application/json"
