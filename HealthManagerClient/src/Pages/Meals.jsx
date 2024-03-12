@@ -6,7 +6,6 @@ function Meals(props) {
   const [meal, setMeal] = useState("");
   const [amount, setAmount] = useState("");
   const [nutritionalValue, setNutritionalValue] = useState([]);
-  const [hideResult, setHideResult] = useState(true);
 
   const fetchNutritionalValue = async () => {
     if (amount === "" || meal === "") {
@@ -31,8 +30,6 @@ function Meals(props) {
       }
       setNutritionalValue(data);
       console.log(data);
-      // console.log(Object.keys(data[0]));
-      setHideResult(false);
     } catch (error) {
       console.error(error);
     }
@@ -41,6 +38,7 @@ function Meals(props) {
   const handleClear = () => {
     setMeal("");
     setAmount("");
+    setNutritionalValue([]);
   };
 
   const handleMealChange = (event) => {
@@ -53,44 +51,44 @@ function Meals(props) {
 
   return (
     <div>
-      <label>Meal name:</label>
-      <br></br>
-      <input
-        required
-        type="text"
-        name="meal"
-        value={meal}
-        placeholder="Name of the meal"
-        onChange={handleMealChange}
-      ></input>
-      <br></br>
-      <label>Serving size:</label>
-      <br></br>
-      <input
-        required
-        type="text"
-        name="amount"
-        value={amount}
-        placeholder="In gramms"
-        onChange={handleAmountChange}
-      ></input>
-      <br></br>
+      <div className="container">
+        <div className="input-fields">
+        <label>Meal name:</label>
+        <br />
+        <input
+          required
+          type="text"
+          name="meal"
+          value={meal}
+          placeholder="Name of the meal"
+          onChange={handleMealChange}
+        ></input>
+        </div>
+        <br />
+        <div className="input-fields">
+        <label>Serving size:</label>
+        <br />
+        <input
+          required
+          type="text"
+          name="amount"
+          value={amount}
+          placeholder="In gramms"
+          onChange={handleAmountChange}
+        ></input>
+        </div>
+      </div>
+      
       <button onClick={() => fetchNutritionalValue()}>Show nutritional value</button>
-      <button
-        onClick={() => {
-          setHideResult(true);
-          handleClear();
-        }}
-      >
-        Clear
-      </button>
+      <button onClick={() => handleClear()}>Clear</button>
       <br />
-      {
-        nutritionalValue.length !== 0 ? 
-      (<div className="mealTable" hidden={hideResult}>
-        <TableComponent dataArray={nutritionalValue} />
-      </div>) : "" 
-      }
+      {nutritionalValue.length !== 0 ? (
+        <div className="mealTable">
+          <TableComponent dataArray={nutritionalValue} />
+        </div>
+      ) : (
+        ""
+      )}
     </div>
   );
 }

@@ -1,14 +1,15 @@
-import React, { useState } from "react";
+import React from "react";
 import { Outlet, Link } from "react-router-dom";
-import "./App.css";
+import "./index.css";
 
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src="/heartlogo.png" alt="logo" width="70%" height="auto" />
-        <h1>Welcome to the Health Manager App!</h1>
+      <div className="container">
+        <img src="/heartlogo.png" alt="logo" className="image" />
+        <h1 className="heading">Welcome to the Health Manager App!</h1>
+        </div>
         <div className="Layout">
           <nav>
             <Link to="/">
@@ -36,7 +37,6 @@ function App() {
           </nav>
           <Outlet />
         </div>
-      </header>
     </div>
   );
 }
