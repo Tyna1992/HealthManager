@@ -1,11 +1,10 @@
-﻿namespace HealthManagerServer.Model;
+using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Identity;
 
-public class User
+public class ApplicationUser : IdentityUser
 {
-    public Guid Id { get; set; }
-    public string UserName { get; set; }
-    public string Email { get; set; }
-    public string Password { get; set; }
-    public double Weight { get; set; }
+    [Required]
     public string Gender { get; set; }
+    [Required]
+    public double Weight { get; set; }
 }
