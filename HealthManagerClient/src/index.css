@@ -18,6 +18,7 @@ a {
   color: #646cff;
   text-decoration: inherit;
 }
+
 a:hover {
   color: #535bf2;
 }
@@ -28,6 +29,13 @@ body {
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
+  background-image: url("https://img.freepik.com/free-vector/medical-healthcare-blue-color_1017-26807.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center;
+
+
 }
 
 h1 {
@@ -41,11 +49,13 @@ h2 {
   line-height: 1.1;
   color: #f9f9f9;
 }
-h3{
+
+h3 {
   color: #f9f9f9;
   line-height: 1.1;
   font-size: 2em;
 }
+
 p {
   color: #f9f9f9;
 }
@@ -66,9 +76,11 @@ button {
   cursor: pointer;
   transition: border-color 0.25s;
 }
+
 button:hover {
   border-color: #646cff;
 }
+
 button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
@@ -83,9 +95,11 @@ input {
     color: #213547;
     background-color: #ffffff;
   }
+
   a:hover {
     color: #747bff;
   }
+
   button {
     background-color: #f9f9f9;
   }
