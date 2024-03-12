@@ -27,24 +27,46 @@ public class MealController : ControllerBase
     [HttpGet("/api/meal/{servingSize}/{name}")]
     public async Task<IActionResult> SearchOrAddMeal(double servingSize, string name)
     {
+        var nameString = name.Split("and");
+        Nutrition? result;
+        IList<Nutrition> nutritionList = new List<Nutrition>();
+        IList<Nutrition> alreadyInDatabaseNutrition = new List<Nutrition>();
         try
         {
-            var result = _nutritionRepository.GetByNameAndWeight(name, servingSize);
-            if (result == null)
+            for (int i = 0; i < nameString.Length; i++)
             {
-                var nutritionData = await _nutritionApiCall.GetNutritionData(name, servingSize);
-                var nutrition = _jsonProcessor.ProcessNutritionJson(nutritionData);
-                _nutritionRepository.AddNutrition(nutrition);
-                return Ok(nutrition);
-                
+                result = _nutritionRepository.GetByNameAndWeight(nameString[i], servingSize);
+                if (result == null)
+                {
+                    var nutritionData = await _nutritionApiCall.GetNutritionData(nameString[i], servingSize);
+                    var nutrition = _jsonProcessor.ProcessNutritionJson(nutritionData);
+                    _nutritionRepository.AddNutrition(nutrition);
+                    nutritionList.Add(nutrition);
+                    _logger.LogInformation(nutrition + " added to the database");
+                }
+                else
+                {
+                    alreadyInDatabaseNutrition.Add(result);
+                }
             }
             
-            return Ok(result);
+            if (alreadyInDatabaseNutrition.Count > 0 && nutritionList.Count == 0)
+            {
+                return Ok(alreadyInDatabaseNutrition);
+            }
+            
+            if (alreadyInDatabaseNutrition.Count > 0 && nutritionList.Count > 0)
+            {
+                return Ok(alreadyInDatabaseNutrition.Concat(nutritionList));
+            }
+            
+            return Ok(nutritionList);
         }
         catch (Exception e)
         {
             return BadRequest(e.Message);
         }
+
     }
     
 
