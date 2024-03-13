@@ -2,6 +2,7 @@ import React from "react";
 import { Outlet, Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import "./index.css";
+import { capitalizeWords } from "../utilities/utils";
 
 function App() {
   const [user, setUser] = useState(null);
@@ -19,7 +20,6 @@ function App() {
           },
         });
         const data = await response.json();
-        
         if (data) {
           setUser(data.userName);
           setEmail(data.email);
@@ -34,40 +34,65 @@ function App() {
   return (
     <div className="App">
       <div className="container">
-        <img src="/heartlogo.png" alt="logo" className="image" />
+        <Link to="/">
+          <img
+            src="/heartlogo.png"
+            alt="logo"
+            className="image"
+            onClick={() => setPath("/")}
+          />
+        </Link>
         <h1 className="heading">Welcome to the Health Manager App!</h1>
       </div>
       <div className="Layout">
         <nav>
-          <Link to="/">
-            <button type="button" onClick={() => setPath("/")}>Home</button>
-          </Link>
           {user === null ? (
             <>
               <Link to="/register">
-                <button type="button">Register</button>
+                <button type="button" onClick={() => setPath("/register")}>
+                  Register
+                </button>
               </Link>
 
               <Link to="/login">
-                <button type="button">Login</button>
+                <button type="button" onClick={() => setPath("/login")}>
+                  Login
+                </button>
+              </Link>
+            </>
+          ) : user !== "admin" ? (
+            <>
+              <Link to="/profile">
+                <button type="button" onClick={() => setPath("/profile")}>
+                  Profile
+                </button>
               </Link>
             </>
           ) : (
-            <div>
-              <button type="button">Welcome {user}</button>
-            </div>
+            <>
+              <Link to="/admin">
+                <button type="button" onClick={() => setPath("/admin")}>
+                  Admin site
+                </button>
+              </Link>
+            </>
           )}
-
           <Link to="/drinks">
-            <button type="button">Search drink</button>
+            <button type="button" onClick={() => setPath("/drinks")}>
+              Search drink
+            </button>
           </Link>
 
           <Link to="/food">
-            <button type="button">Search food</button>
+            <button type="button" onClick={() => setPath("/food")}>
+              Search food
+            </button>
           </Link>
 
           <Link to="/activities">
-            <button type="button">Search activities</button>
+            <button type="button" onClick={() => setPath("/activities")}>
+              Search activities
+            </button>
           </Link>
         </nav>
         <Outlet />
