@@ -1,13 +1,14 @@
 import React from "react";
-import { Outlet, Link } from "react-router-dom";
+import { Outlet, Link, useLocation} from "react-router-dom";
 import { useEffect, useState } from "react";
 import "./index.css";
 import { capitalizeWords } from "../utilities/utils";
+import LogoutButton from "./Components/LogoutButton";
 
 function App() {
   const [user, setUser] = useState(null);
   const [email, setEmail] = useState(null);
-  const [path, setPath] = useState("");
+  const location = useLocation();
 
   useEffect(() => {
     async function fetchData() {
@@ -29,7 +30,7 @@ function App() {
       }
     }
     fetchData();
-  }, [path]);
+  }, [location.pathname]);
 
   return (
     <div className="App">
@@ -39,7 +40,6 @@ function App() {
             src="/heartlogo.png"
             alt="logo"
             className="image"
-            onClick={() => setPath("/")}
           />
         </Link>
         <h1 className="heading">Welcome to the Health Manager App!</h1>
@@ -49,13 +49,13 @@ function App() {
           {user === null ? (
             <>
               <Link to="/register">
-                <button type="button" onClick={() => setPath("/register")}>
+                <button type="button">
                   Register
                 </button>
               </Link>
 
               <Link to="/login">
-                <button type="button" onClick={() => setPath("/login")}>
+                <button type="button">
                   Login
                 </button>
               </Link>
@@ -63,34 +63,36 @@ function App() {
           ) : user !== "admin" ? (
             <>
               <Link to="/profile">
-                <button type="button" onClick={() => setPath("/profile")}>
+                <button type="button">
                   Profile
                 </button>
               </Link>
+              <LogoutButton />
             </>
           ) : (
             <>
               <Link to="/admin">
-                <button type="button" onClick={() => setPath("/admin")}>
+                <button type="button">
                   Admin site
                 </button>
               </Link>
+              <LogoutButton />
             </>
           )}
           <Link to="/drinks">
-            <button type="button" onClick={() => setPath("/drinks")}>
+            <button type="button">
               Search drink
             </button>
           </Link>
 
           <Link to="/food">
-            <button type="button" onClick={() => setPath("/food")}>
+            <button type="button">
               Search food
             </button>
           </Link>
 
           <Link to="/activities">
-            <button type="button" onClick={() => setPath("/activities")}>
+            <button type="button">
               Search activities
             </button>
           </Link>
