@@ -1,7 +1,8 @@
 
-
+using System.Threading.Tasks;
 
 using HealthManagerServer.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace HealthManagerServer.Service;
 
@@ -19,10 +20,14 @@ public class NutritionRepository : INutritionRepository
         _context.SaveChanges();
     }
 
-    public void DeleteNutrition(Nutrition nutrition)
+    public async Task DeleteNutrition(int id)
     {
-        _context.Nutritions.Remove(nutrition);
-        _context.SaveChanges();
+        var nutrition = await _context.Nutritions.FirstOrDefaultAsync(nutrition => nutrition.Id == id);
+        if (nutrition != null)
+        {
+            _context.Nutritions.Remove(nutrition);
+            await _context.SaveChangesAsync();
+        }
     }
 
     public IEnumerable<Nutrition> GetAll()
@@ -35,9 +40,13 @@ public class NutritionRepository : INutritionRepository
         return _context.Nutritions.FirstOrDefault(nutrition => nutrition.Name == name && nutrition.Serving_size_g == weight);
     }
 
-    public void UpdateNutrition(Nutrition nutrition)
+    public async Task UpdateNutrition(int id)
     {
-        _context.Nutritions.Update(nutrition);
-        _context.SaveChanges();
+        var nutrition = await _context.Nutritions.FirstOrDefaultAsync(nutrition => nutrition.Id == id);
+        if (nutrition != null)
+        {
+            _context.Nutritions.Update(nutrition);
+            await _context.SaveChangesAsync();
+        }
     }
 }
