@@ -1,20 +1,25 @@
+using System.IdentityModel.Tokens.Jwt;
+using System.Text;
 using HealthManagerServer.Service.Authentication;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.IdentityModel.Tokens;
 
 public class AuthService : IAuthService
 {
     private readonly UserManager<ApplicationUser> _userManager;
     private readonly ITokenService _tokenService;
+    private readonly IConfiguration _configuration;
 
-    public AuthService(UserManager<ApplicationUser> userManager, ITokenService tokenService)
+    public AuthService(UserManager<ApplicationUser> userManager, ITokenService tokenService, IConfiguration configuration)
     {
         _userManager = userManager;
         _tokenService = tokenService;
+        _configuration = configuration;
     }
 
     public async Task<AuthResult> RegisterAsync(string email, string username, string password, double weight, string gender, string role)
     {
-        var user = new ApplicationUser { UserName = username, Email = email, Weight = weight, Gender = gender};
+        var user = new ApplicationUser { UserName = username, Email = email, Weight = weight, Gender = gender };
         var result = await _userManager.CreateAsync(user, password);
 
         if (!result.Succeeded)
@@ -22,23 +27,23 @@ public class AuthService : IAuthService
             return FailedRegistration(result, email, username);
         }
 
-        await _userManager.AddToRoleAsync(user, role); 
+        await _userManager.AddToRoleAsync(user, role);
         return new AuthResult(true, email, username, "");
     }
 
-    public async Task<AuthResult> LoginAsync(string email, string password)
+    public async Task<AuthResult> LoginAsync(string userName, string password)
     {
-        var managedUser = await _userManager.FindByEmailAsync(email);
+        var managedUser = await _userManager.FindByNameAsync(userName);
 
         if (managedUser == null)
         {
-            return InvalidEmail(email);
+            return InvalidUsername(userName);
         }
 
         var isPasswordValid = await _userManager.CheckPasswordAsync(managedUser, password);
         if (!isPasswordValid)
         {
-            return InvalidPassword(email, managedUser.UserName);
+            return InvalidPassword(userName, managedUser.UserName);
         }
 
         var roles = await _userManager.GetRolesAsync(managedUser);
@@ -47,10 +52,22 @@ public class AuthService : IAuthService
         return new AuthResult(true, managedUser.Email, managedUser.UserName, accessToken);
     }
 
-    private static AuthResult InvalidEmail(string email)
+    public JwtSecurityToken Verify(string token){
+        var tokenHandler = new JwtSecurityTokenHandler();
+        var key = Encoding.UTF8.GetBytes(_configuration.GetSection("IssuerSigningKey").Value);
+        tokenHandler.ValidateToken(token, new TokenValidationParameters{
+            IssuerSigningKey = new SymmetricSecurityKey(key),
+            ValidateIssuerSigningKey = true,
+            ValidateIssuer = false,
+            ValidateAudience = false,
+        }, out SecurityToken validatedToken);
+        return (JwtSecurityToken)validatedToken;
+    }
+
+    private static AuthResult InvalidUsername(string username)
     {
-        var result = new AuthResult(false, email, "", "");
-        result.ErrorMessages.Add("Bad credentials", "Invalid email");
+        var result = new AuthResult(false, "", username, "");
+        result.ErrorMessages.Add("Bad credentials", "Invalid username");
         return result;
     }
 
