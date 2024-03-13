@@ -6,6 +6,7 @@ import Register from "./Pages/Register";
 import Meals from "./Pages/Meals";
 import Cocktails from "./Pages/Cocktails";
 import Activities from "./Pages/Activities";
+import Login from "./Pages/Login";
 
 
 const router = createBrowserRouter([
@@ -28,6 +29,10 @@ const router = createBrowserRouter([
             {
                 path: "/activities",
                 element: <Activities/>
+            },
+            {
+                path: "/login",
+                element: <Login/>
             }
         ]
     }
