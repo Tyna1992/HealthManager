@@ -3,6 +3,7 @@ using HealthManagerServer.Service;
 using HealthManagerServer.Service.JsonProcess;
 using Microsoft.JSInterop;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 namespace HealthManagerServer.Controllers;
 
@@ -68,9 +69,45 @@ public class MealController : ControllerBase
         }
 
     }
-    
 
-    
-    
+    [HttpGet("/api/meal/getAll"), Authorize(Roles ="Admin")]
+    public IActionResult GetAll()
+    {
+        try
+        {
+            return Ok(_nutritionRepository.GetAll());
+        }
+        catch (Exception e)
+        {
+            return BadRequest(e.Message);
+        }
+    }
 
+    [HttpDelete("/api/meal/delete/{id}"), Authorize(Roles ="Admin")]
+    public async Task<IActionResult> Delete(int id)
+    {
+        try
+        {
+            await _nutritionRepository.DeleteNutrition(id);
+            return Ok(new { message = "Deleted" });
+        }
+        catch (Exception e)
+        {
+            return BadRequest(e.Message);
+        }
+    }
+
+    [HttpPatch("/api/meal/update/{id}"), Authorize(Roles ="Admin")]
+    public async Task<IActionResult> Update(int id)
+    {
+        try
+        {
+            await _nutritionRepository.UpdateNutrition(id);
+            return Ok(new { message = "Updated" });
+        }
+        catch (Exception e)
+        {
+            return BadRequest(e.Message);
+        }
+    }
 }
