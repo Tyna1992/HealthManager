@@ -1,5 +1,6 @@
 using HealthManagerServer.Contracts;
 using HealthManagerServer.Service.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HealthManagerServer.Controllers;
@@ -25,7 +26,7 @@ public class AuthController : ControllerBase
             return BadRequest(ModelState);
         }
 
-        var result = await _authenticationService.RegisterAsync(request.Email, request.Username, request.Password,request.Weight, request.Gender, "User");
+        var result = await _authenticationService.RegisterAsync(request.Email, request.Username, request.Password, request.Weight, request.Gender, "User");
 
         if (!result.Success)
         {
@@ -44,7 +45,7 @@ public class AuthController : ControllerBase
             return BadRequest(ModelState);
         }
 
-        var result = await _authenticationService.LoginAsync(request.Email, request.Password);
+        var result = await _authenticationService.LoginAsync(request.UserName, request.Password);
 
         if (!result.Success)
         {
@@ -59,6 +60,24 @@ public class AuthController : ControllerBase
 
         return Ok(new AuthResponse(result.Email, result.UserName));
     }
+
+    [HttpGet("WhoAmI"), Authorize(Roles = "User,Admin")]
+    public ActionResult<AuthResponse> WhoAmI()
+    {
+        var cookie = Request.Cookies["Authorization"];
+        
+        var token = _authenticationService.Verify(cookie);
+        
+        if (token != null)
+        {
+            var claims = token.Claims;
+            var email = claims.FirstOrDefault(c => c.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress")?.Value;
+            var username = claims.FirstOrDefault(c => c.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name")?.Value;
+            return Ok(new AuthResponse(email, username));
+        }
+        return BadRequest("No token found");
+    }
+
     private void AddErrors(AuthResult result)
     {
         foreach (var error in result.ErrorMessages)
