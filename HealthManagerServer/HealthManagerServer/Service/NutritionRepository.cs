@@ -3,6 +3,8 @@
 
 using HealthManagerServer.Data;
 
+namespace HealthManagerServer.Service;
+
 public class NutritionRepository : INutritionRepository
 {
     private readonly DataBaseContext _context;

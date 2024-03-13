@@ -1,11 +1,52 @@
+#root {
+  margin: 0 auto;
+  text-align: center;
+}
+
+.App {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  position: absolute;
+  top: 0%;
+  right: 0%;
+}
+
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 95vw;
+  margin-top: 20px;
+}
+
+.image {
+  width: 150px;
+  height: auto;
+  margin-right: 10px;
+}
+
+.heading {
+  margin: 0;
+}
+
+.Layout {
+  margin-top: 20px;
+  width: 100%;
+  align-self: flex-start;
+}
+
+.input-fields {
+  padding-left: 20px;
+}
+
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
   color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  color: rgb(0, 0, 0);
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -18,6 +59,7 @@ a {
   color: #646cff;
   text-decoration: inherit;
 }
+
 a:hover {
   color: #535bf2;
 }
@@ -27,31 +69,90 @@ body {
   display: flex;
   place-items: center;
   min-width: 320px;
-  min-height: 100vh;
+  height: 100vh;
+  background-image: url("https://img.freepik.com/free-vector/medical-healthcare-blue-color_1017-26807.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center;
+}
+
+.table {
+  padding: 0.5rem;
+  color: black;  
+}
+
+table {
+  width: fit-content;
+  text-align: left;
+  border-collapse: collapse;
+  margin: 0;
+  padding: 0;
+  border-color: #1da6cf;
+  border: 5px solid#1da6cf;
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.mealTable {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+table tbody tr {
+  background-color: rgb(198, 242, 255);
+  width: fit-content;
+  text-align: center;
+  border-collapse: collapse;
+  border: 2px solid #1da6cf;
+  justify-content: center;
+}
+
+table tbody tr:nth-child(even) {
+  background-color: rgb(172, 210, 233);
+  border: 2px solid #1da6cf;
+  width: fit-content;
+  justify-content: center;
+}
+
+table td,
+table th {
+  padding: 0.2rem;
+  padding: 0.2rem;
+  border: 2px solid #1da6cf;
+  text-align: center;
+  font-size: 1.2rem;
+  width: 210px;
+  justify-content: center;
 }
 
 h1 {
   font-size: 3.2em;
   line-height: 1.1;
-  color: #f9f9f9;
+  color: #000000;
 }
 
 h2 {
   font-size: 2.4em;
   line-height: 1.1;
-  color: #f9f9f9;
+  color: #000000;
 }
-h3{
-  color: #f9f9f9;
+
+h3 {
+  color: #000000;
   line-height: 1.1;
   font-size: 2em;
 }
+
 p {
-  color: #f9f9f9;
+  color: #000000;
 }
 
 label {
-  color: #f9f9f9;
+  color: #000000;
 }
 
 button {
@@ -66,9 +167,11 @@ button {
   cursor: pointer;
   transition: border-color 0.25s;
 }
+
 button:hover {
   border-color: #646cff;
 }
+
 button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
@@ -83,9 +186,11 @@ input {
     color: #213547;
     background-color: #ffffff;
   }
+
   a:hover {
     color: #747bff;
   }
+
   button {
     background-color: #f9f9f9;
   }
