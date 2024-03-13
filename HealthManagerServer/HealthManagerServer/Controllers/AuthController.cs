@@ -64,9 +64,9 @@ public class AuthController : ControllerBase
     [HttpGet("WhoAmI"), Authorize(Roles = "User,Admin")]
     public ActionResult<AuthResponse> WhoAmI()
     {
-        var cookie = Request.Cookies["Authorization"];
+        var cookieString = Request.Cookies["Authorization"];
         
-        var token = _authenticationService.Verify(cookie);
+        var token = _authenticationService.Verify(cookieString);
         
         if (token != null)
         {
@@ -76,6 +76,13 @@ public class AuthController : ControllerBase
             return Ok(new AuthResponse(email, username));
         }
         return BadRequest("No token found");
+    }
+
+    [HttpPost("Logout"), Authorize(Roles = "User,Admin")]
+    public ActionResult Logout()
+    {
+        Response.Cookies.Delete("Authorization");
+        return Ok();
     }
 
     private void AddErrors(AuthResult result)
