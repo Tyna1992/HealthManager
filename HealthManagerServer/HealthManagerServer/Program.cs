@@ -59,8 +59,30 @@ void AddServices()
 
 void AddDbContext()
 {
-    builder.Services.AddDbContext<DataBaseContext>();
-    builder.Services.AddDbContext<UserContext>(options => options.UseSqlServer("Server=tcp:mysqlserverhun.database.windows.net,1433;Initial Catalog=Base;Persist Security Info=False;User ID=azureuser;Password=121212EmQ1994!%;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"));
+    builder.Services.AddDbContext<DataBaseContext>(options =>
+    {
+       
+        var connectionString = GetConnectionString();
+        options.UseSqlServer(connectionString);
+    });
+    
+    builder.Services.AddDbContext<UserContext>(options =>
+    {
+        
+        var connectionString= GetConnectionString();
+        options.UseSqlServer(connectionString);
+    });
+    
+    static string? GetConnectionString()
+    {
+        DotNetEnv.Env.Load();
+        var connectionString = DotNetEnv.Env.GetString("CONNECTION_STRING");
+        return connectionString;
+    }
+
+    
+
+
 }
 
 void AddIdentity()
