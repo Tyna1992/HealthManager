@@ -2,6 +2,8 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HealthManagerServer", "HealthManagerServer\HealthManagerServer.csproj", "{D1F5DD74-3089-40C6-91B2-E46B6AFD208D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HealthManagerTest", "HealthManagerTest\HealthManagerTest.csproj", "{BC568396-DFDA-4FD0-9857-C1DE2965CE8D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +14,9 @@ Global
 		{D1F5DD74-3089-40C6-91B2-E46B6AFD208D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D1F5DD74-3089-40C6-91B2-E46B6AFD208D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D1F5DD74-3089-40C6-91B2-E46B6AFD208D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BC568396-DFDA-4FD0-9857-C1DE2965CE8D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BC568396-DFDA-4FD0-9857-C1DE2965CE8D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BC568396-DFDA-4FD0-9857-C1DE2965CE8D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BC568396-DFDA-4FD0-9857-C1DE2965CE8D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

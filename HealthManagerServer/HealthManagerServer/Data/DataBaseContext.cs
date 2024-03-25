@@ -12,15 +12,15 @@ public class DataBaseContext : DbContext
 
     public DataBaseContext(DbContextOptions<DataBaseContext> options) : base(options)
     {
-        DotNetEnv.Env.Load();
+       
     }
 
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {
-        var connectionString = DotNetEnv.Env.GetString("CONNECTION_STRING");
-        optionsBuilder.UseSqlServer(connectionString);
-    }
+    // protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    // {
+    //     var connectionString = DotNetEnv.Env.GetString("CONNECTION_STRING");
+    //     optionsBuilder.UseSqlServer(connectionString);
+    // }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
