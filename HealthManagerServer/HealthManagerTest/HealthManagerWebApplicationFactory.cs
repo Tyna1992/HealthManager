@@ -49,8 +49,8 @@ internal class HealthManagerWebApplicationFactory : WebApplicationFactory<Progra
     
     private static string? GetConnectionString()
     {
-        DotNetEnv.Env.Load(@"C:\Users\User\Desktop\HealthManagerProject\HealthManager\HealthManagerServer\HealthManagerTest\.env");
-        var connectionString = DotNetEnv.Env.GetString("CONNECTION_STRING_TEST");
+        DotNetEnv.Env.Load();
+        var connectionString = DotNetEnv.Env.GetString("CONNECTION_STRING");
         Console.WriteLine(connectionString);
         return connectionString;
     }

@@ -30,4 +30,12 @@
       <ProjectReference Include="..\HealthManagerServer\HealthManagerServer.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Content Include="bin\Debug\net7.0\xunit.runner.reporters.netcoreapp10.dll" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Include="bin\Debug\net7.0\.env" />
+    </ItemGroup>
+
 </Project>
