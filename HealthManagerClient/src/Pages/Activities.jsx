@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { capitalizeWords } from '../../utilities/utils';
+import TableComponent from "../Components/TableComponent.jsx";
 
 function Activities(props) {
 
-    const [activity, setActivity] = useState({});
+    const [activity, setActivity] = useState([]);
     const [activityName, setActivityName] = useState("");
     const [duration, setDuration] = useState("");
     const [weight, setWeight] = useState("");
@@ -27,16 +28,12 @@ function Activities(props) {
                 throw new Error("Fetch failed!")
             }
             const data = await response.json();
+            console.log(data);
             if(data.length === 0){
                 alert("Cannot find the activity. Please try again.")
                 throw new Error("Cannot find the activity. Please try again.") 
             }
-            console.log(data);
-            if (Array.isArray(data)){
-                setActivity(data[0]);
-            } else {
-                setActivity(data);
-            }
+            setActivity(data);
             setHideResult(false);
             console.log(activity)
         }
@@ -80,13 +77,13 @@ return (
         <button onClick={fetchActivity}>Search activity</button>
         <button onClick={() => {setHideResult(true); handleClear()}}>Clear</button>
 
-        {<div hidden={hideResult}>
-            <h2>Calories burned in: {activity.name}</h2>
-            <h3>{activity.total_calories} cal</h3>
-            <h2>Duration: {activity.duration_minutes} minutes</h2>
-            <h2>Weight: {activity.weight} pounds</h2>
-            <h2>Calories burned per hour: {activity.calories_per_hour}</h2>
-        </div>}
+        { activity.length !== 0 ? (
+            <div className="activityTable">
+                <TableComponent dataArray={activity}></TableComponent>
+            </div>
+        ) :(
+            ""
+        )}
       
     </div>
   );

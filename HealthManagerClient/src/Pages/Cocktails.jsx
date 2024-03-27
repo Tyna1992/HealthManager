@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import { capitalizeWords } from "../../utilities/utils";
+import TableComponent from "../Components/TableComponent.jsx";
 
 function Cocktails(props) {
     
     const [cocktail, setCocktail] = useState("");
-    const [cocktailDatas, setCocktailDatas ] = useState({});
+    const [cocktailDatas, setCocktailDatas ] = useState([]);
     const [hideResult, setHideResult] = useState(true);
     const [ingredients, setIngredients] = useState([]);
 
@@ -27,13 +28,7 @@ function Cocktails(props) {
                 throw new Error("Cannot find data about the cocktail. Please try again.");
             }
             console.log(data);
-            if (Array.isArray(data)){
-                setCocktailDatas(data[0]);
-                setIngredients(data[0].ingredients.split(","));
-            } else {
-                setCocktailDatas(data);
-                setIngredients(data.ingredients.split(","));
-            }
+            setCocktailDatas(data);
             setHideResult(false);
         } catch (error) {
             console.error(error);
@@ -57,15 +52,13 @@ function Cocktails(props) {
             <button onClick={fetchCocktailDatas}>Search cocktail</button>
             <button onClick={() => {setHideResult(true); handleClear()}}>Clear</button>
 
-            {<div hidden={hideResult}>
-                <h2>{capitalizeWords(cocktailDatas.name)}</h2>
-                <h3>Ingredients:</h3>
-                {ingredients.map(ingredient => {
-                    return <p>{ingredient}</p>
-                })}
-                <p>Instructions:</p>
-                <p>{cocktailDatas.instructions}</p>
-            </div>}
+            {cocktailDatas.length !== 0 ? (
+                <div className="cocktailTable">
+                    <TableComponent dataArray={cocktailDatas}></TableComponent>
+                </div>
+            ): (
+                ""
+            )}
         </div>
     )
 }
