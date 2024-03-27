@@ -1,34 +1,46 @@
-# This workflow will build a .NET project
-# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-net
-
-name: Integration Tests
+name: .NET
 
 on:
   push:
     branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
-defaults:
-  run:
-    shell: bash
-    working-directory: ./HealthManagerServer/HealthManagerTest  
 
 jobs:
   build:
 
     runs-on: ubuntu-latest
-    env:
-      CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}
-          
+
     steps:
     - uses: actions/checkout@v4
+
+    # Step to start Docker service
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v1
+
+    # Step to start SQL Server Docker container
+    - name: Start SQL Server Container
+      run: |
+            docker run -d -p 1433:1433 --name sql_server_container -e ACCEPT_EULA=Y -e SA_PASSWORD=Zakuro19920120 mcr.microsoft.com/mssql/server:latest
+
+    # Step to wait for SQL Server to initialize (adjust sleep time as needed)
+    - name: Wait for SQL Server Initialization
+      run: sleep 30
+
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: 8.0.x
+
     - name: Restore dependencies
       run: dotnet restore
+
     - name: Build
       run: dotnet build --no-restore
+
     - name: Test
       run: dotnet test --no-build --verbosity normal
+
+    # Step to stop and remove the SQL Server container after tests
+    - name: Stop and Remove SQL Server Container
+      run: docker stop sql_server_container && docker rm sql_server_container
