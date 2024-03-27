@@ -102,6 +102,18 @@ table {
   justify-content: center;
 }
 
+.activityTable{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cocktailTable{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 table tbody tr {
   background-color: rgb(198, 242, 255);
   width: fit-content;
