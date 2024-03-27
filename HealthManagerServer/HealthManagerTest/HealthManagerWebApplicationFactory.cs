@@ -13,18 +13,14 @@ internal class HealthManagerWebApplicationFactory : WebApplicationFactory<Progra
 {
     protected override void ConfigureWebHost(IWebHostBuilder builder)
     {
-        builder.ConfigureAppConfiguration((context, config) =>
-        {
-            var env = context.HostingEnvironment;
-            config.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true, reloadOnChange: true);
-        });
+       
+        
         builder.ConfigureServices((context,services) =>
         {
             services.RemoveAll(typeof(DbContextOptions<DataBaseContext>));
             services.RemoveAll(typeof(DbContextOptions<UserContext>));
 
-            var connectionString = context.Configuration.GetConnectionString("TestDatabase");
+            var connectionString = GetConnectionString();
             
             services.AddDbContext<DataBaseContext>(options =>
                 options.UseSqlServer(connectionString));

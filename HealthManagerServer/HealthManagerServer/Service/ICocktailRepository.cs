@@ -1,7 +1,7 @@
 public interface ICocktailRepository
 {
     IEnumerable<Cocktail> GetAll();
-    IQueryable<Cocktail> GetByName(string name);
+    IList<Cocktail> GetByName(string name);
     void AddCocktail(Cocktail cocktail);
     void DeleteCocktail(Cocktail cocktail);
     void UpdateCocktail(Cocktail cocktail);

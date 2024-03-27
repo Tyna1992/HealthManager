@@ -27,12 +27,16 @@ public class ActivitiesController : ControllerBase
         try
         {
             var result = _activityRepository.GetByActivityName(activityName, weight, duration);
-            if (result == null)
+            if (result.Count == 0)
             {
                 var activityData = await _activitiesApiCall.GetActivitiesData(activityName, weight, duration);
-                var activity = _jsonProcessor.ProcessActivityJson(activityData, weight);
-                _activityRepository.AddActivity(activity);
-                return Ok(activity);
+                var activities = _jsonProcessor.ProcessActivityJson(activityData, weight);
+                foreach (var activity in activities)
+                {
+                    _activityRepository.AddActivity(activity);
+                }
+                
+                return Ok(activities);
             }
             return Ok(result);
         }
