@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 
@@ -12,12 +13,18 @@ internal class HealthManagerWebApplicationFactory : WebApplicationFactory<Progra
 {
     protected override void ConfigureWebHost(IWebHostBuilder builder)
     {
-        builder.ConfigureServices(services =>
+        builder.ConfigureAppConfiguration((context, config) =>
+        {
+            var env = context.HostingEnvironment;
+            config.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true, reloadOnChange: true);
+        });
+        builder.ConfigureServices((context,services) =>
         {
             services.RemoveAll(typeof(DbContextOptions<DataBaseContext>));
             services.RemoveAll(typeof(DbContextOptions<UserContext>));
 
-            var connectionString = GetConnectionString();
+            var connectionString = context.Configuration.GetConnectionString("TestDatabase");
             
             services.AddDbContext<DataBaseContext>(options =>
                 options.UseSqlServer(connectionString));
