@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
-using Microsoft.VisualStudio.TestPlatform.TestHost;
 
 namespace HealthManagerTest;
 
@@ -18,8 +17,8 @@ internal class HealthManagerWebApplicationFactory : WebApplicationFactory<Progra
             services.RemoveAll(typeof(DbContextOptions<DataBaseContext>));
             services.RemoveAll(typeof(DbContextOptions<UserContext>));
 
-            var connectionString =
-                "Integrated Security=SSPI;Persist Security Info=False;Initial Catalog=HealthManagerTest;Data Source=TIMI\\SQLEXPRESS;TrustServerCertificate=true;";
+            var connectionString = GetConnectionString();
+            
             services.AddDbContext<DataBaseContext>(options =>
                 options.UseSqlServer(connectionString));
             
@@ -51,7 +50,8 @@ internal class HealthManagerWebApplicationFactory : WebApplicationFactory<Progra
     private static string? GetConnectionString()
     {
         DotNetEnv.Env.Load();
-        var connectionString = DotNetEnv.Env.GetString("CONNECTION_STRING_TEST");
+        var connectionString = DotNetEnv.Env.GetString("CONNECTION_STRING");
+        Console.WriteLine(connectionString);
         return connectionString;
     }
 }
