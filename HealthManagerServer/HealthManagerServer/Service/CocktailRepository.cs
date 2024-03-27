@@ -26,9 +26,9 @@ public class CocktailRepository : ICocktailRepository
         return _context.Cocktails.ToList();
     }
 
-    public IQueryable<Cocktail> GetByName(string name)
+    public IList<Cocktail> GetByName(string name)
     {
-        return _context.Cocktails.Where(c => c.Name.Contains(name));
+        return _context.Cocktails.Where(c => c.Name.Contains(name)).ToList();
     }
 
     public void UpdateCocktail(Cocktail cocktail)

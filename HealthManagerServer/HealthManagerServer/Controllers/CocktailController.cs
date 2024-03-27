@@ -25,13 +25,18 @@ public class CocktailController : ControllerBase
         try
         {
             var result = _cocktailRepository.GetByName(cocktailName);
-            if (!result.Any())
+            if (result.Count == 0)
             {
                 var cocktailData = await _cocktailApiCall.GetCocktailData(cocktailName);
-                var cocktail = _jsonProcessor.ProcessCocktailJson(cocktailData);
-                _cocktailRepository.AddCocktail(cocktail);
-                Console.WriteLine("IDEEEEEE" + cocktail);
-                return Ok(cocktail);
+                var cocktails = _jsonProcessor.ProcessCocktailJson(cocktailData);
+
+                foreach (var cocktail in cocktails)
+                {
+                    _cocktailRepository.AddCocktail(cocktail);
+                }
+               
+                
+                return Ok(cocktails);
             }
 
             return Ok(result); 
