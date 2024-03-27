@@ -43,42 +43,57 @@ public class JsonProcessor
 
     }
     
-    public Activity ProcessActivityJson(string data, int weight)
+    public IList<Activity> ProcessActivityJson(string data, int weight)
     {
         JsonDocument document = JsonDocument.Parse(data);
         JsonElement root = document.RootElement;
         Console.WriteLine(root);
-        var name = root[0].GetProperty("name").GetString();
-        var caloriesBurnedPerHour = root[0].GetProperty("calories_per_hour").GetDouble();
-        var duration = root[0].GetProperty("duration_minutes").GetInt32();
-        var totalCaloriesBurned = root[0].GetProperty("total_calories").GetDouble();
-
-        return new Activity
+        var list = new List<Activity>();
+        
+        for (int i = 0; i < root.GetArrayLength(); i++)
         {
-            Name = name,
-            Calories_per_hour = caloriesBurnedPerHour,
-            Weight = weight,
-            Duration_minutes = duration,
-            Total_calories = totalCaloriesBurned
-        };
+            var name = root[i].GetProperty("name").GetString();
+            var caloriesBurnedPerHour = root[i].GetProperty("calories_per_hour").GetDouble();
+            var duration = root[i].GetProperty("duration_minutes").GetInt32();
+            var totalCaloriesBurned = root[i].GetProperty("total_calories").GetDouble();
+
+            list.Add(new Activity
+            {
+                Name = name,
+                Calories_per_hour = caloriesBurnedPerHour,
+                Weight = weight,
+                Duration_minutes = duration,
+                Total_calories = totalCaloriesBurned
+            });
+        }
+        
+        return list;
 
     }
 
-    public Cocktail ProcessCocktailJson(string data)
+    public IList<Cocktail> ProcessCocktailJson(string data)
     {
         JsonDocument document = JsonDocument.Parse(data);
         JsonElement root = document.RootElement;
-        Console.WriteLine(root);
-        var name = root[0].GetProperty("name").GetString();
-        var ingredients = root[0].GetProperty("ingredients").EnumerateArray().Select(i => i.GetString()).ToList();
-        var ingredientString = ingredients.Aggregate("", (current, ingredient) => current + (ingredient + ", "));
-        var instructions = root[0].GetProperty("instructions").GetString();
-
-        return new Cocktail
+        
+        var list = new List<Cocktail>();
+        
+        for (int i = 0; i < root.GetArrayLength(); i++)
         {
-            Name = name,
-            Ingredients = ingredientString,
-            Instructions = instructions
-        };
+            var name = root[i].GetProperty("name").GetString();
+            var ingredients = root[i].GetProperty("ingredients").EnumerateArray().Select(i => i.GetString()).ToList();
+            var ingredientString = ingredients.Aggregate("", (current, ingredient) => current + (ingredient + ", "));
+            var instructions = root[i].GetProperty("instructions").GetString();
+
+            list.Add(new Cocktail
+            {
+                Name = name,
+                Ingredients = ingredientString,
+                Instructions = instructions
+            });
+        }
+        
+        return list;
+       
     }
 }

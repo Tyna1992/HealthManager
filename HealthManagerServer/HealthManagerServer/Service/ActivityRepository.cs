@@ -17,9 +17,9 @@ public class ActivityRepository : IActivityRepository
         return _context.Activities.ToList();
     }
 
-    public Activity? GetByActivityName(string name, int weight, int duration)
+    public IList<Activity> GetByActivityName(string name, int weight, int duration)
     {
-        return _context.Activities.FirstOrDefault(a => a.Name.Contains(name) && a.Duration_minutes == duration && a.Weight == weight);
+        return _context.Activities.Where(a => a.Name.Contains(name) && a.Duration_minutes == duration && a.Weight == weight).ToList();
     }
 
     public void AddActivity(Activity activity)
