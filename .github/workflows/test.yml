@@ -1,0 +1,48 @@
+# This workflow will build a .NET project
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-net
+
+name: Integration Tests
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+    
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    env:
+        DOTENV_PATH: ${{ github.workspace }}/.env
+        DBHOST: "localhost"
+        SERVERPORT: 5256
+        # DBNAME: "HealthManager"
+        TESTDBNAME: "HealthManagerTest"
+        DBPORT: 1433
+        DBUSER: "sa"
+        DBPASSWORD: "yourStrong(!)Password"
+        ISSUERSIGNINGKEY: "!SomethingSecret!!SomethingSecret!"
+
+    services:
+      mssql:
+        image: mcr.microsoft.com/mssql/server
+        env:
+          DOTENV_PATH: ${{ github.workspace }}/.env
+          SA_PASSWORD: "yourStrong(!)Password"
+          ACCEPT_EULA: "Y"
+          ports: 1433:1433
+    
+    steps:
+    - uses: actions/checkout@v4
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 8.0.x
+    - name: Restore dependencies
+      run: dotnet restore
+    - name: Build
+      run: dotnet build --no-restore
+    - name: Test
+      run: dotnet test --no-build --verbosity normal
