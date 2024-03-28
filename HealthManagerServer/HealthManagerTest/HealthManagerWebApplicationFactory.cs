@@ -47,12 +47,17 @@ internal class HealthManagerWebApplicationFactory : WebApplicationFactory<Progra
                 var dataBaseContext = scope.ServiceProvider.GetRequiredService<DataBaseContext>();
                 var userContext = scope.ServiceProvider.GetRequiredService<UserContext>();
                 
-                dataBaseContext.Database.EnsureDeleted();
-                
-                
-                dataBaseContext.Database.EnsureCreated();
-                userContext.Database.Migrate();
-                userContext.Database.EnsureCreated();
+                if (!dataBaseContext.Database.CanConnect() || !userContext.Database.CanConnect())
+                {
+                    
+                    dataBaseContext.Database.EnsureCreated();
+                    userContext.Database.Migrate(); 
+                    userContext.Database.EnsureCreated();
+                }
+                else
+                {
+                    Console.WriteLine("Database already exists. Skipping creation.");
+                }
             }
             
         });
