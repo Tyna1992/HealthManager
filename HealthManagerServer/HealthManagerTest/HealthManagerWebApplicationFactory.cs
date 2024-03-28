@@ -47,7 +47,7 @@ internal class HealthManagerWebApplicationFactory : WebApplicationFactory<Progra
                 var dataBaseContext = scope.ServiceProvider.GetRequiredService<DataBaseContext>();
                 var userContext = scope.ServiceProvider.GetRequiredService<UserContext>();
                 
-                userContext.Database.EnsureDeleted();
+                
                 
                 if (!dataBaseContext.Database.CanConnect() || !userContext.Database.CanConnect())
                 {
@@ -58,7 +58,13 @@ internal class HealthManagerWebApplicationFactory : WebApplicationFactory<Progra
                 }
                 else
                 {
-                    Console.WriteLine("Database already exists. Skipping creation.");
+                    dataBaseContext.Database.EnsureDeleted();
+                    userContext.Database.EnsureDeleted();
+        
+                    // Recreate the database
+                    dataBaseContext.Database.EnsureCreated();
+                    userContext.Database.Migrate();
+                    userContext.Database.EnsureCreated();
                 }
             }
             
