@@ -14,6 +14,8 @@ defaults:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      CONNECTION_STRING: "Integrated Security=SSPI;Persist Security Info=False;Initial Catalog=HealthManagerTest;Data Source=TIMI\\SQLEXPRESS;TrustServerCertificate=true;"
 
     steps:
     - name: Checkout repository
@@ -41,7 +43,4 @@ jobs:
         name: test-results
         path: '**/TestResults/*.trx'
 
-    - name: Deploy
-      run: |
-        connectionString=${{ secrets.CONNECTION_STRING }}
-        dotnet publish -c Release -o ./publish /p:ConnectionString="Integrated Security=SSPI;Persist Security Info=False;Initial Catalog=HealthManagerTest;Data Source=TIMI\SQLEXPRESS;TrustServerCertificate=true;"
+    
