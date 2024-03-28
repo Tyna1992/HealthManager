@@ -49,6 +49,6 @@ public class MealControllerTest
         var allData = await response.Content.ReadFromJsonAsync<List<Nutrition>>();
         
         Assert.NotNull(allData);
-        Assert.Empty(allData);
+        Assert.Equal(2, allData.Count);
     }
 }

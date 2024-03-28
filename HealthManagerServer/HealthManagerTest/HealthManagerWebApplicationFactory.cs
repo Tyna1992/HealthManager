@@ -47,6 +47,8 @@ internal class HealthManagerWebApplicationFactory : WebApplicationFactory<Progra
                 var dataBaseContext = scope.ServiceProvider.GetRequiredService<DataBaseContext>();
                 var userContext = scope.ServiceProvider.GetRequiredService<UserContext>();
                 
+                userContext.Database.EnsureDeleted();
+                
                 if (!dataBaseContext.Database.CanConnect() || !userContext.Database.CanConnect())
                 {
                     
