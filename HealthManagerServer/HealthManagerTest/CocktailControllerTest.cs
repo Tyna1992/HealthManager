@@ -24,9 +24,10 @@ public class CocktailControllerTest
         _testOutputHelper.WriteLine(response.ToString());
 
         response.EnsureSuccessStatusCode();
-        var cocktailData = await response.Content.ReadFromJsonAsync<Cocktail>();
+        var cocktailData = await response.Content.ReadFromJsonAsync<List<Cocktail>>();
 
         Assert.NotNull(cocktailData);
-        Assert.Equal("margarita", cocktailData.Name);
+        Assert.Equal(6, cocktailData.Count);
+        Assert.Equal("margarita", cocktailData[0].Name);
     }
 }

@@ -27,10 +27,10 @@ public class ActivitiesControllerTest
         _testOutputHelper.WriteLine(response.ToString());
         
         response.EnsureSuccessStatusCode();
-        var activityData = await response.Content.ReadFromJsonAsync<Activity>();
+        var activityData = await response.Content.ReadFromJsonAsync<List<Activity>>();
         
         Assert.NotNull(activityData);
-        Assert.Equal("Running, 5 mph (12 minute mile)", activityData.Name);
+        Assert.Equal("Running, 5 mph (12 minute mile)", activityData[0].Name);
     }
     
 }
