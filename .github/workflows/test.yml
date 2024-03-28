@@ -44,4 +44,4 @@ jobs:
     - name: Deploy
       run: |
         connectionString=${{ secrets.CONNECTION_STRING }}
-        dotnet publish -c Release -o ./publish /p:ConnectionString=$connectionString
+        dotnet publish -c Release -o ./publish /p:ConnectionString="Integrated Security=SSPI;Persist Security Info=False;Initial Catalog=HealthManagerTest;Data Source=TIMI\SQLEXPRESS;TrustServerCertificate=true;"
