@@ -30,10 +30,10 @@ internal class HealthManagerWebApplicationFactory : WebApplicationFactory<Progra
             var connectionString = configuration.GetConnectionString("TestDatabase");
             
             services.AddDbContext<DataBaseContext>(options =>
-                options.UseSqlServer(connectionString));
+                options.UseSqlServer(connectionString != null ? configuration.GetConnectionString("TestDatabase") : Environment.GetEnvironmentVariable("CONNECTION_STRING")));
             
             services.AddDbContext<UserContext>(options =>
-                options.UseSqlServer(connectionString));
+                options.UseSqlServer(connectionString != null ? configuration.GetConnectionString("TestDatabase") : Environment.GetEnvironmentVariable("CONNECTION_STRING")));
             
             services.AddAuthentication("TestUserScheme")
                 .AddScheme<AuthenticationSchemeOptions, TestAuthHandler>("TestUserScheme", options => { });
