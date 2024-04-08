@@ -42,7 +42,9 @@ jobs:
       run: dotnet build --no-restore
 
     - name: Test
-      run: dotnet test --no-build --verbosity normal
+      env:
+        IssuerSigningKey: ${{ secrets.IssuerSigningKey }}
+        run: dotnet test --no-build --verbosity normal
 
     # Step to stop and remove the SQL Server container after tests
     - name: Stop and Remove SQL Server Container
