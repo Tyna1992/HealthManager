@@ -5,7 +5,7 @@ using HealthManagerServer.Service.Authentication;
 using Xunit.Abstractions;
 
 namespace HealthManagerTest;
-
+[Collection("Integration")] 
 public class AuthControllerTest
 {
     private readonly ITestOutputHelper _testOutputHelper;

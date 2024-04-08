@@ -4,7 +4,7 @@ using HealthManagerServer.Model;
 using Xunit.Abstractions;
 
 namespace HealthManagerTest;
-
+[Collection("Integration")]
 public class ActivitiesControllerTest
 {
     private readonly ITestOutputHelper _testOutputHelper;

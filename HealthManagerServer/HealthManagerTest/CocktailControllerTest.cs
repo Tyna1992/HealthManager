@@ -3,7 +3,7 @@ using System.Net.Http.Json;
 using Xunit.Abstractions;
 
 namespace HealthManagerTest;
-
+[Collection("Integration")]
 public class CocktailControllerTest
 {
     private readonly ITestOutputHelper _testOutputHelper;
