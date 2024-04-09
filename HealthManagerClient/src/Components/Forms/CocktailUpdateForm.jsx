@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import TextareaAutosize from 'react-textarea-autosize';
 import "../../index.css";
 
 function CocktailUpdateForm({ data, onEdit, clearData }) {
@@ -35,11 +36,11 @@ function CocktailUpdateForm({ data, onEdit, clearData }) {
             <br />
             <label>Ingredients:</label>
             <br />
-            <textarea name="ingredients" value={formData.ingredients} onChange={handleChange} />
+            <TextareaAutosize className="textarea" name="ingredients" value={formData.ingredients} onChange={handleChange} minRows={2} />
             <br />
             <label>Instructions:</label>
             <br />
-            <textarea name="instructions" value={formData.instructions} onChange={handleChange} />
+            <TextareaAutosize className="textarea" name="instructions" value={formData.instructions} onChange={handleChange} minRows={2} />
             <br />
             <button onClick={handleUpdateClick}>Update</button>
             <button onClick={clearData}>Cancel</button>
