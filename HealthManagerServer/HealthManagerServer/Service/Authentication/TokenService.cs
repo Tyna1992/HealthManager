@@ -2,9 +2,9 @@ using System.Globalization;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using HealthManagerServer.Service.Authentication;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
+
+namespace HealthManagerServer.Service.Authentication;
 
 public class TokenService : ITokenService
 {
