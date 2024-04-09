@@ -25,7 +25,7 @@ function AdminTableComponent({ dataArray , onDelete, onEdit}) {
                 <button onClick={() => onDelete(data.id)}>Delete</button>
               </td>
               <td>
-                <button onClick={() => onEdit(data.id)}>Edit</button>
+                <button onClick={() => onEdit(data)}>Edit</button>
               </td>
             </tr>
           ))}
