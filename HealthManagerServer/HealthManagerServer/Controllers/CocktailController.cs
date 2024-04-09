@@ -1,4 +1,5 @@
 using HealthManagerServer.Service.JsonProcess;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HealthManagerServer.Controllers;
@@ -40,6 +41,48 @@ public class CocktailController : ControllerBase
             }
 
             return Ok(result); 
+        }
+        catch (Exception e)
+        {
+            return BadRequest(e.Message);
+        }
+    }
+    
+    [HttpGet("/api/cocktail/getAll"), Authorize(Roles = "Admin")]
+    public async Task<IActionResult> GetAllCocktails()
+    {
+        try
+        {
+            var result = await _cocktailRepository.GetAll();
+            return Ok(result);
+        }
+        catch (Exception e)
+        {
+            return BadRequest(e.Message);
+        }
+    }
+
+    [HttpDelete("/api/cocktail/delete/{id}"), Authorize(Roles = "Admin")]
+    public async Task<IActionResult> DeleteCocktail(int id)
+    {
+        try
+        {
+            await _cocktailRepository.DeleteCocktail(id);
+            return Ok(new {message = "Cocktail deleted"});
+        }
+        catch (Exception e)
+        {
+            return BadRequest(e.Message);
+        }
+    }
+    
+    [HttpPatch("/api/cocktail/update/{id}"), Authorize(Roles = "Admin")]
+    public async Task<IActionResult> UpdateCocktail(int id, [FromBody] Cocktail cocktail)
+    {
+        try
+        {
+            await _cocktailRepository.UpdateCocktail(id, cocktail);
+            return Ok(new {message = "Cocktail updated"});
         }
         catch (Exception e)
         {

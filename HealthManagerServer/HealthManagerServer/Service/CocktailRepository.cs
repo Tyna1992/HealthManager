@@ -1,4 +1,5 @@
 using HealthManagerServer.Data;
+using Microsoft.EntityFrameworkCore;
 
 public class CocktailRepository : ICocktailRepository
 {
@@ -15,15 +16,21 @@ public class CocktailRepository : ICocktailRepository
         _context.SaveChanges();
     }
 
-    public void DeleteCocktail(Cocktail cocktail)
+    public async Task DeleteCocktail(int id)
     {
+        var cocktail = await _context.Cocktails.FirstOrDefaultAsync(cocktail => cocktail.Id == id);
+        if (cocktail != null)
+        {
         _context.Cocktails.Remove(cocktail);
-        _context.SaveChanges();
+         await  _context.SaveChangesAsync();
+            
+        }
     }
+    
 
-    public IEnumerable<Cocktail> GetAll()
+    public async Task<IEnumerable<Cocktail>> GetAll()
     {
-        return _context.Cocktails.ToList();
+        return await _context.Cocktails.ToListAsync();
     }
 
     public IList<Cocktail> GetByName(string name)
@@ -31,9 +38,18 @@ public class CocktailRepository : ICocktailRepository
         return _context.Cocktails.Where(c => c.Name.Contains(name)).ToList();
     }
 
-    public void UpdateCocktail(Cocktail cocktail)
+    public async Task UpdateCocktail(int id, Cocktail cocktail)
     {
-        _context.Cocktails.Update(cocktail);
-        _context.SaveChanges();
+        var cocktailToUpdate = await _context.Cocktails.FirstOrDefaultAsync(cocktail => cocktail.Id == id);
+        if (cocktailToUpdate != null)
+        {
+            cocktailToUpdate.Name = cocktail.Name;
+            cocktailToUpdate.Ingredients = cocktail.Ingredients;
+            cocktailToUpdate.Instructions = cocktail.Instructions;
+            _context.Cocktails.Update(cocktailToUpdate);
+            await _context.SaveChangesAsync();
+        }
     }
+    
+
 }
