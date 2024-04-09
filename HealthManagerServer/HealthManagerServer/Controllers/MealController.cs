@@ -98,11 +98,11 @@ public class MealController : ControllerBase
     }
 
     [HttpPatch("/api/meal/update/{id}"), Authorize(Roles ="Admin")]
-    public async Task<IActionResult> Update(int id)
+    public async Task<IActionResult> Update(int id, [FromBody] Nutrition nutrition)
     {
         try
         {
-            await _nutritionRepository.UpdateNutrition(id);
+            await _nutritionRepository.UpdateNutrition(id, nutrition);
             return Ok(new { message = "Updated" });
         }
         catch (Exception e)

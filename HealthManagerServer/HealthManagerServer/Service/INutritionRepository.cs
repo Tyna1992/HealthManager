@@ -4,5 +4,5 @@ public interface INutritionRepository
     Nutrition? GetByNameAndWeight(string name, double weight);
     void AddNutrition(Nutrition nutrition);
     Task DeleteNutrition(int id);
-    Task UpdateNutrition(int id);
+    Task UpdateNutrition(int id, Nutrition nutrition);
 }
