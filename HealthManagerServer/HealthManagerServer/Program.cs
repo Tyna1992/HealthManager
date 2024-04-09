@@ -47,6 +47,7 @@ void AddServices()
     builder.Services.AddScoped<INutritionRepository, NutritionRepository>();
     builder.Services.AddScoped<IActivityRepository, ActivityRepository>();
     builder.Services.AddScoped<ICocktailRepository, CocktailRepository>();
+    builder.Services.AddScoped<IUserRepository, UserRepository>();
     builder.Services.AddScoped<IAuthService, AuthService>();
     builder.Services.AddScoped<ITokenService, TokenService>();
     builder.Services.AddScoped<AuthSeeder>();
