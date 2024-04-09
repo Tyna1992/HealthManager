@@ -1,6 +1,10 @@
-﻿using HealthManagerServer.Service;
+﻿using System.Net;
+using HealthManagerServer.Model;
+using HealthManagerServer.Service;
 using HealthManagerServer.Service.ExternalApis;
 using HealthManagerServer.Service.JsonProcess;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authorization.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HealthManagerServer.Controllers;
@@ -39,6 +43,48 @@ public class ActivitiesController : ControllerBase
                 return Ok(activities);
             }
             return Ok(result);
+        }
+        catch (Exception e)
+        {
+            return BadRequest(e.Message);
+        }
+    }
+
+    [HttpGet("/api/activities/getAll"), Authorize(Roles = "Admin")]
+    public async Task<IActionResult> GetAllActivities()
+    {
+        try
+        {
+            var result = await _activityRepository.GetAll();
+            return Ok(result);
+        }
+        catch (Exception e)
+        {
+            return BadRequest(e.Message);
+        }
+    }
+    
+    [HttpDelete("/api/activities/delete/{id}"), Authorize(Roles ="Admin")]
+    public async Task<IActionResult> Delete(int id)
+    {
+        try
+        {
+            await _activityRepository.DeleteActivity(id);
+            return Ok(new { message = "Deleted" });
+        }
+        catch (Exception e)
+        {
+            return BadRequest(e.Message);
+        }
+    }
+
+    [HttpPatch("/api/activities/update/{id}"), Authorize(Roles ="Admin")]
+    public async Task<IActionResult> Update(int id, [FromBody] Activity activity)
+    {
+        try
+        {
+            await _activityRepository.UpdateActivity(id, activity);
+            return Ok(new { message = "Updated" });
         }
         catch (Exception e)
         {

@@ -1,5 +1,6 @@
 ﻿using HealthManagerServer.Data;
 using HealthManagerServer.Model;
+using Microsoft.EntityFrameworkCore;
 
 namespace HealthManagerServer.Service;
 
@@ -12,9 +13,9 @@ public class ActivityRepository : IActivityRepository
         _context = context;
     }
     
-    public IEnumerable<Activity> GetAll()
+    public async Task<IEnumerable<Activity>> GetAll()
     {
-        return _context.Activities.ToList();
+        return await _context.Activities.ToListAsync();
     }
 
     public IList<Activity> GetByActivityName(string name, int weight, int duration)
@@ -28,15 +29,30 @@ public class ActivityRepository : IActivityRepository
         _context.SaveChanges();
     }
 
-    public void DeleteActivity(Activity activity)
+    public async Task DeleteActivity(int id)
     {
-        _context.Activities.Remove(activity);
-        _context.SaveChanges();
+        var activity = await _context.Activities.FirstOrDefaultAsync(activity => activity.Id == id);
+        if (activity != null)
+        {
+            _context.Activities.Remove(activity);
+            await _context.SaveChangesAsync();
+        }
+    }
+    
+
+    public async Task UpdateActivity(int id, Activity activity)
+    {
+        var activityToUpdate = await _context.Activities.FirstOrDefaultAsync(activity => activity.Id == id);
+        if (activityToUpdate != null)
+        {
+            activityToUpdate.Name = activity.Name;
+            activityToUpdate.Calories_per_hour = activity.Calories_per_hour;
+            activityToUpdate.Weight = activity.Weight;
+            activityToUpdate.Duration_minutes = activity.Duration_minutes;
+            activityToUpdate.Total_calories = activity.Total_calories;
+            _context.Activities.Update(activityToUpdate);
+            await _context.SaveChangesAsync();
+        }
     }
 
-    public void UpdateActivity(Activity activity)
-    {
-        _context.Activities.Update(activity);
-        _context.SaveChanges();
-    }
 }
