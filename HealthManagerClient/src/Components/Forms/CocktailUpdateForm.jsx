@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import TextareaAutosize from 'react-textarea-autosize';
 import "../../index.css";
 
-function CocktailUpdateForm({ data, onEdit, clearData }) {
+function CocktailUpdateForm({ data, onUpdate, clearData }) {
     const [formData, setFormData] = useState({
         id: data.id,
         name: data.name,
@@ -18,7 +18,7 @@ function CocktailUpdateForm({ data, onEdit, clearData }) {
     }
 
     const handleUpdateClick = () => {
-        onEdit(formData);
+        onUpdate(data.id, formData);
         clearData();
     }
 
