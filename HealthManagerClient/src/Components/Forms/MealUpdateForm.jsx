@@ -1,21 +1,21 @@
 import React, { useState } from 'react';
 import "../../index.css";
 
-function MealDataUpdateForm({data, onEdit, clearData}){
+function MealDataUpdateForm({data, onUpdate, clearData}){
     const [formData, setFormData] = useState({
         id: data.id,
         name: data.name,
-        servingSize: data.serving_size_g,
+        serving_size_g: data.serving_size_g,
         calories: data.calories,
-        totalFat: data.fat_total_g,
-        saturatedFat: data.fat_saturated_g,
-        protein: data.protein_g,
-        sodium: data.sodium_mg,
-        potassium: data.potassium_mg,
-        cholesterol: data.cholesterol_mg,
-        carbohydrates: data.carbohydrates_total_g,
-        fiber: data.fiber_g,
-        sugar: data.sugar_g
+        fat_total_g: data.fat_total_g,
+        fat_saturated_g: data.fat_saturated_g,
+        protein_g: data.protein_g,
+        sodium_mg: data.sodium_mg,
+        potassium_mg: data.potassium_mg,
+        cholesterol_mg: data.cholesterol_mg,
+        carbohydrates_total_g: data.carbohydrates_total_g,
+        fiber_g: data.fiber_g,
+        sugar_g: data.sugar_g
     });
 
     const handleChange = (e) => {
@@ -23,7 +23,7 @@ function MealDataUpdateForm({data, onEdit, clearData}){
     }
 
     const handleUpdateClick = () => {
-        onEdit(formData);
+        onUpdate(data.id, formData);
         clearData();
     }
 
@@ -41,47 +41,47 @@ function MealDataUpdateForm({data, onEdit, clearData}){
             <br />
             <label>Serving Size (g):</label>
             <br />
-            <input type="text" name="servingSize" value={formData.servingSize} onChange={handleChange} />
+            <input type="number" name="serving_size_g" value={formData.serving_size_g} onChange={handleChange} />
             <br />
             <label>Calories:</label>
             <br />
-            <input type="text" name="calories" value={formData.calories} onChange={handleChange} />
+            <input type="number" name="calories" value={formData.calories} onChange={handleChange} />
             <br />
             <label>Total Fat (g):</label>
             <br />
-            <input type="text" name="totalFat" value={formData.totalFat} onChange={handleChange} />
+            <input type="number" name="fat_total_g" value={formData.fat_total_g} onChange={handleChange} />
             <br />
             <label>Saturated Fat (g):</label>
             <br />
-            <input type="text" name="saturatedFat" value={formData.saturatedFat} onChange={handleChange} />
+            <input type="number" name="fat_saturated_g" value={formData.fat_saturated_g} onChange={handleChange} />
             <br />
             <label>Protein (g):</label>
             <br />
-            <input type="text" name="protein" value={formData.protein} onChange={handleChange} />
+            <input type="number" name="protein_g" value={formData.protein_g} onChange={handleChange} />
             <br />
             <label>Sodium (mg):</label>
             <br />
-            <input type="text" name="sodium" value={formData.sodium} onChange={handleChange} />
+            <input type="number" name="sodium_mg" value={formData.sodium_mg} onChange={handleChange} />
             <br />
             <label>Potassium (mg):</label>
             <br />
-            <input type="text" name="potassium" value={formData.potassium} onChange={handleChange} />
+            <input type="number" name="potassium_mg" value={formData.potassium_mg} onChange={handleChange} />
             <br />
             <label>Cholesterol (mg):</label>
             <br />
-            <input type="text" name="cholesterol" value={formData.cholesterol} onChange={handleChange} />
+            <input type="number" name="cholesterol_mg" value={formData.cholesterol_mg} onChange={handleChange} />
             <br />
             <label>Carbohydrates (g):</label>
             <br />
-            <input type="text" name="carbohydrates" value={formData.carbohydrates} onChange={handleChange} />
+            <input type="number" name="carbohydrates_total_g" value={formData.carbohydrates_total_g} onChange={handleChange} />
             <br />
             <label>Fiber (g):</label>
             <br />
-            <input type="text" name="fiber" value={formData.fiber} onChange={handleChange} />
+            <input type="number" name="fiber_g" value={formData.fiber_g} onChange={handleChange} />
             <br />
             <label>Sugar (g):</label>
             <br />
-            <input type="text" name="sugar" value={formData.sugar} onChange={handleChange} />
+            <input type="number" name="sugar_g" value={formData.sugar_g} onChange={handleChange} />
             <br />
             <button onClick={handleUpdateClick}>Update</button>
             <button onClick={clearData}>Cancel</button>
