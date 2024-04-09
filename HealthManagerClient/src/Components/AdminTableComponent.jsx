@@ -1,38 +1,48 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "../index.css";
-import { capitalizeWords } from "../../utilities/utils";
+import {capitalizeWords} from "../../utilities/utils";
 
-function AdminTableComponent({ dataArray , onDelete, onEdit}) {
-  let dataKeys = Object.keys(dataArray[0]);
+function AdminTableComponent({dataArray, onDelete, onEdit}) {
+    const [dataKeys, setDataKeys] = useState([]);
 
-  return (
-    <div className="table">
-      <table>
-        <tbody>
-          <tr>
-            {dataKeys.map((dataKey, index) => (
-              <th key={index}>{capitalizeWords(dataKey)}</th>
-            ))}
-          </tr>
-          {dataArray.map((data) => (
-            <tr key={data.id}>
-              {dataKeys.map((dataKey, index) => (
-                <>
-                  <td key={dataKey + index}>{capitalizeWords(data[dataKey])}</td>
-                </>
-              ))}
-              <td>
-                <button onClick={() => onDelete(data.id)}>Delete</button>
-              </td>
-              <td>
-                <button onClick={() => onEdit(data)}>Edit</button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
-  );
+    useEffect(() => {
+        if (dataArray.length > 0) {
+          setDataKeys(Object.keys(dataArray[0]));
+        }
+      }, [dataArray]);
+
+    return (
+        <div>
+            {dataArray.length === 0 ? (
+                <h1>No data to display</h1>
+            ) : (
+                <div className="table">
+                    <table>
+                        <tbody>
+                            <tr>
+                                {dataKeys.map((dataKey, index) => (
+                                    <th key={index}>{capitalizeWords(dataKey)}</th>
+                                ))}
+                            </tr>
+                            {dataArray.map((data) => (
+                                <tr key={data.id}>
+                                    {dataKeys.map((dataKey, index) => (
+                                        <td key={dataKey + index}>{capitalizeWords(data[dataKey])}</td>
+                                    ))}
+                                    <td>
+                                        <button onClick={() => onDelete(data.id)}>Delete</button>
+                                    </td>
+                                    <td>
+                                        <button onClick={() => onEdit(data)}>Edit</button>
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
+            )}
+        </div>
+    );
 }
 
 export default AdminTableComponent;
