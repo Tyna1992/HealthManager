@@ -2,13 +2,11 @@ import React, {useEffect, useState} from 'react';
 import {useLocation} from "react-router-dom";
 
 function Profile() {
-
-    const [user, setUser] = useState(null);
-    const [email, setEmail] = useState(null);
-    
+    const [userData, setUserData] = useState({});    
 
     useEffect(() => {
         async function fetchData() {
+            let email = "";
             try {
                 const response = await fetch("/api/Auth/WhoAmI", {
                     method: "GET",
@@ -19,8 +17,18 @@ function Profile() {
                 });
                 const data = await response.json();
                 if (data) {
-                    setUser(data.userName);
-                    setEmail(data.email);
+                    email = data.email;
+                }
+                const response2 = await fetch(`/api/User/getByEmail/${email}`, {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                });
+                const data2 = await response2.json();
+                console.log(data2);
+                if (data2) {
+                    setUserData(data2);
                 }
             } catch (error) {
                 console.log("Error", error);
@@ -31,16 +39,15 @@ function Profile() {
     
     return (
         <div className="profile">
-            <h1>User Profile</h1>
-            <br/>
-            <h2>Username:</h2>
-            <h3>{user}</h3>
-            <br/>
-            <h2>Email:</h2>
-            
-            <h3>{email}</h3>
-
-
+            <h1>Welcome {userData.userName}!</h1>
+            <h2>Profile</h2>
+            <p>Email: {userData.email}</p>
+            <p>Username: {userData.userName}</p>
+            <p>Gender: {userData.gender}</p>
+            <p>Weight: {userData.weight}</p>
+            <p>Phone Number: {userData.phoneNumber}</p>
+            <button>Edit</button>
+            <button>Delete</button>
         </div>
     );
 };
