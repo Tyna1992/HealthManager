@@ -36,6 +36,7 @@ function Admin() {
         },
       });
       const data = await response.json();
+      console.log(data);
       setMealData(data);
       setLoadingScreen(false);
     } catch (error) {
@@ -266,19 +267,19 @@ function Admin() {
           <h2>Loading Sport Data...</h2>
         ) : showMealDataTable && !showDrinksDataTable && !showSportDataTable && !mealUpdateForm && !sportUpdateForm && !drinkUpdateForm ? (
           <AdminTableComponent
-            data={mealData}
+          dataArray={mealData}
             onDelete={handleMealDelete}
             onEdit={handleMealDataToUpdate}
           />
         ) : !showMealDataTable && showDrinksDataTable && !showSportDataTable && !mealUpdateForm && !sportUpdateForm && !drinkUpdateForm ? (
           <AdminTableComponent
-            data={drinksData}
+            dataArray={drinksData}
             onDelete={handleDrinksDelete}
             onEdit={handleDrinksDataToUpdate}
           />
         ) : !showMealDataTable && !showDrinksDataTable && showSportDataTable && !mealUpdateForm && !sportUpdateForm && !drinkUpdateForm ? (
           <AdminTableComponent
-            data={sportData}
+            dataArray={sportData}
             onDelete={handleSportDelete}
             onEdit={handleSportDataToUpdate}
           />
@@ -286,19 +287,19 @@ function Admin() {
           <MealDataUpdateForm
             data={mealToUpdate}
             onUpdate={handleMealUpdate}
-            onClear={clearMealData}
+            clearData={clearMealData}
           />
         ) : !mealUpdateForm && drinkUpdateForm && !sportUpdateForm ? (
           <CocktailUpdateForm
             data={drinkToUpdate}
             onUpdate={handleDrinksUpdate}
-            onClear={clearDrinksData}
+            clearData={clearDrinksData}
           />
         ) : !mealUpdateForm && !drinkUpdateForm && sportUpdateForm ? (
           <ActivityUpdateForm
             data={sportToUpdate}
             onUpdate={handleSportUpdate}
-            onClear={clearSportData}
+            clearData={clearSportData}
           />
         ) : (
           <h2>Waiting for instructions...</h2>
