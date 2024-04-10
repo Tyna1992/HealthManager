@@ -68,6 +68,9 @@ function App() {
                 </button>
               </Link>
               <LogoutButton />
+              <Link to= "/mealplanner">
+                <button type= "button"> Diet planner </button>
+              </Link>
             </>
           ) : (
             <>

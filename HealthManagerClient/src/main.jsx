@@ -9,6 +9,7 @@ import Activities from "./Pages/Activities";
 import Login from "./Pages/Login";
 import Profile from "./Pages/Profile";
 import Admin from "./Pages/Admin";
+import Mealplan from "./Pages/Mealplan";
 
 
 const router = createBrowserRouter([
@@ -43,6 +44,10 @@ const router = createBrowserRouter([
             {
                 path: "/admin",
                 element: <Admin/>
+            },
+            {
+                path: "/mealplanner",
+                element: <Mealplan/>
             }
         ]
     }
