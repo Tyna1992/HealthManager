@@ -21,16 +21,17 @@ public class MealPlanRepository : IMealPlanRepository
         return mealPlans;
     }
 
-    public async Task<MealPlan> GetByDate(DateOnly date)
+    public async Task<MealPlan> GetByDate(DateOnly date, string userName)
     {
-        var formatedDate = date.ToDateTime(TimeOnly.MinValue);
-        MealPlan? mealPlan = await _dataBaseContext.MealPlans.FirstOrDefaultAsync(x => x.Date.Date == formatedDate.Date);
+        var formattedDate = date.ToDateTime(TimeOnly.MinValue);
+        MealPlan? mealPlan = await _dataBaseContext.MealPlans.FirstOrDefaultAsync(x => x.Date.Date == formattedDate.Date && x.UserName == userName);
         return mealPlan;
     }
 
-    public async Task<IEnumerable<MealPlan>> GetMealPlansByDay(string day)
+    public async Task<IEnumerable<MealPlan>> GetMealPlansByDay(string day, string userName)
     {
-        var mealPlans = await _dataBaseContext.MealPlans.Where(x => x.DayOfTheWeek == day).ToListAsync();
+        var mealPlans = await GetAllMealPlans();
+        mealPlans = mealPlans.Where(x => x.Date.DayOfWeek.ToString() == day && x.UserName == userName);
         return mealPlans;
     
     }

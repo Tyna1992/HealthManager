@@ -28,7 +28,7 @@ public class MealPlanController : ControllerBase
     }
 
 
-    [HttpPost("create")]
+    [HttpPost("create"), Authorize(Roles = "User")]
     public async Task<ActionResult<MealPlan>> CreateMealPlan([FromBody] MealPlanRequest request)
     {
         try
@@ -37,7 +37,7 @@ public class MealPlanController : ControllerBase
             {
                 return BadRequest("Date cannot be in the past");
             }
-            var formattedDate = request.Date.ToDateTime(TimeOnly.MinValue);
+            var formatedDate = request.Date.ToDateTime(TimeOnly.MinValue);
             var nutrition = _nutritionRepository.GetByNameAndWeight(request.Name, request.ServingSize);
             if (nutrition == null)
             {
@@ -50,7 +50,7 @@ public class MealPlanController : ControllerBase
                     Id = Guid.NewGuid(),
                     UserName = request.UserName,
                     MealId = nutritionDataJson.Id,
-                    Date = formattedDate,
+                    Date = formatedDate,
                     MealTime = request.MealTime
                 };
                 await _mealPlanRepository.AddMealPlan(mealPlan);
@@ -63,7 +63,7 @@ public class MealPlanController : ControllerBase
                 {
                     UserName = request.UserName,
                     MealId = nutrition.Id,
-                    Date = formattedDate,
+                    Date = formatedDate,
                     MealTime = request.MealTime
                 };
                 await _mealPlanRepository.AddMealPlan(mealPlan);
@@ -77,18 +77,99 @@ public class MealPlanController : ControllerBase
         }
     }
 
-    [HttpGet("getByDate/{date}"), Authorize(Roles = "User")]
-    public async Task<IActionResult> GetByDate(DateOnly date)
+    [HttpGet("getByDate/{userName}/{date}"), Authorize(Roles = "User")]
+    public async Task<IActionResult> GetByDate(DateOnly date, string userName)
     {
-
         try
         {
-            var mealPlan = await _mealPlanRepository.GetByDate(date);
+            var mealPlan = await _mealPlanRepository.GetByDate(date, userName);
             if (mealPlan != null)
             {
                 return Ok(mealPlan);
             }
             return NotFound("Meal plan not found on the given date");
+        }
+        catch (Exception e)
+        {
+            return BadRequest(e.Message);
+        }
+    }
+
+    [HttpGet("getAll"), Authorize(Roles = "Admin")]
+    public async Task<IActionResult> GetAllMealPlans()
+    {
+        try
+        {
+            var mealPlans = await _mealPlanRepository.GetAllMealPlans();
+            return Ok(mealPlans);
+        }
+        catch (Exception e)
+        {
+            return BadRequest(e.Message);
+        }
+    }
+
+    [HttpGet("getByDay/{userName}/{day}"), Authorize(Roles = "User")]
+    public async Task<IActionResult> GetMealPlansByDay(string day, string userName) //day should start with uppercase letter
+    {
+        try
+        {
+            var mealPlans = await _mealPlanRepository.GetMealPlansByDay(day, userName);
+            if (mealPlans != null)
+            {
+                return Ok(mealPlans);
+            }
+            return NotFound("No meal plans found on the given day");
+        }
+        catch (Exception e)
+        {
+            return BadRequest(e.Message);
+        }
+    }
+
+    [HttpGet("getByUserName/{userName}"), Authorize(Roles = "User")]
+    public async Task<IActionResult> GetMealPlansByUserName(string userName)
+    {
+        try
+        {
+            var mealPlans = await _mealPlanRepository.GetMealPlansByUserName(userName);
+            if (mealPlans != null)
+            {
+                return Ok(mealPlans);
+            }
+            return NotFound("No meal plans found for the given user");
+        }
+        catch (Exception e)
+        {
+            return BadRequest(e.Message);
+        }
+    }
+
+    [HttpPatch("update/{id}"), Authorize(Roles = "User")]
+    public async Task<IActionResult> UpdateMealPlan(string id, [FromBody] MealPlan mealPlan)
+    {
+        try
+        {
+            if (DateOnly.FromDateTime(mealPlan.Date) < DateOnly.FromDateTime(DateTime.Now))
+            {
+                return BadRequest("Date cannot be in the past");
+            }
+            await _mealPlanRepository.UpdateMealPlan(id, mealPlan);
+            return Ok("Meal plan updated successfully");
+        }
+        catch (Exception e)
+        {
+            return BadRequest(e.Message);
+        }
+    }
+
+    [HttpDelete("delete/{id}"), Authorize(Roles = "User")]
+    public async Task<IActionResult> DeleteMealPlan(string id)
+    {
+        try
+        {
+            await _mealPlanRepository.DeleteMealPlan(id);
+            return Ok("Meal plan deleted successfully");
         }
         catch (Exception e)
         {
