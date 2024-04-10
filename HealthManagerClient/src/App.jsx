@@ -7,7 +7,7 @@ import LogoutButton from "./Components/LogoutButton";
 
 function App() {
   const [user, setUser] = useState(null);
-  const [email, setEmail] = useState(null);
+  const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
   const location = useLocation();
 
   useEffect(() => {
@@ -23,7 +23,6 @@ function App() {
         const data = await response.json();
         if (data) {
           setUser(data.userName);
-          setEmail(data.email);
         }
       } catch (error) {
         console.log("Error", error);
@@ -31,6 +30,17 @@ function App() {
     }
     fetchData();
   }, [location.pathname]);
+
+  function changeTheme() {
+    const newTheme = theme === "light" ? "dark" : "light";
+    setTheme(newTheme);
+    localStorage.setItem("theme", newTheme);
+  }
+
+  useEffect(() => {
+    document.body.className = theme;
+    console.log(localStorage.getItem("theme"));
+  }, [theme]);
 
   return (
     <div className="App">
@@ -99,6 +109,9 @@ function App() {
               Search activities
             </button>
           </Link>
+          <button type="button" onClick={changeTheme}>
+            {theme === "light" ? "Dark mode" : "Light mode"}
+          </button>
         </nav>
         <Outlet />
       </div>
