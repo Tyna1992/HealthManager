@@ -37,7 +37,7 @@ public class MealPlanController : ControllerBase
             {
                 return BadRequest("Date cannot be in the past");
             }
-            var formatedDate = request.Date.ToDateTime(TimeOnly.MinValue);
+            var formattedDate = request.Date.ToDateTime(TimeOnly.MinValue);
             var nutrition = _nutritionRepository.GetByNameAndWeight(request.Name, request.ServingSize);
             if (nutrition == null)
             {
@@ -50,7 +50,7 @@ public class MealPlanController : ControllerBase
                     Id = Guid.NewGuid(),
                     UserName = request.UserName,
                     MealId = nutritionDataJson.Id,
-                    Date = formatedDate,
+                    Date = formattedDate,
                     MealTime = request.MealTime
                 };
                 await _mealPlanRepository.AddMealPlan(mealPlan);
@@ -63,7 +63,7 @@ public class MealPlanController : ControllerBase
                 {
                     UserName = request.UserName,
                     MealId = nutrition.Id,
-                    Date = formatedDate,
+                    Date = formattedDate,
                     MealTime = request.MealTime
                 };
                 await _mealPlanRepository.AddMealPlan(mealPlan);
@@ -77,7 +77,7 @@ public class MealPlanController : ControllerBase
         }
     }
 
-    [HttpGet("getByDate/{date}")]
+    [HttpGet("getByDate/{date}"), Authorize(Roles = "User")]
     public async Task<IActionResult> GetByDate(DateOnly date)
     {
 
