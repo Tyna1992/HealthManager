@@ -35,9 +35,9 @@ public class MealPlanRepository : IMealPlanRepository
     
     }
 
-    public async Task<IEnumerable<MealPlan>> GetMealPlansByUserId(string userId)
+    public async Task<IEnumerable<MealPlan>> GetMealPlansByUserName(string userName)
     {
-        var mealPlans = await _dataBaseContext.MealPlans.Where(x => x.UserId == userId).ToListAsync();
+        var mealPlans = await _dataBaseContext.MealPlans.Where(x => x.UserName == userName).ToListAsync();
         return mealPlans;
     }
 
