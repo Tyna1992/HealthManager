@@ -11,6 +11,7 @@ function Admin() {
   const [sportData, setSportData] = useState([]);
   const [drinksData, setDrinksData] = useState([]);
   const [usersData, setUsersData] = useState([]);
+  const [mealPlanData, setMealPlanData] = useState([]);
 
   const [mealToUpdate, setMealToUpdate] = useState({});
   const [sportToUpdate, setSportToUpdate] = useState({});
@@ -26,6 +27,7 @@ function Admin() {
   const [showSportDataTable, setShowSportDataTable] = useState(false);
   const [showDrinksDataTable, setShowDrinksDataTable] = useState(false);
   const [showUsersDataTable, setShowUsersDataTable] = useState(false);
+  const [showMealPlanDataTable, setShowMealPlanDataTable] = useState(false);
 
   const [loadingScreen, setLoadingScreen] = useState(false);
 
@@ -298,6 +300,25 @@ function Admin() {
     setShowUsersDataTable(true);
   }
 
+  // MealPlan only getall method
+  async function fetchMealPlanData() {
+    try {
+      setLoadingScreen(true);
+      const response = await fetch("/api/mealplan/getAll", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const data = await response.json();
+      console.log(data);
+      setMealPlanData(data);
+      setLoadingScreen(false);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   return (
     <div>
       <h1>Admin Page</h1>
@@ -309,6 +330,7 @@ function Admin() {
             setShowSportDataTable(false);
             setShowDrinksDataTable(false);
             setShowUsersDataTable(false);
+            setShowMealPlanDataTable(false);
             setMealUpdateForm(false);
             setDrinkUpdateForm(false);
             setSportUpdateForm(false);
@@ -325,6 +347,7 @@ function Admin() {
             setShowMealDataTable(false);
             setShowDrinksDataTable(false);
             setShowUsersDataTable(false);
+            setShowMealPlanDataTable(false);
             setMealUpdateForm(false);
             setDrinkUpdateForm(false);
             setSportUpdateForm(false);
@@ -341,6 +364,7 @@ function Admin() {
             setShowMealDataTable(false);
             setShowSportDataTable(false);
             setShowUsersDataTable(false);
+            setShowMealPlanDataTable(false);
             setMealUpdateForm(false);
             setDrinkUpdateForm(false);
             setSportUpdateForm(false);
@@ -357,6 +381,7 @@ function Admin() {
             setShowMealDataTable(false);
             setShowSportDataTable(false);
             setShowDrinksDataTable(false);
+            setShowMealPlanDataTable(false);
             setMealUpdateForm(false);
             setDrinkUpdateForm(false);
             setSportUpdateForm(false);
@@ -367,12 +392,30 @@ function Admin() {
         >
           Show Users Data
         </button>
+        <button
+          onClick={() => {
+            setShowMealPlanDataTable(true);
+            setShowUsersDataTable(false);
+            setShowMealDataTable(false);
+            setShowSportDataTable(false);
+            setShowDrinksDataTable(false);
+            setMealUpdateForm(false);
+            setDrinkUpdateForm(false);
+            setSportUpdateForm(false);
+            setUserUpdateForm(false);
+            fetchMealPlanData();
+          }}
+          disabled={showMealPlanDataTable}
+        >
+          Show Meal Plan Data
+        </button>
       </div>
       <div className="table">
         {showMealDataTable &&
         !showDrinksDataTable &&
         !showSportDataTable &&
         !showUsersDataTable &&
+        !showMealPlanDataTable &&
         !mealUpdateForm &&
         !sportUpdateForm &&
         !drinkUpdateForm &&
@@ -383,6 +426,7 @@ function Admin() {
           showDrinksDataTable &&
           !showSportDataTable &&
           !showUsersDataTable &&
+          !showMealPlanDataTable &&
           !mealUpdateForm &&
           !sportUpdateForm &&
           !drinkUpdateForm &&
@@ -393,6 +437,7 @@ function Admin() {
           !showDrinksDataTable &&
           showSportDataTable &&
           !showUsersDataTable &&
+          !showMealPlanDataTable &&
           !mealUpdateForm &&
           !sportUpdateForm &&
           !drinkUpdateForm &&
@@ -403,12 +448,24 @@ function Admin() {
           !showDrinksDataTable &&
           !showSportDataTable &&
           showUsersDataTable &&
+          !showMealPlanDataTable &&
           !mealUpdateForm &&
           !sportUpdateForm &&
           !drinkUpdateForm &&
           !userUpdateForm &&
           loadingScreen ? (
           <h2>Loading Users Data...</h2>
+        ) : showMealPlanDataTable &&
+          !showUsersDataTable &&
+          !showMealDataTable &&
+          !showDrinksDataTable &&
+          !showSportDataTable &&
+          !mealUpdateForm &&
+          !sportUpdateForm &&
+          !drinkUpdateForm &&
+          !userUpdateForm &&
+          loadingScreen ? (
+          <h2>Loading Meal Plan Data...</h2>
         ) : showUsersDataTable &&
           !showMealDataTable &&
           !showDrinksDataTable &&
@@ -461,6 +518,16 @@ function Admin() {
             onDelete={handleSportDelete}
             onEdit={handleSportDataToUpdate}
           />
+        ) : showMealPlanDataTable &&
+          !showUsersDataTable &&
+          !showMealDataTable &&
+          !showDrinksDataTable &&
+          !showSportDataTable &&
+          !mealUpdateForm &&
+          !sportUpdateForm &&
+          !drinkUpdateForm &&
+          !userUpdateForm ? (
+          <AdminTableComponent dataArray={mealPlanData} />
         ) : mealUpdateForm && !drinkUpdateForm && !sportUpdateForm && !userUpdateForm ? (
           <MealDataUpdateForm
             data={mealToUpdate}
