@@ -10,6 +10,7 @@ function Mealplan(props) {
   const [meal, setMeal] = useState("");
   const [date, setDate] = useState(today);
   const [mealTime, setMealTime] = useState("");
+  const [nutritionalValueShow, setNutritionalValueShow] = useState(false);
 
   useEffect(() => {
     async function fetchData() {
@@ -54,6 +55,7 @@ function Mealplan(props) {
         throw new Error("Cannot find the nutritional value for the meal. Please try again.");
       }
       setNutritionalValue(data);
+      setNutritionalValueShow(true);
       console.log(data);
     } catch (error) {
       console.error(error);
@@ -94,6 +96,7 @@ function Mealplan(props) {
     setMeal("");
     setAmount("");
     setNutritionalValue([]);
+    setNutritionalValueShow(false);
   };
 
   const handleMealChange = (event) => {
@@ -160,7 +163,7 @@ function Mealplan(props) {
             <label>Meal time:</label>
             <br />
             <select value={mealTime} name="mealTime" onChange={handleMealTimeChange}>
-              <option value="" disabled selected>
+              <option value="" disabled defaultValue={""}>
                 Select meal time
               </option>
               <option value="breakfast">Breakfast</option>
@@ -175,7 +178,7 @@ function Mealplan(props) {
 
         <button onClick={() => fetchNutritionalValue()}>Show nutritional value</button>
         <button onClick={() => handleClear()}>Clear</button>
-        <button onClick={() => fetchMealPlan()} type="button">
+        <button onClick={() => fetchMealPlan()} type="button" disabled={!nutritionalValueShow}>
           Add to the plan
         </button>
         <br />
