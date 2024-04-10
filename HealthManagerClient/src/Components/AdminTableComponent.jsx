@@ -29,12 +29,16 @@ function AdminTableComponent({ dataArray, onDelete, onEdit }) {
               {dataKeys.map((dataKey, index) => (
                 <td key={dataKey + index}>{capitalizeWords(data[dataKey])}</td>
               ))}
+              {onDelete ? (
               <td>
                 <button onClick={() => onDelete(data.id)}>Delete</button>
               </td>
+              ) : null}
+              {onEdit ? (
               <td>
                 <button onClick={() => onEdit(data)}>Edit</button>
               </td>
+              ) : null}
             </tr>
           ))}
         </tbody>
