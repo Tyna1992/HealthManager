@@ -26,14 +26,48 @@ public class MealPlanController : ControllerBase
     }
 
 
-    [HttpPost("create")]
-    public async Task<IActionResult> CreateMealPlan([FromBody] MealPlan mealPlan)
+    [HttpPost("create/{userId}/{servingSize}/{name}/{date}/{mealTime}")]
+    public async Task<ActionResult<MealPlan>> CreateMealPlan(string userId, double servingSize, string name, DateOnly date, string mealTime)
     {
-        
         try
         {
-            await _mealPlanRepository.AddMealPlan(mealPlan);
-            return Ok(mealPlan + "Meal plan created successfully");
+            if (date < DateOnly.FromDateTime(DateTime.Now))
+            {
+                return BadRequest("Date cannot be in the past");
+            }
+            var formatedDate = date.ToDateTime(TimeOnly.MinValue);
+            var nutrition = _nutritionRepository.GetByNameAndWeight(name, servingSize);
+            if (nutrition == null)
+            {
+                var nutritionData = await _nutritionApiCall.GetNutritionData(name, servingSize);
+                var nutritionDataJson = _jsonProcessor.ProcessNutritionJson(nutritionData);
+                _nutritionRepository.AddNutrition(nutritionDataJson);
+                _logger.LogInformation(nutritionDataJson + " added to the database");
+                var mealPlan = new MealPlan()
+                {
+                    Id = Guid.NewGuid(),
+                    UserId = userId,
+                    MealId = nutritionDataJson.Id,
+                    Date = formatedDate,
+                    MealTime = mealTime
+                };
+                await _mealPlanRepository.AddMealPlan(mealPlan);
+                _logger.LogInformation(mealPlan + "Meal plan created successfully");
+                return Ok(mealPlan);
+            }
+            else
+            {
+                var mealPlan = new MealPlan()
+                {
+                    UserId = userId,
+                    MealId = nutrition.Id,
+                    Date = formatedDate,
+                    MealTime = mealTime
+                };
+                await _mealPlanRepository.AddMealPlan(mealPlan);
+                _logger.LogInformation(mealPlan + "Meal plan created successfully");
+                return Ok(mealPlan);
+            }
         }
         catch (Exception e)
         {
