@@ -15,20 +15,20 @@ public class UserRepository : IUserRepository
     public async Task<IEnumerable<UserResponse>> GetAllUsers()
     {
         return await _context.Users
-            .Select(user => new UserResponse(user.Id, user.UserName, user.Email, user.PhoneNumber, user.Gender, user.Weight))
+            .Select(user => new UserResponse(user.Id, user.UserName, user.Email, user.Gender, user.Weight))
             .ToListAsync();
     }
 
     public async Task<UserResponse> GetUserById(string id)
     {
         var user = await _context.Users.FindAsync(id);
-        return new UserResponse(user.Id, user.UserName, user.Email, user.PhoneNumber, user.Gender, user.Weight);
+        return new UserResponse(user.Id, user.UserName, user.Email, user.Gender, user.Weight);
     }
 
     public async Task<UserResponse> GetByEmail(string email)
     {
         var user = await _context.Users.FirstOrDefaultAsync(user => user.Email == email);
-        return new UserResponse(user.Id, user.UserName, user.Email, user.PhoneNumber, user.Gender, user.Weight);
+        return new UserResponse(user.Id, user.UserName, user.Email, user.Gender, user.Weight);
     }
 
     public async Task UpdateUser(string id, UserResponse userResponse)
@@ -38,7 +38,6 @@ public class UserRepository : IUserRepository
         {
             user.UserName = userResponse.UserName;
             user.Email = userResponse.Email;
-            user.PhoneNumber = userResponse.PhoneNumber;
             user.Gender = userResponse.Gender;
             user.Weight = userResponse.Weight;
             _context.Users.Update(user);
