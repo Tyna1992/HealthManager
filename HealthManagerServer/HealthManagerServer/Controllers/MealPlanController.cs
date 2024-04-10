@@ -1,6 +1,8 @@
 using HealthManagerServer.Model;
 using HealthManagerServer.Service;
 using HealthManagerServer.Service.JsonProcess;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HealthManagerServer.Controllers;
@@ -26,30 +28,30 @@ public class MealPlanController : ControllerBase
     }
 
 
-    [HttpPost("create/{userId}/{servingSize}/{name}/{date}/{mealTime}")]
-    public async Task<ActionResult<MealPlan>> CreateMealPlan(string userId, double servingSize, string name, DateOnly date, string mealTime)
+    [HttpPost("create")]
+    public async Task<ActionResult<MealPlan>> CreateMealPlan([FromBody] MealPlanRequest request)
     {
         try
         {
-            if (date < DateOnly.FromDateTime(DateTime.Now))
+            if (request.Date < DateOnly.FromDateTime(DateTime.Now))
             {
                 return BadRequest("Date cannot be in the past");
             }
-            var formatedDate = date.ToDateTime(TimeOnly.MinValue);
-            var nutrition = _nutritionRepository.GetByNameAndWeight(name, servingSize);
+            var formatedDate = request.Date.ToDateTime(TimeOnly.MinValue);
+            var nutrition = _nutritionRepository.GetByNameAndWeight(request.Name, request.ServingSize);
             if (nutrition == null)
             {
-                var nutritionData = await _nutritionApiCall.GetNutritionData(name, servingSize);
+                var nutritionData = await _nutritionApiCall.GetNutritionData(request.Name, request.ServingSize);
                 var nutritionDataJson = _jsonProcessor.ProcessNutritionJson(nutritionData);
                 _nutritionRepository.AddNutrition(nutritionDataJson);
                 _logger.LogInformation(nutritionDataJson + " added to the database");
                 var mealPlan = new MealPlan()
                 {
                     Id = Guid.NewGuid(),
-                    UserId = userId,
+                    UserName = request.UserName,
                     MealId = nutritionDataJson.Id,
                     Date = formatedDate,
-                    MealTime = mealTime
+                    MealTime = request.MealTime
                 };
                 await _mealPlanRepository.AddMealPlan(mealPlan);
                 _logger.LogInformation(mealPlan + "Meal plan created successfully");
@@ -59,10 +61,10 @@ public class MealPlanController : ControllerBase
             {
                 var mealPlan = new MealPlan()
                 {
-                    UserId = userId,
+                    UserName = request.UserName,
                     MealId = nutrition.Id,
                     Date = formatedDate,
-                    MealTime = mealTime
+                    MealTime = request.MealTime
                 };
                 await _mealPlanRepository.AddMealPlan(mealPlan);
                 _logger.LogInformation(mealPlan + "Meal plan created successfully");
