@@ -1,4 +1,5 @@
 using HealthManagerServer.Contracts;
+using HealthManagerServer.Service;
 using HealthManagerServer.Service.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -62,18 +63,22 @@ public class AuthController : ControllerBase
     }
 
     [HttpGet("WhoAmI"), Authorize(Roles = "User,Admin")]
-    public ActionResult<AuthResponse> WhoAmI()
+    public ActionResult<UserResponse> WhoAmI()
     {
         var cookieString = Request.Cookies["Authorization"];
         
         var token = _authenticationService.Verify(cookieString);
-        
+
         if (token != null)
         {
             var claims = token.Claims;
             var email = claims.FirstOrDefault(c => c.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress")?.Value;
             var username = claims.FirstOrDefault(c => c.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name")?.Value;
-            return Ok(new AuthResponse(email, username));
+            var userId = claims.FirstOrDefault(c => c.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier")?.Value;
+            var weight = claims.FirstOrDefault(c => c.Type == "Weight")?.Value;
+            var gender = claims.FirstOrDefault(c => c.Type == "Gender")?.Value;
+
+            return Ok(new UserResponse(userId, username, email, gender, Convert.ToDouble(weight)));
         }
         return BadRequest("No token found");
     }
