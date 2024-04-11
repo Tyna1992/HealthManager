@@ -1,8 +1,10 @@
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
+using HealthManagerServer.Model;
 using Xunit.Abstractions;
 
 namespace HealthManagerTest;
+
 [Collection("Integration")]
 public class MealControllerTest
 {
@@ -31,8 +33,6 @@ public class MealControllerTest
         Assert.NotEmpty(mealData);
         Assert.Equal(2, mealData.Count);
         Assert.Equal("popcorn", mealData[0].Name);
-        
-        
     }
 
     [Fact]

@@ -1,10 +1,10 @@
-using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using HealthManagerServer.Contracts;
 using HealthManagerServer.Service.Authentication;
 using Xunit.Abstractions;
 
 namespace HealthManagerTest;
+
 [Collection("Integration")] 
 public class AuthControllerTest
 {

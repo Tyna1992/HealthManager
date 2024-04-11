@@ -25,7 +25,7 @@ public class TestAuthHandler : AuthenticationHandler<AuthenticationSchemeOptions
             return HandleAuthenticateAsyncUser();
         }
     }
-    
+
     private Task<AuthenticateResult> HandleAuthenticateAsyncAdmin()
     {
         var claims = new[]
@@ -40,7 +40,7 @@ public class TestAuthHandler : AuthenticationHandler<AuthenticationSchemeOptions
         var result = AuthenticateResult.Success(ticket);
         return Task.FromResult(result);
     }
-    
+
     private Task<AuthenticateResult> HandleAuthenticateAsyncUser()
     {
         var claims = new[]

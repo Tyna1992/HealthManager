@@ -1,8 +1,9 @@
-using System.Net.Http.Headers;
 using System.Net.Http.Json;
+using HealthManagerServer.Model;
 using Xunit.Abstractions;
 
 namespace HealthManagerTest;
+
 [Collection("Integration")]
 public class CocktailControllerTest
 {

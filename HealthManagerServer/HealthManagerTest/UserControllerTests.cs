@@ -18,7 +18,6 @@ public class UserControllerTests
         var response = await client.GetAsync($"/api/user/getAll");
         response.EnsureSuccessStatusCode();
         
-        var responseString = await response.Content.ReadAsStringAsync();
         var users = await response.Content.ReadFromJsonAsync<List<UserResponse>>();
         
         Assert.NotNull(users);
@@ -36,11 +35,9 @@ public class UserControllerTests
         var response = await client.GetAsync($"/api/user/getByEmail/{email}");
         response.EnsureSuccessStatusCode();
         
-        var responseString = await response.Content.ReadAsStringAsync();
         var user = await response.Content.ReadFromJsonAsync<UserResponse>();
         
         Assert.NotNull(user);
         Assert.Equal(email, user.Email);
-        
     }
 }

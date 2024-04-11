@@ -26,7 +26,6 @@ internal class HealthManagerWebApplicationFactory : WebApplicationFactory<Progra
             services.RemoveAll(typeof(DbContextOptions<DataBaseContext>));
             services.RemoveAll(typeof(DbContextOptions<UserContext>));
 
-            
             var configuration = context.Configuration;
             var connectionString = configuration.GetConnectionString("TestDatabase");
             
@@ -47,8 +46,6 @@ internal class HealthManagerWebApplicationFactory : WebApplicationFactory<Progra
                 var dataBaseContext = scope.ServiceProvider.GetRequiredService<DataBaseContext>();
                 var userContext = scope.ServiceProvider.GetRequiredService<UserContext>();
                 
-                
-                
                 if (!dataBaseContext.Database.CanConnect() || !userContext.Database.CanConnect())
                 {
                     
@@ -67,20 +64,6 @@ internal class HealthManagerWebApplicationFactory : WebApplicationFactory<Progra
                     userContext.Database.EnsureCreated();
                 }
             }
-            
         });
-    }
-    
-    private static string? GetConnectionString()
-    {
-        var connectionString = Environment.GetEnvironmentVariable("CONNECTION_STRING");
-        if (!string.IsNullOrEmpty(connectionString))
-        {
-            return connectionString;
-        }
-
-        
-        Env.Load();
-        return Environment.GetEnvironmentVariable("CONNECTION_STRING");
     }
 }
