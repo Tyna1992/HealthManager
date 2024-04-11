@@ -23,21 +23,31 @@ function AdminTableComponent({ dataArray, onDelete, onEdit }) {
             {dataKeys.map((dataKey, index) => (
               <th key={index}>{capitalizeWords(dataKey)}</th>
             ))}
+            {onDelete && onEdit ? (
+              <>
+                <th>Delete</th>
+                <th>Edit</th>
+              </>
+            ) : null}
           </tr>
           {dataArray.map((data) => (
             <tr key={data.id}>
               {dataKeys.map((dataKey, index) => (
-                <td key={dataKey + index}>{capitalizeWords(data[dataKey])}</td>
+                <td key={dataKey + index}>
+                  {dataKey === "meal" 
+                    ? capitalizeWords(data[dataKey].name + " " + data[dataKey].serving_size_g + "g")
+                    : capitalizeWords(data[dataKey])}
+                </td>
               ))}
-              {onDelete ? (
-              <td>
-                <button onClick={() => onDelete(data.id)}>Delete</button>
-              </td>
-              ) : null}
-              {onEdit ? (
-              <td>
-                <button onClick={() => onEdit(data)}>Edit</button>
-              </td>
+              {onDelete && onEdit ? (
+                <>
+                  <td>
+                    <button onClick={() => onDelete(data.id)}>Delete</button>
+                  </td>
+                  <td>
+                    <button onClick={() => onEdit(data)}>Edit</button>
+                  </td>
+                </>
               ) : null}
             </tr>
           ))}
