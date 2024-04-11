@@ -13,5 +13,5 @@ public class MealPlan
     public Nutrition? Meal { get; set; }
     public DateTime Date { get; set; }
     public string? MealTime { get; set; }
-    public string? DayOfTheWeek => Date.DayOfWeek.ToString("D");
+    public string? DayOfTheWeek => Date.DayOfWeek.ToString();
 }
