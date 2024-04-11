@@ -21,7 +21,7 @@ public class MealPlanControllerTests
         
             UserName : "TestUser",
             ServingSize : 100,
-            Date : new DateOnly(2024,4,10),
+            Date : DateOnly.FromDateTime(DateTime.Now),
             MealTime : "Breakfast",
             Name : "cereal"
         );
