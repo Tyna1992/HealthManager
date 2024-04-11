@@ -31,6 +31,10 @@ public class MealPlanRepository : IMealPlanRepository
     {
         var formattedDate = date.ToDateTime(TimeOnly.MinValue);
         MealPlan? mealPlan = await _dataBaseContext.MealPlans.FirstOrDefaultAsync(x => x.Date.Date == formattedDate.Date && x.UserName == userName);
+        if (mealPlan != null)
+        {
+            mealPlan.Meal = await _nutritionRepository.GetById(mealPlan.MealId);
+        }
         return mealPlan;
     }
 
@@ -38,6 +42,10 @@ public class MealPlanRepository : IMealPlanRepository
     {
         var mealPlans = await GetAllMealPlans();
         mealPlans = mealPlans.Where(x => x.Date.DayOfWeek.ToString() == day && x.UserName == userName);
+        foreach (var mealPlan in mealPlans)
+        {
+            mealPlan.Meal = await _nutritionRepository.GetById(mealPlan.MealId);
+        }
         return mealPlans;
     
     }
@@ -45,6 +53,10 @@ public class MealPlanRepository : IMealPlanRepository
     public async Task<IEnumerable<MealPlan>> GetMealPlansByUserName(string userName)
     {
         var mealPlans = await _dataBaseContext.MealPlans.Where(x => x.UserName == userName).ToListAsync();
+        foreach (var mealPlan in mealPlans)
+        {
+            mealPlan.Meal = await _nutritionRepository.GetById(mealPlan.MealId);
+        }
         return mealPlans;
     }
 
