@@ -1,6 +1,6 @@
 import React from "react";
-import "../index.css";
-import { capitalizeWords } from "../../utilities/utils";
+import "../../index.css";
+import { capitalizeWords } from "../../../utilities/utils";
 
 function TableComponent({ dataArray }) {
 

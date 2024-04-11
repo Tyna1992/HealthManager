@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import "../index.css";
-import { capitalizeWords } from "../../utilities/utils";
+import "../../index.css";
+import { capitalizeWords } from "../../../utilities/utils";
 
 function AdminTableComponent({ dataArray, onDelete, onEdit }) {
   const [dataKeys, setDataKeys] = useState([]);
