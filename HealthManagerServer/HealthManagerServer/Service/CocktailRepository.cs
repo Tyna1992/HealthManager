@@ -1,10 +1,13 @@
 using HealthManagerServer.Data;
+using HealthManagerServer.Model;
 using Microsoft.EntityFrameworkCore;
+
+namespace HealthManagerServer.Service;
 
 public class CocktailRepository : ICocktailRepository
 {
     private readonly DataBaseContext _context;
-    
+
     public CocktailRepository(DataBaseContext context)
     {
         _context = context;
@@ -21,12 +24,10 @@ public class CocktailRepository : ICocktailRepository
         var cocktail = await _context.Cocktails.FirstOrDefaultAsync(cocktail => cocktail.Id == id);
         if (cocktail != null)
         {
-        _context.Cocktails.Remove(cocktail);
-         await  _context.SaveChangesAsync();
-            
+            _context.Cocktails.Remove(cocktail);
+            await _context.SaveChangesAsync();
         }
     }
-    
 
     public async Task<IEnumerable<Cocktail>> GetAll()
     {
@@ -50,6 +51,4 @@ public class CocktailRepository : ICocktailRepository
             await _context.SaveChangesAsync();
         }
     }
-    
-
 }

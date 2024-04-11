@@ -2,10 +2,8 @@ using System.Text.Json;
 using HealthManagerServer.Model;
 
 namespace HealthManagerServer.Service.JsonProcess;
-
 public class JsonProcessor
 {
-
     public Nutrition ProcessNutritionJson(string data)
     {
         JsonDocument document = JsonDocument.Parse(data);
@@ -38,9 +36,7 @@ public class JsonProcessor
             Carbohydrates_total_g = carbohydratesTotal,
             Fiber_g = fiber,
             Sugar_g = sugar
-
         };
-
     }
     
     public IList<Activity> ProcessActivityJson(string data, int weightInPounds)
@@ -66,9 +62,7 @@ public class JsonProcessor
                 Total_calories = totalCaloriesBurned
             });
         }
-        
         return list;
-
     }
 
     public IList<Cocktail> ProcessCocktailJson(string data)
@@ -92,7 +86,6 @@ public class JsonProcessor
                 Instructions = instructions
             });
         }
-        
         return list;
     }
 }

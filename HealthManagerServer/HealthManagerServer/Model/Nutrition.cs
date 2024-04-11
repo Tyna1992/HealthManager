@@ -1,3 +1,5 @@
+namespace HealthManagerServer.Model;
+
 public class Nutrition
 {
     public int Id { get; set; }

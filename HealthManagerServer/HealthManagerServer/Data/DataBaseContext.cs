@@ -1,6 +1,5 @@
 using HealthManagerServer.Model;
 using Microsoft.EntityFrameworkCore;
-using DotNetEnv;
 
 namespace HealthManagerServer.Data;
 
@@ -13,11 +12,7 @@ public class DataBaseContext : DbContext
 
     public DataBaseContext(DbContextOptions<DataBaseContext> options) : base(options)
     {
-
     }
-
-
-    
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

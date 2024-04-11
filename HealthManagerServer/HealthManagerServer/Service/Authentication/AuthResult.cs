@@ -1,4 +1,3 @@
-
 namespace HealthManagerServer.Service.Authentication;
 
 public record AuthResult(

@@ -11,14 +11,12 @@ namespace HealthManagerServer.Controllers;
 [Route("[controller]")]
 public class MealController : ControllerBase
 {
-    private readonly ILogger<MealController> _logger;
-    private readonly INutritionRepository _nutritionRepository ;
+    private readonly INutritionRepository _nutritionRepository;
     private readonly NutritionApiCall _nutritionApiCall;
     private readonly JsonProcessor _jsonProcessor;
 
-    public MealController(ILogger<MealController> logger, INutritionRepository userRepository, NutritionApiCall nutritionApiCall, JsonProcessor jsonProcessor)
+    public MealController(INutritionRepository userRepository, NutritionApiCall nutritionApiCall, JsonProcessor jsonProcessor)
     {
-        _logger = logger;
         _nutritionRepository = userRepository;
         _nutritionApiCall = nutritionApiCall;
         _jsonProcessor = jsonProcessor;
@@ -43,24 +41,23 @@ public class MealController : ControllerBase
                     var nutrition = _jsonProcessor.ProcessNutritionJson(nutritionData);
                     _nutritionRepository.AddNutrition(nutrition);
                     nutritionList.Add(nutrition);
-                    _logger.LogInformation(nutrition + " added to the database");
                 }
                 else
                 {
                     alreadyInDatabaseNutrition.Add(result);
                 }
             }
-            
+
             if (alreadyInDatabaseNutrition.Count > 0 && nutritionList.Count == 0)
             {
                 return Ok(alreadyInDatabaseNutrition);
             }
-            
+
             if (alreadyInDatabaseNutrition.Count > 0 && nutritionList.Count > 0)
             {
                 return Ok(alreadyInDatabaseNutrition.Concat(nutritionList));
             }
-            
+
             return Ok(nutritionList);
         }
         catch (Exception e)
@@ -70,7 +67,7 @@ public class MealController : ControllerBase
 
     }
 
-    [HttpGet("/api/meal/getAll"), Authorize(Roles ="Admin")]
+    [HttpGet("/api/meal/getAll"), Authorize(Roles = "Admin")]
     public IActionResult GetAll()
     {
         try
@@ -83,7 +80,7 @@ public class MealController : ControllerBase
         }
     }
 
-    [HttpDelete("/api/meal/delete/{id}"), Authorize(Roles ="Admin")]
+    [HttpDelete("/api/meal/delete/{id}"), Authorize(Roles = "Admin")]
     public async Task<IActionResult> Delete(int id)
     {
         try
@@ -97,7 +94,7 @@ public class MealController : ControllerBase
         }
     }
 
-    [HttpPatch("/api/meal/update/{id}"), Authorize(Roles ="Admin")]
+    [HttpPatch("/api/meal/update/{id}"), Authorize(Roles = "Admin")]
     public async Task<IActionResult> Update(int id, [FromBody] Nutrition nutrition)
     {
         try

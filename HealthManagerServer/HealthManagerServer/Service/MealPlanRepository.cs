@@ -6,13 +6,11 @@ namespace HealthManagerServer.Service;
 
 public class MealPlanRepository : IMealPlanRepository
 {
-    private readonly UserContext _userContext;
     private readonly DataBaseContext _dataBaseContext;
     private readonly INutritionRepository _nutritionRepository;
 
-    public MealPlanRepository(UserContext userContext, DataBaseContext dataBaseContext, INutritionRepository nutritionRepository)
+    public MealPlanRepository(DataBaseContext dataBaseContext, INutritionRepository nutritionRepository)
     {
-        _userContext = userContext;
         _dataBaseContext = dataBaseContext;
         _nutritionRepository = nutritionRepository;
     }
@@ -47,7 +45,6 @@ public class MealPlanRepository : IMealPlanRepository
             mealPlan.Meal = await _nutritionRepository.GetById(mealPlan.MealId);
         }
         return mealPlans;
-    
     }
 
     public async Task<IEnumerable<MealPlan>> GetMealPlansByUserName(string userName)
@@ -88,4 +85,3 @@ public class MealPlanRepository : IMealPlanRepository
         }
     }
 }
-    

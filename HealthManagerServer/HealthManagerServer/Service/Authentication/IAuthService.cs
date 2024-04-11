@@ -1,5 +1,6 @@
 using System.IdentityModel.Tokens.Jwt;
-using HealthManagerServer.Service.Authentication;
+
+namespace HealthManagerServer.Service.Authentication;
 
 public interface IAuthService
 {

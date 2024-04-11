@@ -1,3 +1,7 @@
+using HealthManagerServer.Model;
+
+namespace HealthManagerServer.Service;
+
 public interface INutritionRepository
 {
     IEnumerable<Nutrition> GetAll();

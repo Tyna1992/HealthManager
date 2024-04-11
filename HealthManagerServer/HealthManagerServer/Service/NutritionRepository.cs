@@ -1,7 +1,5 @@
-
-using System.Threading.Tasks;
-
 using HealthManagerServer.Data;
+using HealthManagerServer.Model;
 using Microsoft.EntityFrameworkCore;
 
 namespace HealthManagerServer.Service;
@@ -65,7 +63,5 @@ public class NutritionRepository : INutritionRepository
             _context.Nutritions.Update(nutritionToUpdate);
             await _context.SaveChangesAsync();
         }
-        
-      
     }
 }

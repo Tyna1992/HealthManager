@@ -1,8 +1,7 @@
-
+namespace HealthManagerServer.Service.ExternalApis;
 
 public class CocktailApiCall
 {
-    
     private readonly string _apiKey;
 
     public CocktailApiCall()

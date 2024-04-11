@@ -1,3 +1,5 @@
+namespace HealthManagerServer.Model;
+
 public class Cocktail
 {
     public int Id { get; set; }

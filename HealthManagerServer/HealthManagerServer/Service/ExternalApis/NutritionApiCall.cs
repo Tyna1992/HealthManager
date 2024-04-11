@@ -1,4 +1,4 @@
-
+namespace HealthManagerServer.Service.ExternalApis;
 
 public class NutritionApiCall{
     
@@ -23,8 +23,5 @@ public class NutritionApiCall{
             return content;
         }
         return null;
-
-    }
-
-    
+    }    
 }

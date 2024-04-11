@@ -2,6 +2,7 @@ using System.Globalization;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using HealthManagerServer.Model;
 using Microsoft.IdentityModel.Tokens;
 
 namespace HealthManagerServer.Service.Authentication;

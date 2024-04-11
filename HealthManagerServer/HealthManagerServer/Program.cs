@@ -1,5 +1,6 @@
 using System.Text;
 using HealthManagerServer.Data;
+using HealthManagerServer.Model;
 using HealthManagerServer.Service;
 using HealthManagerServer.Service.Authentication;
 using HealthManagerServer.Service.ExternalApis;
@@ -32,7 +33,6 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-
 app.UseAuthentication();
 app.UseAuthorization();
 
@@ -63,28 +63,24 @@ void AddDbContext()
 {
     builder.Services.AddDbContext<DataBaseContext>(options =>
     {
-       
+
         var connectionString = GetConnectionString();
         options.UseSqlServer(connectionString);
     });
-    
+
     builder.Services.AddDbContext<UserContext>(options =>
     {
-        
-        var connectionString= GetConnectionString();
+
+        var connectionString = GetConnectionString();
         options.UseSqlServer(connectionString);
     });
-    
+
     static string? GetConnectionString()
     {
         DotNetEnv.Env.Load();
         var connectionString = DotNetEnv.Env.GetString("CONNECTION_STRING");
         return connectionString;
     }
-
-    
-
-
 }
 
 void AddIdentity()
@@ -139,7 +135,8 @@ void AddAuthentication()
 {
     builder.Services
         .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-        .AddCookie(options => {
+        .AddCookie(options =>
+        {
             options.Cookie.Name = "Authorization";
         })
         .AddJwtBearer(options =>

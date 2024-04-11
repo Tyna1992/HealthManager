@@ -2,7 +2,6 @@ using HealthManagerServer.Model;
 using HealthManagerServer.Service;
 using HealthManagerServer.Service.JsonProcess;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HealthManagerServer.Controllers;
@@ -16,15 +15,13 @@ public class MealPlanController : ControllerBase
     private readonly INutritionRepository _nutritionRepository;
     private readonly NutritionApiCall _nutritionApiCall;
     private readonly JsonProcessor _jsonProcessor;
-    private readonly ILogger<MealPlanController> _logger;
 
-    public MealPlanController(IMealPlanRepository mealPlanRepository, INutritionRepository nutritionRepository, JsonProcessor jsonProcessor, NutritionApiCall nutritionApiCall, ILogger<MealPlanController> logger)
+    public MealPlanController(IMealPlanRepository mealPlanRepository, INutritionRepository nutritionRepository, JsonProcessor jsonProcessor, NutritionApiCall nutritionApiCall)
     {
         _mealPlanRepository = mealPlanRepository;
         _nutritionRepository = nutritionRepository;
         _jsonProcessor = jsonProcessor;
         _nutritionApiCall = nutritionApiCall;
-        _logger = logger;
     }
 
 
@@ -44,7 +41,6 @@ public class MealPlanController : ControllerBase
                 var nutritionData = await _nutritionApiCall.GetNutritionData(request.Name, request.ServingSize);
                 var nutritionDataJson = _jsonProcessor.ProcessNutritionJson(nutritionData);
                 _nutritionRepository.AddNutrition(nutritionDataJson);
-                _logger.LogInformation(nutritionDataJson + " added to the database");
                 var mealPlan = new MealPlan()
                 {
                     Id = Guid.NewGuid(),
@@ -54,7 +50,6 @@ public class MealPlanController : ControllerBase
                     MealTime = request.MealTime
                 };
                 await _mealPlanRepository.AddMealPlan(mealPlan);
-                _logger.LogInformation(mealPlan + "Meal plan created successfully");
                 return Ok(mealPlan);
             }
             else
@@ -67,7 +62,6 @@ public class MealPlanController : ControllerBase
                     MealTime = request.MealTime
                 };
                 await _mealPlanRepository.AddMealPlan(mealPlan);
-                _logger.LogInformation(mealPlan + "Meal plan created successfully");
                 return Ok(mealPlan);
             }
         }

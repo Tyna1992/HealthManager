@@ -1,32 +1,28 @@
-﻿using System.Net;
-using HealthManagerServer.Model;
+﻿using HealthManagerServer.Model;
 using HealthManagerServer.Service;
 using HealthManagerServer.Service.ExternalApis;
 using HealthManagerServer.Service.JsonProcess;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Authorization.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HealthManagerServer.Controllers;
 
 public class ActivitiesController : ControllerBase
 {
-    private readonly ILogger<ActivitiesController> _logger;
     private readonly IActivityRepository _activityRepository;
     private readonly ActivitiesApiCall _activitiesApiCall;
     private readonly JsonProcessor _jsonProcessor;
-    
-    public ActivitiesController(ILogger<ActivitiesController> logger, IActivityRepository activityRepository,
+
+    public ActivitiesController(IActivityRepository activityRepository,
         ActivitiesApiCall activitiesApiCall, JsonProcessor jsonProcessor)
     {
-        _logger = logger;
         _activityRepository = activityRepository;
         _activitiesApiCall = activitiesApiCall;
         _jsonProcessor = jsonProcessor;
     }
-    
+
     [HttpGet("/api/activities/{activityName}/{weight}/{duration}")]
-    public async Task<IActionResult> SearchOrAddActivity(string activityName, int weight = 160, int duration=60)
+    public async Task<IActionResult> SearchOrAddActivity(string activityName, int weight = 160, int duration = 60)
     {
         try
         {
@@ -39,7 +35,7 @@ public class ActivitiesController : ControllerBase
                 {
                     _activityRepository.AddActivity(activity);
                 }
-                
+
                 return Ok(activities);
             }
             return Ok(result);
@@ -63,8 +59,8 @@ public class ActivitiesController : ControllerBase
             return BadRequest(e.Message);
         }
     }
-    
-    [HttpDelete("/api/activities/delete/{id}"), Authorize(Roles ="Admin")]
+
+    [HttpDelete("/api/activities/delete/{id}"), Authorize(Roles = "Admin")]
     public async Task<IActionResult> Delete(int id)
     {
         try
@@ -78,7 +74,7 @@ public class ActivitiesController : ControllerBase
         }
     }
 
-    [HttpPatch("/api/activities/update/{id}"), Authorize(Roles ="Admin")]
+    [HttpPatch("/api/activities/update/{id}"), Authorize(Roles = "Admin")]
     public async Task<IActionResult> Update(int id, [FromBody] Activity activity)
     {
         try

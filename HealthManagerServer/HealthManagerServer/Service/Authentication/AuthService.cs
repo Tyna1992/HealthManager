@@ -1,8 +1,10 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Text;
-using HealthManagerServer.Service.Authentication;
+using HealthManagerServer.Model;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
+
+namespace HealthManagerServer.Service.Authentication;
 
 public class AuthService : IAuthService
 {
@@ -52,10 +54,12 @@ public class AuthService : IAuthService
         return new AuthResult(true, managedUser.Email, managedUser.UserName, accessToken);
     }
 
-    public JwtSecurityToken Verify(string token){
+    public JwtSecurityToken Verify(string token)
+    {
         var tokenHandler = new JwtSecurityTokenHandler();
         var key = Encoding.UTF8.GetBytes(_configuration.GetSection("IssuerSigningKey").Value);
-        tokenHandler.ValidateToken(token, new TokenValidationParameters{
+        tokenHandler.ValidateToken(token, new TokenValidationParameters
+        {
             IssuerSigningKey = new SymmetricSecurityKey(key),
             ValidateIssuerSigningKey = true,
             ValidateIssuer = false,

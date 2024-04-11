@@ -8,8 +8,6 @@ namespace HealthManagerServer.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-
-
 public class AuthController : ControllerBase
 {
     private readonly IAuthService _authenticationService;
@@ -66,7 +64,7 @@ public class AuthController : ControllerBase
     public ActionResult<UserResponse> WhoAmI()
     {
         var cookieString = Request.Cookies["Authorization"];
-        
+
         var token = _authenticationService.Verify(cookieString);
 
         if (token != null)

@@ -1,11 +1,12 @@
-
+using HealthManagerServer.Model;
 using Microsoft.AspNetCore.Identity;
 
 namespace HealthManagerServer.Service.Authentication;
+
 public class AuthSeeder
 {
-    private RoleManager<IdentityRole> _roleManager;
-    private UserManager<ApplicationUser> userManager;
+    private readonly RoleManager<IdentityRole> _roleManager;
+    private readonly UserManager<ApplicationUser> userManager;
 
     public AuthSeeder(RoleManager<IdentityRole> roleManager, UserManager<ApplicationUser> userManager)
     {
@@ -21,6 +22,7 @@ public class AuthSeeder
         var tUser = CreateUserRole(_roleManager);
         tUser.Wait();
     }
+
     public void AddAdmin()
     {
         var tAdmin = CreateAdminIfNotExists();

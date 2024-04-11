@@ -39,7 +39,6 @@ public class ActivityRepository : IActivityRepository
         }
     }
     
-
     public async Task UpdateActivity(int id, Activity activity)
     {
         var activityToUpdate = await _context.Activities.FirstOrDefaultAsync(activity => activity.Id == id);
@@ -54,5 +53,4 @@ public class ActivityRepository : IActivityRepository
             await _context.SaveChangesAsync();
         }
     }
-
 }

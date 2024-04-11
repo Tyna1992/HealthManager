@@ -6,15 +6,13 @@ namespace HealthManagerServer.Controllers;
 
 public class CocktailController : ControllerBase
 {
-    private readonly ILogger<ActivitiesController> _logger;
     private readonly ICocktailRepository _cocktailRepository;
     private readonly CocktailApiCall _cocktailApiCall;
     private readonly JsonProcessor _jsonProcessor;
 
-    public CocktailController(ILogger<ActivitiesController> logger, ICocktailRepository cocktailRepository,
+    public CocktailController(ICocktailRepository cocktailRepository,
         CocktailApiCall cocktailApiCall, JsonProcessor jsonProcessor)
     {
-        _logger = logger;
         _cocktailRepository = cocktailRepository;
         _cocktailApiCall = cocktailApiCall;
         _jsonProcessor = jsonProcessor;
@@ -35,19 +33,18 @@ public class CocktailController : ControllerBase
                 {
                     _cocktailRepository.AddCocktail(cocktail);
                 }
-               
-                
+
                 return Ok(cocktails);
             }
 
-            return Ok(result); 
+            return Ok(result);
         }
         catch (Exception e)
         {
             return BadRequest(e.Message);
         }
     }
-    
+
     [HttpGet("/api/cocktail/getAll"), Authorize(Roles = "Admin")]
     public async Task<IActionResult> GetAllCocktails()
     {
@@ -68,21 +65,21 @@ public class CocktailController : ControllerBase
         try
         {
             await _cocktailRepository.DeleteCocktail(id);
-            return Ok(new {message = "Cocktail deleted"});
+            return Ok(new { message = "Cocktail deleted" });
         }
         catch (Exception e)
         {
             return BadRequest(e.Message);
         }
     }
-    
+
     [HttpPatch("/api/cocktail/update/{id}"), Authorize(Roles = "Admin")]
     public async Task<IActionResult> UpdateCocktail(int id, [FromBody] Cocktail cocktail)
     {
         try
         {
             await _cocktailRepository.UpdateCocktail(id, cocktail);
-            return Ok(new {message = "Cocktail updated"});
+            return Ok(new { message = "Cocktail updated" });
         }
         catch (Exception e)
         {
