@@ -23,11 +23,7 @@ function RegisterUser() {
             })
             console.log(user)
             alert("Registration successful!");
-            event.target.username.value = "";
-            event.target.email.value = "";
-            event.target.password.value = "";
-            event.target.weight.value = "";
-            event.target.gender.value = "";
+            navigate("/login");
         } catch(e) {
             alert("Registration failed!");
             console.log(e);
