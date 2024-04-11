@@ -1,8 +1,10 @@
 import React, {useEffect, useState} from 'react';
 import {useLocation} from "react-router-dom";
+import MealPlanTableComponent from '../Components/Tables/MealPlanTableComponent';
 
 function Profile() {
-    const [userData, setUserData] = useState({});    
+    const [userData, setUserData] = useState({});   
+    const [userMealPlan, setUserMealPlan] = useState([]);
 
     useEffect(() => {
         async function fetchData() {
@@ -36,6 +38,23 @@ function Profile() {
         }
         fetchData();
     }, []);
+
+    const getMealPlans = async () =>{
+        try {
+            const response = await fetch(`/api/mealPlan/getByUserName/${userData.userName}`, {
+                method: "GET",
+                credentials: "include",
+                headres:{
+                    "Content-Type": "application/json"
+                }
+            });
+            const data = await response.json();
+            setUserMealPlan(data);
+        } 
+        catch (error) {
+            console.log("Error", error);
+        }
+    }
     
     return (
         <div className="profile">
@@ -44,10 +63,18 @@ function Profile() {
             <p>Email: {userData.email}</p>
             <p>Username: {userData.userName}</p>
             <p>Gender: {userData.gender}</p>
-            <p>Weight: {userData.weight}</p>
-            <p>Phone Number: {userData.phoneNumber}</p>
+            <p>Weight: {userData.weight} kg</p>
             <button>Edit</button>
             <button>Delete</button>
+            <button onClick={() => getMealPlans()}>Show diet plan</button>
+            {userMealPlan.length !== 0 ?
+            <div>
+                <h2>Diet Plans</h2>
+                <MealPlanTableComponent dataArray={userMealPlan} />
+            </div>
+            :
+            ""
+            }
         </div>
     );
 };
