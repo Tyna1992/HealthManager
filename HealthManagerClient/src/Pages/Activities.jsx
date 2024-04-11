@@ -1,14 +1,13 @@
 import React, { useState } from 'react';
-import { capitalizeWords } from '../../utilities/utils';
 import TableComponent from "../Components/TableComponent.jsx";
 
-function Activities(props) {
+function Activities() {
 
     const [activity, setActivity] = useState([]);
     const [activityName, setActivityName] = useState("");
     const [duration, setDuration] = useState("");
     const [weight, setWeight] = useState("");
-    const [hideResult, setHideResult] = useState(true);
+
 
     const fetchActivity = async () => {
         if (activityName === ""){
@@ -28,14 +27,11 @@ function Activities(props) {
                 throw new Error("Fetch failed!")
             }
             const data = await response.json();
-            console.log(data);
             if(data.length === 0){
                 alert("Cannot find the activity. Please try again.")
                 throw new Error("Cannot find the activity. Please try again.") 
             }
             setActivity(data);
-            setHideResult(false);
-            console.log(activity)
         }
         catch (error) {
             console.error(error);
@@ -70,12 +66,12 @@ return (
         <br></br>
         <input type="text" name="duration" value={duration} placeholder="Duration of the activity" onChange={handleDurationChange}></input>
         <br></br>
-        <label>Weight (in pounds):</label>
+        <label>Weight (in kg):</label>
         <br></br>
         <input type="text" name="weight" value={weight} placeholder="Weight of the person" onChange={handleWeightChange}></input>
         <br></br>
         <button onClick={fetchActivity}>Search activity</button>
-        <button onClick={() => {setHideResult(true); handleClear()}}>Clear</button>
+        <button onClick={() => handleClear()}>Clear</button>
 
         { activity.length !== 0 ? (
             <div className="activityTable">
@@ -84,7 +80,6 @@ return (
         ) :(
             ""
         )}
-      
     </div>
   );
 };
