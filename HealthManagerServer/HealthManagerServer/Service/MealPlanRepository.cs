@@ -8,16 +8,22 @@ public class MealPlanRepository : IMealPlanRepository
 {
     private readonly UserContext _userContext;
     private readonly DataBaseContext _dataBaseContext;
+    private readonly INutritionRepository _nutritionRepository;
 
-    public MealPlanRepository(UserContext userContext, DataBaseContext dataBaseContext)
+    public MealPlanRepository(UserContext userContext, DataBaseContext dataBaseContext, INutritionRepository nutritionRepository)
     {
         _userContext = userContext;
         _dataBaseContext = dataBaseContext;
+        _nutritionRepository = nutritionRepository;
     }
 
     public async Task<IEnumerable<MealPlan>> GetAllMealPlans()
     {
         var mealPlans = await _dataBaseContext.MealPlans.ToListAsync();
+        foreach (var mealPlan in mealPlans)
+        {
+            mealPlan.Meal = await _nutritionRepository.GetById(mealPlan.MealId);
+        }
         return mealPlans;
     }
 
