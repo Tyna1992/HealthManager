@@ -43,7 +43,7 @@ public class JsonProcessor
 
     }
     
-    public IList<Activity> ProcessActivityJson(string data, int weight)
+    public IList<Activity> ProcessActivityJson(string data, int weightInPounds)
     {
         JsonDocument document = JsonDocument.Parse(data);
         JsonElement root = document.RootElement;
@@ -61,7 +61,7 @@ public class JsonProcessor
             {
                 Name = name,
                 Calories_per_hour = caloriesBurnedPerHour,
-                Weight = weight,
+                Weight = (int)(weightInPounds / 2.20462),
                 Duration_minutes = duration,
                 Total_calories = totalCaloriesBurned
             });
@@ -94,6 +94,5 @@ public class JsonProcessor
         }
         
         return list;
-       
     }
 }
