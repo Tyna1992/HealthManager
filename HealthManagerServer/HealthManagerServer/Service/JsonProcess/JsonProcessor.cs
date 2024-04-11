@@ -57,7 +57,7 @@ public class JsonProcessor
             {
                 Name = name,
                 Calories_per_hour = caloriesBurnedPerHour,
-                Weight = (int)(weightInPounds / 2.20462),
+                Weight = weightInPounds,
                 Duration_minutes = duration,
                 Total_calories = totalCaloriesBurned
             });

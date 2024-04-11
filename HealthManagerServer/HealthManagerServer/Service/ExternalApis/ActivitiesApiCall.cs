@@ -11,8 +11,8 @@ public class ActivitiesApiCall
 
     public async Task<string> GetActivitiesData(string activityName, int weight = 75, int duration = 60)
     {
-        int weightInPounds = (int)(weight / 0.45359237);
-        string url = $"https://api.api-ninjas.com/v1/caloriesburned/?activity={activityName}&weight={weightInPounds}&duration={duration}";
+        
+        string url = $"https://api.api-ninjas.com/v1/caloriesburned/?activity={activityName}&weight={weight}&duration={duration}";
         using var client = new HttpClient();
         client.DefaultRequestHeaders.Add("X-Api-Key", _apiKey);
         var response = await client.GetAsync(url);
