@@ -1,10 +1,10 @@
 import React, {useEffect, useState} from 'react';
-import {useLocation} from "react-router-dom";
 import MealPlanTableComponent from '../Components/Tables/MealPlanTableComponent';
 
 function Profile() {
     const [userData, setUserData] = useState({});   
     const [userMealPlan, setUserMealPlan] = useState([]);
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         async function fetchData() {
@@ -41,6 +41,7 @@ function Profile() {
 
     const getMealPlans = async () =>{
         try {
+            setLoading(true);
             const response = await fetch(`/api/mealPlan/getByUserName/${userData.userName}`, {
                 method: "GET",
                 credentials: "include",
@@ -50,8 +51,27 @@ function Profile() {
             });
             const data = await response.json();
             setUserMealPlan(data);
+            setLoading(false);
         } 
         catch (error) {
+            console.log("Error", error);
+        }
+    }
+
+    const deleteMealPlan = async (id) => {
+        try {
+            const response = await fetch(`/api/mealPlan/delete/${id}`, {
+                method: "DELETE",
+                credentials: "include",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            });
+            if (response.ok) {
+                const newMealPlan = userMealPlan.filter((mealPlan) => mealPlan.id !== id);
+                setUserMealPlan(newMealPlan);
+            }
+        } catch (error) {
             console.log("Error", error);
         }
     }
@@ -60,20 +80,31 @@ function Profile() {
         <div className="profile">
             <h1>Welcome {userData.userName}!</h1>
             <h2>Profile</h2>
-            <p>Email: {userData.email}</p>
-            <p>Username: {userData.userName}</p>
-            <p>Gender: {userData.gender}</p>
-            <p>Weight: {userData.weight} kg</p>
-            <button>Edit</button>
-            <button>Delete</button>
+            <table>
+                <tbody>
+                <tr>
+                    <th>Email</th>
+                    <th>User name</th>
+                    <th>Gender</th>
+                    <th>Weight</th>
+                </tr>
+                <tr>
+                    <td>{userData.email}</td>
+                    <td>{userData.userName}</td>
+                    <td>{userData.gender}</td>
+                    <td>{userData.weight} kg</td>
+                </tr>
+                </tbody>
+            </table>
+            <button disabled>Edit</button>
+            <button disabled>Delete</button>
             <button onClick={() => getMealPlans()}>Show diet plan</button>
-            {userMealPlan.length !== 0 ?
+            {userMealPlan.length !== 0 && !loading?
             <div>
                 <h2>Diet Plans</h2>
-                <MealPlanTableComponent dataArray={userMealPlan} />
+                <MealPlanTableComponent dataArray={userMealPlan} onDelete={deleteMealPlan} />
             </div>
-            :
-            ""
+            : loading ? <h1>Loading Meal Plans...</h1> : null
             }
         </div>
     );
