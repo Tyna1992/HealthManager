@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { capitalizeWords } from "../../utilities/utils";
-import TableComponent from "../Components/TableComponent.jsx";
+import TableComponent from "../Components/Tables/TableComponent";
 
 function Cocktails(props) {
     

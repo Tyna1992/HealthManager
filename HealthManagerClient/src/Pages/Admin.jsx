@@ -1,6 +1,6 @@
 import { useState } from "react";
 import "../index.css";
-import AdminTableComponent from "../Components/AdminTableComponent";
+import AdminTableComponent from "../Components/Tables/AdminTableComponent";
 import MealDataUpdateForm from "../Components/Forms/MealUpdateForm";
 import ActivityUpdateForm from "../Components/Forms/ActivityUpdateForm";
 import CocktailUpdateForm from "../Components/Forms/CocktailUpdateForm";

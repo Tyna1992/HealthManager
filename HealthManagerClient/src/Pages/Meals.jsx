@@ -1,6 +1,6 @@
 ﻿import { useState } from "react";
 import "../index.css";
-import TableComponent from "../Components/TableComponent";
+import TableComponent from "../Components/Tables/TableComponent";
 
 function Meals(props) {
   const [meal, setMeal] = useState("");

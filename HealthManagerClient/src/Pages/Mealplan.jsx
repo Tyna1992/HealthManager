@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import "../index.css";
-import TableComponent from "../Components/TableComponent";
+import TableComponent from "../Components/Tables/TableComponent";
 
 function Mealplan(props) {
   const today = new Date().toISOString().slice(0, 10);

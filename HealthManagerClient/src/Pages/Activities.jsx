@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import TableComponent from "../Components/TableComponent.jsx";
+import TableComponent from "../Components/Tables/TableComponent";
 
 function Activities() {
 
