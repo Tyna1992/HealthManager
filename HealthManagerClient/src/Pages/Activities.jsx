@@ -2,12 +2,10 @@ import React, { useState } from 'react';
 import TableComponent from "../Components/Tables/TableComponent";
 
 function Activities() {
-
     const [activity, setActivity] = useState([]);
     const [activityName, setActivityName] = useState("");
     const [duration, setDuration] = useState("");
     const [weight, setWeight] = useState("");
-
 
     const fetchActivity = async () => {
         if (activityName === ""){
@@ -21,7 +19,6 @@ function Activities() {
                     "Content-Type": "application/json"
                 }
             })
-            console.log(response);
             if(!response.ok){
                 alert("Cannot find the activity. Please try again.")
                 throw new Error("Fetch failed!")
@@ -72,14 +69,11 @@ return (
         <br></br>
         <button onClick={fetchActivity}>Search activity</button>
         <button onClick={() => handleClear()}>Clear</button>
-
-        { activity.length !== 0 ? (
+        {activity.length !== 0 ? (
             <div className="activityTable">
                 <TableComponent dataArray={activity}></TableComponent>
             </div>
-        ) :(
-            ""
-        )}
+        ) : null}
     </div>
   );
 };

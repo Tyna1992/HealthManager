@@ -46,7 +46,6 @@
   font-weight: 400;
 
   color-scheme: light dark;
-  /*color: rgb(0, 0, 0);*/
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -112,13 +111,13 @@ table {
   justify-content: center;
 }
 
-.activityTable{
+.activityTable {
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.cocktailTable{
+.cocktailTable {
   display: flex;
   align-items: center;
   justify-content: center;

@@ -1,8 +1,7 @@
 import React from "react";
-import { Outlet, Link, useLocation} from "react-router-dom";
+import { Outlet, Link, useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 import "./index.css";
-import { capitalizeWords } from "../utilities/utils";
 import LogoutButton from "./Components/LogoutButton";
 
 function App() {
@@ -25,7 +24,7 @@ function App() {
           setUser(data.userName);
         }
       } catch (error) {
-        console.log("Error", error);
+        console.error(error);
       }
     }
     fetchData();
@@ -39,18 +38,13 @@ function App() {
 
   useEffect(() => {
     document.body.className = theme;
-    console.log(localStorage.getItem("theme"));
   }, [theme]);
 
   return (
     <div className="App">
       <div className="container">
         <Link to="/">
-          <img
-            src="/heartlogo.png"
-            alt="logo"
-            className="image"
-          />
+          <img src="/heartlogo.png" alt="logo" className="image" />
         </Link>
         <h1 className="heading">Welcome to the Health Manager App!</h1>
       </div>
@@ -59,55 +53,38 @@ function App() {
           {user === null ? (
             <>
               <Link to="/register">
-                <button type="button">
-                  Register
-                </button>
+                <button type="button">Register</button>
               </Link>
-
               <Link to="/login">
-                <button type="button">
-                  Login
-                </button>
+                <button type="button">Login</button>
               </Link>
             </>
           ) : user !== "admin" ? (
             <>
               <Link to="/profile">
-                <button type="button">
-                  Profile
-                </button>
+                <button type="button">Profile</button>
               </Link>
               <LogoutButton />
-              <Link to= "/mealplanner">
-                <button type= "button"> Diet planner </button>
+              <Link to="/mealplanner">
+                <button type="button"> Diet planner </button>
               </Link>
             </>
           ) : (
             <>
               <Link to="/admin">
-                <button type="button">
-                  Admin site
-                </button>
+                <button type="button">Admin site</button>
               </Link>
               <LogoutButton />
             </>
           )}
           <Link to="/drinks">
-            <button type="button">
-              Search drink
-            </button>
+            <button type="button">Search drink</button>
           </Link>
-
           <Link to="/food">
-            <button type="button">
-              Search food
-            </button>
+            <button type="button">Search food</button>
           </Link>
-
           <Link to="/activities">
-            <button type="button">
-              Search activities
-            </button>
+            <button type="button">Search activities</button>
           </Link>
           <button type="button" onClick={changeTheme}>
             {theme === "light" ? "Dark mode" : "Light mode"}

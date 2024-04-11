@@ -18,13 +18,10 @@ function Login() {
       if (!response.ok) {
         throw new Error("Invalid credentials");
       }
-      const data = await response.json();
-      console.log(data);
       setPassword("");
       setUsername("");
       navigate("/");
     } catch (error) {
-      alert(error.message);
       console.error(error);
     }
   }
@@ -36,7 +33,6 @@ function Login() {
         <form onSubmit={handleSubmit}>
           <label>Username:</label>
           <br />
-
           <input
             type="text"
             name="username"
@@ -44,7 +40,6 @@ function Login() {
             onChange={(e) => setUsername(e.target.value)}
           />
           <br />
-
           <label>Password:</label>
           <br />
           <input

@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import "../index.css";
 import TableComponent from "../Components/Tables/TableComponent";
 
-function Mealplan(props) {
+function Mealplan() {
   const today = new Date().toISOString().slice(0, 10);
   const [userData, setUserData] = useState({});
   const [nutritionalValue, setNutritionalValue] = useState([]);
@@ -27,7 +27,7 @@ function Mealplan(props) {
           setUserData(data);
         }
       } catch (error) {
-        console.log("Error", error);
+        console.error(error);
       }
     }
     fetchData();
@@ -56,7 +56,6 @@ function Mealplan(props) {
       }
       setNutritionalValue(data);
       setNutritionalValueShow(true);
-      console.log(data);
     } catch (error) {
       console.error(error);
     }
@@ -78,13 +77,10 @@ function Mealplan(props) {
           MealTime: mealTime,
         }),
       });
-
       if (!response.ok) {
         alert("Cannot add the meal to the plan. Please try again.");
-        console.log(response);
         throw new Error("Fetch failed!");
       }
-      console.log("Meal added to the plan.");
       alert("Meal added to the plan.");
       window.location.reload();
     } catch (error) {
@@ -116,7 +112,7 @@ function Mealplan(props) {
   };
 
   return (
-    <>
+    <div>
       <h1>Welcome {userData.userName}!</h1>
       <div>
         <div className="container">
@@ -175,7 +171,6 @@ function Mealplan(props) {
           </div>
           <br />
         </div>
-
         <button onClick={() => fetchNutritionalValue()}>Show nutritional value</button>
         <button onClick={() => handleClear()}>Clear</button>
         <button onClick={() => fetchMealPlan()} type="button" disabled={!nutritionalValueShow}>
@@ -187,11 +182,9 @@ function Mealplan(props) {
             <TableComponent dataArray={nutritionalValue} />
             <br />
           </div>
-        ) : (
-          ""
-        )}
+        ) : null}
       </div>
-    </>
+    </div>
   );
 }
 

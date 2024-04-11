@@ -2,7 +2,7 @@
 import "../index.css";
 import TableComponent from "../Components/Tables/TableComponent";
 
-function Meals(props) {
+function Meals() {
   const [meal, setMeal] = useState("");
   const [amount, setAmount] = useState("");
   const [nutritionalValue, setNutritionalValue] = useState([]);
@@ -29,7 +29,6 @@ function Meals(props) {
         throw new Error("Cannot find the nutritional value for the meal. Please try again.");
       }
       setNutritionalValue(data);
-      console.log(data);
     } catch (error) {
       console.error(error);
     }
@@ -53,32 +52,31 @@ function Meals(props) {
     <div>
       <div className="container">
         <div className="input-fields">
-        <label>Meal name:</label>
-        <br />
-        <input
-          required
-          type="text"
-          name="meal"
-          value={meal}
-          placeholder="Name of the meal"
-          onChange={handleMealChange}
-        ></input>
+          <label>Meal name:</label>
+          <br />
+          <input
+            required
+            type="text"
+            name="meal"
+            value={meal}
+            placeholder="Name of the meal"
+            onChange={handleMealChange}
+          ></input>
         </div>
         <br />
         <div className="input-fields">
-        <label>Serving size:</label>
-        <br />
-        <input
-          required
-          type="text"
-          name="amount"
-          value={amount}
-          placeholder="In gramms"
-          onChange={handleAmountChange}
-        ></input>
+          <label>Serving size:</label>
+          <br />
+          <input
+            required
+            type="text"
+            name="amount"
+            value={amount}
+            placeholder="In gramms"
+            onChange={handleAmountChange}
+          ></input>
         </div>
       </div>
-      
       <button onClick={() => fetchNutritionalValue()}>Show nutritional value</button>
       <button onClick={() => handleClear()}>Clear</button>
       <br />
@@ -86,9 +84,7 @@ function Meals(props) {
         <div className="mealTable">
           <TableComponent dataArray={nutritionalValue} />
         </div>
-      ) : (
-        ""
-      )}
+      ) : null}
     </div>
   );
 }

@@ -11,7 +11,6 @@ import Profile from "./Pages/Profile";
 import Admin from "./Pages/Admin";
 import Mealplan from "./Pages/Mealplan";
 
-
 const router = createBrowserRouter([
     {
         path: "/",

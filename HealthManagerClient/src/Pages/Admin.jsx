@@ -42,11 +42,10 @@ function Admin() {
         },
       });
       const data = await response.json();
-      console.log(data);
       setMealData(data);
       setLoadingScreen(false);
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   }
 
@@ -63,9 +62,8 @@ function Admin() {
         const newData = mealData.filter((meal) => meal.id !== id);
         setMealData(newData);
       }
-      console.log("Meal deleted!");
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   }
 
@@ -80,10 +78,9 @@ function Admin() {
       });
       if (response.ok) {
         setMealData(mealData.map((row) => (row.id === data.id ? { ...row, ...data } : row)));
-        console.log("Meal updated!");
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   }
 
@@ -113,7 +110,7 @@ function Admin() {
       setSportData(data);
       setLoadingScreen(false);
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   }
 
@@ -130,9 +127,8 @@ function Admin() {
         const newData = sportData.filter((sport) => sport.id !== id);
         setSportData(newData);
       }
-      console.log("Sport deleted!");
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   }
 
@@ -147,10 +143,9 @@ function Admin() {
       });
       if (response.ok) {
         setSportData(sportData.map((row) => (row.id === data.id ? { ...row, ...data } : row)));
-        console.log("Sport updated!");
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   }
 
@@ -180,7 +175,7 @@ function Admin() {
       setDrinksData(data);
       setLoadingScreen(false);
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   }
 
@@ -197,9 +192,8 @@ function Admin() {
         const newData = drinksData.filter((drink) => drink.id !== id);
         setDrinksData(newData);
       }
-      console.log("Drink deleted!");
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   }
 
@@ -216,10 +210,9 @@ function Admin() {
         setDrinksData(
           drinksData.map((row) => (row.id === data.id ? { ...row, ...data } : row))
         );
-        console.log("Drink updated!");
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   }
 
@@ -249,7 +242,7 @@ function Admin() {
       setUsersData(data);
       setLoadingScreen(false);
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   }
 
@@ -266,9 +259,8 @@ function Admin() {
         const newData = usersData.filter((user) => user.id !== id);
         setUsersData(newData);
       }
-      console.log("User deleted!");
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   }
 
@@ -283,10 +275,9 @@ function Admin() {
       });
       if (response.ok) {
         setUsersData(usersData.map((row) => (row.id === id ? { ...row, ...data } : row)));
-        console.log("User updated!");
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   }
 
@@ -313,14 +304,13 @@ function Admin() {
         },
       });
       const data = await response.json();
-      console.log(data);
-      data.forEach(element => {
+      data.forEach((element) => {
         element.date = element.date.split("T")[0];
       });
       setMealPlanData(data);
       setLoadingScreen(false);
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   }
 
