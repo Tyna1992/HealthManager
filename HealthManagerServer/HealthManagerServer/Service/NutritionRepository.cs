@@ -35,6 +35,11 @@ public class NutritionRepository : INutritionRepository
         return _context.Nutritions.ToList();
     }
 
+    public async Task<Nutrition> GetById(int id)
+    {
+        var result = await _context.Nutritions.FirstOrDefaultAsync(nutrition => nutrition.Id == id);
+        return result;
+    }
     public Nutrition? GetByNameAndWeight(string name, double weight)
     {
         return _context.Nutritions.FirstOrDefault(nutrition => nutrition.Name == name && nutrition.Serving_size_g == weight);

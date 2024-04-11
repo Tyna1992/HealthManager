@@ -5,4 +5,5 @@ public interface INutritionRepository
     void AddNutrition(Nutrition nutrition);
     Task DeleteNutrition(int id);
     Task UpdateNutrition(int id, Nutrition nutrition);
+    Task<Nutrition> GetById(int id);
 }
