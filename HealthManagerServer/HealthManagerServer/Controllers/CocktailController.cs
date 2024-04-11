@@ -1,3 +1,4 @@
+using HealthManagerServer.Model;
 using HealthManagerServer.Service;
 using HealthManagerServer.Service.ExternalApis;
 using HealthManagerServer.Service.JsonProcess;
