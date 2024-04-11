@@ -49,7 +49,7 @@ function RegisterUser() {
                 <br></br>
                 <input type="password" name="password"></input>
                 <br></br>
-                <label>Weight:</label>
+                <label>Weight in kg:</label>
                 <br></br>
                 <input type="number"name="weight"></input>
                 <br></br>
