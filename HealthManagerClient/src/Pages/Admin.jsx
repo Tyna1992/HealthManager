@@ -213,7 +213,9 @@ function Admin() {
         body: JSON.stringify(data),
       });
       if (response.ok) {
-        setDrinksData(drinksData.map((row) => (row.id === data.id ? { ...row, ...data } : row)));
+        setDrinksData(
+          drinksData.map((row) => (row.id === data.id ? { ...row, ...data } : row))
+        );
         console.log("Drink updated!");
       }
     } catch (error) {
@@ -312,6 +314,9 @@ function Admin() {
       });
       const data = await response.json();
       console.log(data);
+      data.forEach(element => {
+        element.date = element.date.split("T")[0];
+      });
       setMealPlanData(data);
       setLoadingScreen(false);
     } catch (error) {
@@ -410,7 +415,7 @@ function Admin() {
           Show Meal Plan Data
         </button>
       </div>
-      <div className="table">
+      <div>
         {showMealDataTable &&
         !showDrinksDataTable &&
         !showSportDataTable &&
@@ -474,11 +479,13 @@ function Admin() {
           !sportUpdateForm &&
           !drinkUpdateForm &&
           !userUpdateForm ? (
-          <AdminTableComponent
-            dataArray={usersData}
-            onDelete={handleUsersDelete}
-            onEdit={handleUsersDataToUpdate}
-          />
+          <div className="table">
+            <AdminTableComponent
+              dataArray={usersData}
+              onDelete={handleUsersDelete}
+              onEdit={handleUsersDataToUpdate}
+            />
+          </div>
         ) : showMealDataTable &&
           !showDrinksDataTable &&
           !showSportDataTable &&
@@ -487,11 +494,13 @@ function Admin() {
           !sportUpdateForm &&
           !drinkUpdateForm &&
           !userUpdateForm ? (
-          <AdminTableComponent
-            dataArray={mealData}
-            onDelete={handleMealDelete}
-            onEdit={handleMealDataToUpdate}
-          />
+          <div className="table">
+            <AdminTableComponent
+              dataArray={mealData}
+              onDelete={handleMealDelete}
+              onEdit={handleMealDataToUpdate}
+            />
+          </div>
         ) : !showMealDataTable &&
           showDrinksDataTable &&
           !showSportDataTable &&
@@ -500,11 +509,13 @@ function Admin() {
           !sportUpdateForm &&
           !drinkUpdateForm &&
           !userUpdateForm ? (
-          <AdminTableComponent
-            dataArray={drinksData}
-            onDelete={handleDrinksDelete}
-            onEdit={handleDrinksDataToUpdate}
-          />
+          <div className="table">
+            <AdminTableComponent
+              dataArray={drinksData}
+              onDelete={handleDrinksDelete}
+              onEdit={handleDrinksDataToUpdate}
+            />
+          </div>
         ) : !showMealDataTable &&
           !showDrinksDataTable &&
           showSportDataTable &&
@@ -513,11 +524,13 @@ function Admin() {
           !sportUpdateForm &&
           !drinkUpdateForm &&
           !userUpdateForm ? (
-          <AdminTableComponent
-            dataArray={sportData}
-            onDelete={handleSportDelete}
-            onEdit={handleSportDataToUpdate}
-          />
+          <div className="table">
+            <AdminTableComponent
+              dataArray={sportData}
+              onDelete={handleSportDelete}
+              onEdit={handleSportDataToUpdate}
+            />
+          </div>
         ) : showMealPlanDataTable &&
           !showUsersDataTable &&
           !showMealDataTable &&
@@ -527,7 +540,9 @@ function Admin() {
           !sportUpdateForm &&
           !drinkUpdateForm &&
           !userUpdateForm ? (
-          <AdminTableComponent dataArray={mealPlanData} />
+          <div className="table">
+            <AdminTableComponent dataArray={mealPlanData} />
+          </div>
         ) : mealUpdateForm && !drinkUpdateForm && !sportUpdateForm && !userUpdateForm ? (
           <MealDataUpdateForm
             data={mealToUpdate}
