@@ -1,9 +1,9 @@
 using HealthManagerServer.Model;
 using HealthManagerServer.Service;
 using HealthManagerServer.Service.JsonProcess;
-using Microsoft.JSInterop;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
+using HealthManagerServer.Service.ExternalApis;
 
 namespace HealthManagerServer.Controllers;
 
