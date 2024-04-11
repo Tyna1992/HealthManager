@@ -92,17 +92,12 @@ body.dark {
   background-position: center;
 }
 
-.table {
-  padding: 0.5rem;
-  color: black;  
-}
-
 table {
   width: fit-content;
   text-align: left;
+  color: black;
   border-collapse: collapse;
-  margin: 0;
-  padding: 0;
+  margin: auto;
   border-color: #1da6cf;
   border: 5px solid#1da6cf;
   justify-content: center;
