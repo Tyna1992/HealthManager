@@ -3,6 +3,7 @@ import { Outlet, Link, useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 import "./index.css";
 import LogoutButton from "./Components/LogoutButton";
+import {ToastContainer} from "react-toastify";
 
 function App() {
   const [user, setUser] = useState(null);
@@ -46,7 +47,7 @@ function App() {
         <Link to="/">
           <img src="/heartlogo.png" alt="logo" className="image" />
         </Link>
-        <h1 className="heading">Welcome to the Health Manager App!</h1>
+        <h1 className="heading">Welcome to the Health Manager!</h1>
       </div>
       <div className="Layout">
         <nav>
@@ -90,8 +91,14 @@ function App() {
             {theme === "light" ? "Dark mode" : "Light mode"}
           </button>
         </nav>
+        <h1>Manage your diet and exercise!</h1>
         <Outlet />
       </div>
+      <ToastContainer 
+          autoClose={2000}
+        pauseOnFocusLoss={false}
+        pauseOnHover={true}
+      ></ToastContainer>
     </div>
   );
 }
