@@ -17,6 +17,7 @@ AddServices();
 AddDbContext();
 AddIdentity();
 ConfigureSwagger();
+RunMigrations();
 AddAuthentication();
 
 var app = builder.Build();
@@ -166,4 +167,24 @@ void AddAuthentication()
                 }
             };
         });
+}
+
+void RunMigrations()
+{
+    using (var scope = builder.Services.BuildServiceProvider().CreateScope())
+    {
+        var userDataBase = scope.ServiceProvider.GetRequiredService<UserContext>();
+        var dataBase = scope.ServiceProvider.GetRequiredService<DataBaseContext>();
+
+        if (userDataBase.Database.GetPendingMigrations().Any())
+        {
+            userDataBase.Database.Migrate();
+        }
+
+        if (dataBase.Database.GetPendingMigrations().Any())
+        {
+            dataBase.Database.Migrate();
+        }
+        
+    }
 }
