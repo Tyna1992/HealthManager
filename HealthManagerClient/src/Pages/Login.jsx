@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../index.css";
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function Login() {
   const navigate = useNavigate();
@@ -16,6 +18,9 @@ function Login() {
         body: JSON.stringify({ username, password }),
       });
       if (!response.ok) {
+        toast.error("Invalid username or password!", {
+          position: "top-right"
+        });
         throw new Error("Invalid credentials");
       }
       setPassword("");

@@ -1,6 +1,8 @@
 ﻿import { useState } from "react";
 import "../index.css";
 import TableComponent from "../Components/Tables/TableComponent";
+import { toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 function Meals() {
   const [meal, setMeal] = useState("");
@@ -20,12 +22,18 @@ function Meals() {
         },
       });
       if (!response.ok) {
-        alert("Cannot find the nutritional value for the meal. Please try again.");
+        toast.error("Cannot find the nutritional value for the meal. Please try again.",{
+            position: "top-right"
+            
+        });
         throw new Error("Fetch failed!");
       }
       const data = await response.json();
       if (data.length === 0) {
-        alert("Cannot find the nutritional value for the meal. Please try again.");
+        toast.error("Cannot find the nutritional value for the meal. Please try again.",{
+          position: "top-right"
+
+        });
         throw new Error("Cannot find the nutritional value for the meal. Please try again.");
       }
       setNutritionalValue(data);

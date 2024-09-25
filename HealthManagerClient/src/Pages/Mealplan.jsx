@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import "../index.css";
 import TableComponent from "../Components/Tables/TableComponent";
+import {toast} from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 function Mealplan() {
   const today = new Date().toISOString().slice(0, 10);
@@ -35,7 +37,10 @@ function Mealplan() {
 
   const fetchNutritionalValue = async () => {
     if (amount === "" || meal === "") {
-      alert("Please fill out serving size and meal name fields.");
+      toast.error("Please fill out the meal and serving size fields!",{
+        position: "top-right"
+
+      });
       return;
     }
     try {
@@ -46,12 +51,18 @@ function Mealplan() {
         },
       });
       if (!response.ok) {
-        alert("Cannot find the nutritional value for the meal. Please try again.");
+        toast.error("Cannot find the nutritional value for the meal. Please try again.",{
+          position: "top-right"
+
+        });
         throw new Error("Fetch failed!");
       }
       const data = await response.json();
       if (data.length === 0) {
-        alert("Cannot find the nutritional value for the meal. Please try again.");
+        toast.error("Cannot find the nutritional value for the meal. Please try again.",{
+          position: "top-right"
+
+        });
         throw new Error("Cannot find the nutritional value for the meal. Please try again.");
       }
       setNutritionalValue(data);
@@ -78,10 +89,16 @@ function Mealplan() {
         }),
       });
       if (!response.ok) {
-        alert("Cannot add the meal to the plan. Please try again.");
+        toast.error("Cannot add to the plan. Please try again.",{
+          position: "top-right"
+
+        });
         throw new Error("Fetch failed!");
       }
-      alert("Meal added to the plan.");
+      toast.success("Meal added to the plan!",{
+        position: "top-right"
+
+      });
       window.location.reload();
     } catch (error) {
       console.error(error);

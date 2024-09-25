@@ -1,6 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import "../index.css";
+import {toast} from "react-toastify";
 
 function RegisterUser() {
   const navigate = useNavigate();
@@ -22,12 +23,19 @@ function RegisterUser() {
         body: JSON.stringify(user),
       });
       if (!response.ok) {
+        toast.error("Error occured, please try again!", {
+          position: "top-right"
+        });
         throw new Error("Registration failed!");
       }
-      alert("Registration successful!");
+      toast.success("Registration succesful!", {
+        position: "top-right"
+      });
       navigate("/login");
     } catch (error) {
-      alert("Registration failed!");
+      toast.error("Registration failed!", {
+        position: "top-right"
+            });
       console.error(error);
     }
   }

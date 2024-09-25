@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import TableComponent from "../Components/Tables/TableComponent";
+import {toast} from "react-toastify";
 
 function Cocktails() {
   const [cocktail, setCocktail] = useState("");
@@ -14,12 +15,16 @@ function Cocktails() {
         },
       });
       if (!response.ok) {
-        alert("Cannot find the cocktail. Please try again.");
+        toast.error("Cannot find the requested drink. Please try again!", {
+          position: "top-right"
+        });
         throw new Error("Fetch failed!");
       }
       const data = await response.json();
       if (data.length === 0) {
-        alert("Cannot find the cocktail. Please try again.");
+        toast.error("Cannot find the requested drink. Please try again!", {
+          position: "top-right"
+        });
         throw new Error("Cannot find data about the cocktail. Please try again.");
       }
       setCocktailDatas(data);

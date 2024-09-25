@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import TableComponent from "../Components/Tables/TableComponent";
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function Activities() {
     const [activity, setActivity] = useState([]);
@@ -20,12 +22,18 @@ function Activities() {
                 }
             })
             if(!response.ok){
-                alert("Cannot find the activity. Please try again.")
+                toast.error("Cannot find the activity data. Please try again.",{
+                    position: "top-right"
+
+                });
                 throw new Error("Fetch failed!")
             }
             const data = await response.json();
             if(data.length === 0){
-                alert("Cannot find the activity. Please try again.")
+                toast.error("Cannot find the activity data. Please try again.",{
+                    position: "top-right"
+
+                });
                 throw new Error("Cannot find the activity. Please try again.") 
             }
             setActivity(data);
