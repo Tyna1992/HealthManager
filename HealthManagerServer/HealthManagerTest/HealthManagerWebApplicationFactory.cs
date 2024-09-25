@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using Microsoft.Extensions.Logging;
 
 namespace HealthManagerTest;
 
@@ -26,9 +27,11 @@ internal class HealthManagerWebApplicationFactory : WebApplicationFactory<Progra
             services.RemoveAll(typeof(DbContextOptions<DataBaseContext>));
             services.RemoveAll(typeof(DbContextOptions<UserContext>));
 
-            var configuration = context.Configuration;
-            var connectionString = configuration.GetConnectionString("TestDatabase");
-            Console.WriteLine($"Test Database Connection String: {connectionString}");
+            
+            var serviceProvider = services.BuildServiceProvider();
+            var connectionString = "Server=localhost,1433;Database=HealthManagerTest;User Id=sa;Password=Zakuro19920120;Encrypt=false;";
+            var logger = serviceProvider.GetRequiredService<ILogger<HealthManagerWebApplicationFactory>>();
+            logger.LogInformation($"Test Database Connection String: {connectionString}");
             services.AddDbContext<DataBaseContext>(options =>
                 options.UseSqlServer(connectionString));
             
