@@ -18,7 +18,7 @@ internal class HealthManagerWebApplicationFactory : WebApplicationFactory<Progra
         {
             var env = context.HostingEnvironment;
             config.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true, reloadOnChange: true);
+                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true, reloadOnChange: true).AddEnvironmentVariables();
         });
         
         builder.ConfigureServices((context,services) =>
@@ -28,7 +28,7 @@ internal class HealthManagerWebApplicationFactory : WebApplicationFactory<Progra
 
             var configuration = context.Configuration;
             var connectionString = configuration.GetConnectionString("TestDatabase");
-            
+            Console.WriteLine($"Test Database Connection String: {connectionString}");
             services.AddDbContext<DataBaseContext>(options =>
                 options.UseSqlServer(connectionString));
             
