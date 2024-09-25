@@ -40,7 +40,7 @@ jobs:
 
     - name: Test
       env:
-        ConnectionStrings__TestDatabase: "Server=localhost,1433;Database=HealthManagerTest;User Id=sa;Password=Zakuro19920120;Encrypt=false;"
+        ConnectionStrings__TestDatabase: ${{ secrets.CONNECTION_STRINGS_TEST_DATABASE }}
         IssuerSigningKey: ${{ secrets.IssuerSigningKey }}
       run: dotnet test --no-build --verbosity normal
 
