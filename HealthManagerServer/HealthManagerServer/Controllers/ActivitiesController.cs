@@ -24,9 +24,7 @@ public class ActivitiesController : ControllerBase
     [HttpGet("/api/activities/{activityName}/{weight}/{duration}")]
     public async Task<IActionResult> SearchOrAddActivity(string activityName, int weight = 75, int duration = 60)
     {
-        try
-        {
-            var weightInPounds = (int)(weight / 2.20462262);
+            var weightInPounds = (int)(weight * 2.20462262);
             var result = _activityRepository.GetByActivityName(activityName, weightInPounds, duration);
             if (result.Count == 0)
             {
@@ -40,11 +38,8 @@ public class ActivitiesController : ControllerBase
                 return Ok(activities);
             }
             return Ok(result);
-        }
-        catch (Exception e)
-        {
-            return BadRequest(e.Message);
-        }
+        
+        
     }
 
     [HttpGet("/api/activities/getAll"), Authorize(Roles = "Admin")]

@@ -62,7 +62,7 @@ public class MealController : ControllerBase
         }
         catch (Exception e)
         {
-            return BadRequest(e.Message);
+            return BadRequest("Error: Bad request ");
         }
 
     }

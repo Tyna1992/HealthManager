@@ -1,0 +1,38 @@
+﻿services:
+  healthmanagerbackend:
+    build:
+      context: .
+      dockerfile: HealthManagerServer/Dockerfile
+    environment:
+      - CONNECTION_STRING=Server=database,1433;Database=HealthManager;User Id=sa;Password=${DB_PASSWORD};Encrypt=false;
+      - ASPNETCORE_URLS=http://+:6000
+      - IssuerSigningKey=${ISSUER_SIGNING_KEY}
+    depends_on: 
+      database:
+        condition: service_healthy
+        
+
+        
+  database:
+    image: mcr.microsoft.com/mssql/server
+    ports:
+      - "1433:1433"
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=${DB_PASSWORD}
+      
+    healthcheck:
+      test: [ "CMD", "/opt/mssql-tools/bin/sqlcmd", "-S","localhost","-U","SA", "-P", "${DB_PASSWORD}","-Q","SELECT 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+        
+  frontend: 
+    build:
+      context: ../HealthManagerClient
+    ports:
+      - "3000:5173"
+    depends_on: 
+      - healthmanagerbackend
+    environment:
+        - BACKEND_URL=http://healthmanagerbackend:6000
