@@ -1,5 +1,28 @@
 # HealthManager Documentation
 
+<p align="center">
+		<em>Developed with the software and tools below.</em>
+</p>
+<p align="center">
+	<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript" target="_blank">
+  		<img src="https://img.shields.io/badge/JavaScript-F7DF1E.svg?style=flat&logo=JavaScript&logoColor=black" alt="JavaScript">
+	</a>
+	<a href="https://developer.mozilla.org/en-US/docs/Glossary/HTML5" target="_blank">
+		<img src="https://img.shields.io/badge/HTML5-E34F26.svg?style=flat&logo=HTML5&logoColor=white" alt="HTML5">	
+	</a>
+	<a href="https://react.dev/reference/react" target="_blank">
+		<img src="https://img.shields.io/badge/React-61DAFB.svg?style=flat&logo=React&logoColor=black" alt="React">
+	</a>
+ <a href="https://learn.microsoft.com/en-us/dotnet/csharp/" target="_blank">
+	<img src="https://img.shields.io/badge/C%23-239120.svg?style=flat&logo=c-sharp&logoColor=white" alt="C#">
+</a>
+<a href="https://learn.microsoft.com/en-us/sql/sql-server/" target="_blank">
+	<img src="https://img.shields.io/badge/MS_SQL_Server-CC2927.svg?style=flat&logo=microsoftsqlserver&logoColor=white" alt="MS SQL Server">
+</a>
+</p>
+
+![Health Manager Home page](./Assets/health_manager.png)
+
 ## Table of Contents
 - [Introduction](#introduction)
 - [Usage](#usage)
