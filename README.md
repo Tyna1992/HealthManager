@@ -19,6 +19,16 @@
 <a href="https://learn.microsoft.com/en-us/sql/sql-server/" target="_blank">
 	<img src="https://img.shields.io/badge/MS_SQL_Server-CC2927.svg?style=flat&logo=microsoftsqlserver&logoColor=white" alt="MS SQL Server">
 </a>
+<a href="https://www.npmjs.com/" target="_blank">
+  	<img src="https://img.shields.io/badge/NPM-CB3837.svg?style=flat&logo=npm&logoColor=white" alt="NPM">
+</a>
+<a href="https://www.nuget.org/" target="_blank">
+  	<img src="https://img.shields.io/badge/NuGet-004880.svg?style=flat&logo=nuget&logoColor=white" alt="NuGet">
+</a>
+<a href="https://www.docker.com/" target="_blank">
+  	<img src="https://img.shields.io/badge/Docker-2496ED.svg?style=flat&logo=docker&logoColor=white" alt="Docker">
+</a>
+
 </p>
 
 ![Health Manager Home page](./Assets/health_manager.png)
@@ -82,3 +92,84 @@ The API is a RESTful API that allows users to interact with the database. The AP
 - `/api/auth/login`: Login a user.
 - `/api/auth/logout`: Logout a user. Admin and user only.
 - `/api/auth/whoami`: Get the current user. Admin and user only.
+
+###  Installation
+
+Install HealthManager using one of the following methods:
+
+**Build from source:**
+
+1. Clone the HealthManager repository:
+```sh
+❯ git clone https://github.com/Tyna1992/HealthManager
+```
+
+2. Navigate to the project directory:
+```sh
+❯ cd HealthManager
+```
+
+3. Install the project dependencies:
+
+
+**Using `npm`** &nbsp; [<img align="center" src="" />]()
+
+```sh
+❯ echo 'INSERT-INSTALL-COMMAND-HERE'
+```
+
+
+**Using `nuget`** &nbsp; [<img align="center" src="https://img.shields.io/badge/C%23-239120.svg?style={badge_style}&logo=c-sharp&logoColor=white" />](https://docs.microsoft.com/en-us/dotnet/csharp/)
+
+```sh
+❯ dotnet restore
+```
+
+
+**Using `docker`** &nbsp; [<img align="center" src="https://img.shields.io/badge/Docker-2CA5E0.svg?style={badge_style}&logo=docker&logoColor=white" />](https://www.docker.com/)
+
+```sh
+❯ docker build -t Tyna1992/HealthManager .
+```
+
+
+
+
+###  Usage
+Run HealthManager using the following command:
+**Using `npm`** &nbsp; [<img align="center" src="" />]()
+
+```sh
+❯ echo 'INSERT-RUN-COMMAND-HERE'
+```
+
+
+**Using `nuget`** &nbsp; [<img align="center" src="https://img.shields.io/badge/C%23-239120.svg?style={badge_style}&logo=c-sharp&logoColor=white" />](https://docs.microsoft.com/en-us/dotnet/csharp/)
+
+```sh
+❯ dotnet run
+```
+
+
+**Using `docker`** &nbsp; [<img align="center" src="https://img.shields.io/badge/Docker-2CA5E0.svg?style={badge_style}&logo=docker&logoColor=white" />](https://www.docker.com/)
+
+```sh
+❯ docker run -it {image_name}
+```
+
+
+###  Testing
+Run the test suite using the following command:
+**Using `npm`** &nbsp; [<img align="center" src="" />]()
+
+```sh
+❯ echo 'INSERT-TEST-COMMAND-HERE'
+```
+
+
+**Using `nuget`** &nbsp; [<img align="center" src="https://img.shields.io/badge/C%23-239120.svg?style={badge_style}&logo=c-sharp&logoColor=white" />](https://docs.microsoft.com/en-us/dotnet/csharp/)
+
+```sh
+❯ dotnet test
+```
+
